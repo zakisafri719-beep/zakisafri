@@ -1,0 +1,20 @@
+{
+  "name": "AI Chat - مساعدك الذكي",
+  "short_name": "AI Chat",
+  "description": "دردشة ذكية بالعربية",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0618",
+  "theme_color": "#7c3aed",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "file_000000000cc482118a017dbfa6f8ed8b.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
