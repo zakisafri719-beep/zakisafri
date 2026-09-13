@@ -2,12 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Chat</title>
 
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="file_000000000cc482118a017dbfa6f8ed8b.png">
-<meta name="theme-color" content="#0a0618">
+<meta name="theme-color" content="#7c3aed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="AI Chat">
 
@@ -15,17 +15,17 @@
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
 
   :root {
+    --accent: #7c3aed;
+    --accent-light: #a855f7;
+    --accent-glow: rgba(124, 58, 237, 0.6);
     --bg-main: #000000;
     --bg-sidebar: #0a0a0f;
-    --bg-user-bubble: #1a9e8f;
+    --bg-user-bubble: #7c3aed;
     --bg-bot-bubble: #111118;
     --bg-input: #0f0f18;
-    --accent: #1a9e8f;
-    --accent-light: #2dd4bf;
-    --accent-glow: rgba(26, 158, 143, 0.6);
     --text: #f0f5f4;
-    --text-muted: #7a8a87;
-    --border: #1a2422;
+    --text-muted: #7a7a87;
+    --border: #1a1a24;
   }
 
   html, body {
@@ -33,6 +33,7 @@
     color: var(--text);
     height: 100vh;
     overflow: hidden;
+    overscroll-behavior: none;
   }
 
   /* ===== الخلفية المتحركة ===== */
@@ -50,25 +51,25 @@
     filter: blur(80px);
     opacity: 0.4;
     animation: floatOrb 20s ease-in-out infinite;
+    transition: background 0.5s;
   }
 
   .bg-orb.o1 {
     width: 400px; height: 400px;
-    background: radial-gradient(circle, #1a9e8f, transparent);
+    background: radial-gradient(circle, var(--accent), transparent);
     top: -100px; right: -100px;
-    animation-delay: 0s;
   }
 
   .bg-orb.o2 {
     width: 350px; height: 350px;
-    background: radial-gradient(circle, #2dd4bf, transparent);
+    background: radial-gradient(circle, var(--accent-light), transparent);
     bottom: -100px; left: -100px;
     animation-delay: -7s;
   }
 
   .bg-orb.o3 {
     width: 300px; height: 300px;
-    background: radial-gradient(circle, #0d9488, transparent);
+    background: radial-gradient(circle, var(--accent), transparent);
     top: 50%; left: 50%;
     animation-delay: -14s;
   }
@@ -80,7 +81,6 @@
     75% { transform: translate(30px, 30px) scale(1.05); }
   }
 
-  /* النجوم */
   .star {
     position: absolute;
     width: 2px;
@@ -111,6 +111,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 15px;
+    padding-top: max(12px, env(safe-area-inset-top));
     background: rgba(10, 10, 15, 0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
@@ -134,9 +135,9 @@
     padding: 10px;
   }
 
-  .menu-btn:hover, .menu-btn:active {
-    background: rgba(26, 158, 143, 0.15);
-    transform: scale(1.05);
+  .menu-btn:active {
+    background: rgba(124, 58, 237, 0.15);
+    transform: scale(0.95);
   }
 
   .menu-btn span {
@@ -191,10 +192,7 @@
     background-clip: text;
   }
 
-  .top-right {
-    display: flex;
-    gap: 5px;
-  }
+  .top-right { display: flex; gap: 5px; }
 
   .top-icon-btn {
     width: 42px;
@@ -209,26 +207,12 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
   }
 
-  .top-icon-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, var(--accent-glow), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .top-icon-btn:hover::before, .top-icon-btn:active::before {
-    opacity: 0.3;
-  }
-
-  .top-icon-btn:hover, .top-icon-btn:active {
+  .top-icon-btn:active {
+    background: rgba(124, 58, 237, 0.15);
     color: var(--accent-light);
-    transform: scale(1.05);
+    transform: scale(0.95);
   }
 
   /* ===== القائمة الجانبية ===== */
@@ -245,6 +229,8 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     overflow-y: auto;
   }
 
@@ -303,15 +289,12 @@
     transition: transform 0.3s;
   }
 
-  .sidebar-item:hover, .sidebar-item:active {
-    background: rgba(26, 158, 143, 0.1);
+  .sidebar-item:active {
+    background: rgba(124, 58, 237, 0.1);
     color: var(--text);
-    transform: translateX(-5px);
   }
 
-  .sidebar-item:hover::before, .sidebar-item:active::before {
-    transform: scaleY(1);
-  }
+  .sidebar-item:active::before { transform: scaleY(1); }
 
   .sidebar-item .icon { font-size: 20px; }
 
@@ -327,12 +310,10 @@
     gap: 12px;
     padding: 12px;
     border-radius: 12px;
-    background: rgba(26, 158, 143, 0.08);
+    background: rgba(124, 58, 237, 0.08);
     cursor: pointer;
     transition: all 0.3s;
   }
-
-  .sidebar-footer .user:hover { background: rgba(26, 158, 143, 0.15); }
 
   .user-avatar {
     width: 40px;
@@ -350,7 +331,6 @@
   .user-info h4 { font-size: 13px; }
   .user-info p { font-size: 10px; color: var(--text-muted); }
 
-  /* Overlay */
   .overlay {
     position: fixed;
     inset: 0;
@@ -362,10 +342,7 @@
     backdrop-filter: blur(4px);
   }
 
-  .overlay.show {
-    opacity: 1;
-    visibility: visible;
-  }
+  .overlay.show { opacity: 1; visibility: visible; }
 
   /* ===== منطقة الدردشة ===== */
   .chat-area {
@@ -385,7 +362,6 @@
 
   .messages { max-width: 900px; margin: 0 auto; }
 
-  /* شاشة الترحيب */
   .welcome {
     text-align: center;
     max-width: 700px;
@@ -449,30 +425,14 @@
     border-radius: 16px;
     cursor: pointer;
     text-align: right;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s;
   }
 
-  .suggestion-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .suggestion-card:hover, .suggestion-card:active {
+  .suggestion-card:active {
     border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(26, 158, 143, 0.2);
+    transform: scale(0.97);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
   }
-
-  .suggestion-card:hover::before { opacity: 0.3; }
 
   .suggestion-card .emoji {
     font-size: 22px;
@@ -524,9 +484,8 @@
   }
 
   .msg.bot .msg-avatar {
-    background: linear-gradient(135deg, #1e2a28, var(--accent));
+    background: linear-gradient(135deg, #1e1e2a, var(--accent));
     color: white;
-    box-shadow: 0 0 15px rgba(26, 158, 143, 0.4);
   }
 
   .msg-bubble { flex: 1; max-width: calc(100% - 60px); }
@@ -540,14 +499,13 @@
     word-wrap: break-word;
     white-space: pre-wrap;
     border: 1px solid var(--border);
-    position: relative;
   }
 
   .msg.user .msg-content {
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
     color: white;
-    box-shadow: 0 8px 25px rgba(26, 158, 143, 0.3);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
   }
 
   .msg.user { flex-direction: row-reverse; }
@@ -565,11 +523,8 @@
     gap: 6px;
     margin-top: 8px;
     padding: 0 5px;
-    opacity: 0;
-    transition: opacity 0.3s;
+    opacity: 0.7;
   }
-
-  .msg:hover .msg-actions, .msg:active .msg-actions { opacity: 1; }
 
   .msg-action-btn {
     background: transparent;
@@ -586,14 +541,12 @@
     transition: all 0.3s;
   }
 
-  .msg-action-btn:hover, .msg-action-btn:active {
-    background: rgba(26, 158, 143, 0.15);
+  .msg-action-btn:active {
+    background: rgba(124, 58, 237, 0.15);
     border-color: var(--accent);
-    color: var(--accent-light);
-    transform: scale(1.1);
+    transform: scale(0.95);
   }
 
-  /* شاشة الكتابة */
   .typing-indicator {
     display: flex;
     gap: 5px;
@@ -622,7 +575,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 12px 15px 20px;
+    padding: 12px 15px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     background: linear-gradient(to top, rgba(0,0,0,0.95) 60%, transparent);
     z-index: 50;
     pointer-events: none;
@@ -645,7 +599,7 @@
 
   .input-box:focus-within {
     border-color: var(--accent);
-    box-shadow: 0 0 30px rgba(26, 158, 143, 0.3), 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.3), 0 10px 40px rgba(0,0,0,0.5);
   }
 
   .input-box textarea {
@@ -685,10 +639,10 @@
     transition: all 0.3s;
   }
 
-  .input-icon-btn:hover, .input-icon-btn:active {
-    background: rgba(26, 158, 143, 0.15);
+  .input-icon-btn:active {
+    background: rgba(124, 58, 237, 0.15);
     color: var(--accent-light);
-    transform: scale(1.1);
+    transform: scale(0.9);
   }
 
   .send-btn {
@@ -703,28 +657,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s;
     box-shadow: 0 0 20px var(--accent-glow);
   }
 
-  .send-btn:hover, .send-btn:active {
-    transform: scale(1.1) rotate(-10deg);
+  .send-btn:active {
+    transform: scale(0.9);
     box-shadow: 0 0 35px var(--accent-glow);
   }
 
-  .send-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-  }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ===== Toast إشعار ===== */
+  /* ===== Toast ===== */
   .toast {
     position: fixed;
-    bottom: 100px;
+    bottom: 110px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: rgba(26, 158, 143, 0.95);
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
     color: white;
     padding: 12px 24px;
     border-radius: 30px;
@@ -732,9 +682,11 @@
     font-weight: 600;
     z-index: 9999;
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 30px rgba(26, 158, 143, 0.4);
+    transition: all 0.4s;
+    box-shadow: 0 10px 30px var(--accent-glow);
     pointer-events: none;
+    max-width: 90%;
+    text-align: center;
   }
 
   .toast.show {
@@ -742,11 +694,11 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* ===== Modal الإعدادات ===== */
+  /* ===== Modal عام ===== */
   .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     z-index: 300;
     display: flex;
     align-items: center;
@@ -758,10 +710,7 @@
     backdrop-filter: blur(10px);
   }
 
-  .modal.show {
-    opacity: 1;
-    visibility: visible;
-  }
+  .modal.show { opacity: 1; visibility: visible; }
 
   .modal-content {
     background: var(--bg-sidebar);
@@ -801,7 +750,7 @@
     transition: all 0.3s;
   }
 
-  .modal-close:hover { background: rgba(255,255,255,0.1); color: white; }
+  .modal-close:active { background: rgba(255,255,255,0.1); color: white; }
 
   .modal-item {
     display: flex;
@@ -809,85 +758,147 @@
     align-items: center;
     padding: 15px;
     border-radius: 12px;
-    background: rgba(26, 158, 143, 0.05);
+    background: rgba(124, 58, 237, 0.05);
     margin-bottom: 10px;
     cursor: pointer;
     transition: all 0.3s;
   }
 
-  .modal-item:hover { background: rgba(26, 158, 143, 0.15); }
+  .modal-item:active { background: rgba(124, 58, 237, 0.15); }
   .modal-item span { font-size: 14px; }
 
-  /* ===== جوال ===== */
+  /* ===== اختيار اللون ===== */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    padding: 15px 0;
+  }
+
+  .color-option {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .color-option:active { transform: scale(0.9); }
+
+  .color-option.selected {
+    border-color: white;
+    box-shadow: 0 0 20px currentColor;
+  }
+
+  .color-option.selected::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  /* ===== مفتاح تبديل ===== */
+  .toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    background: var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .toggle-switch.on {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+
+  .toggle-switch.on::after {
+    right: calc(100% - 25px);
+  }
+
   @media (max-width: 768px) {
     .sidebar { width: 280px; right: -300px; }
     .suggestions { grid-template-columns: 1fr; }
     .welcome h2 { font-size: 22px; }
-    .chat-area { padding: 15px 10px 130px; }
-    .input-wrapper { padding: 10px 10px 15px; }
+    .chat-area { padding: 15px 10px 140px; }
+    .input-wrapper { padding: 10px 10px; padding-bottom: max(15px, env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
 <body>
 
-<!-- الخلفية المتحركة -->
 <div class="bg-animated">
   <div class="bg-orb o1"></div>
   <div class="bg-orb o2"></div>
   <div class="bg-orb o3"></div>
 </div>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-<!-- القائمة الجانبية -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-logo">✨</div>
     <div>
-      <h2>AI Chat</h2>
-      <p>مساعدك الذكي</p>
+      <h2 id="sideTitle">AI Chat</h2>
+      <p id="sideSub">مساعدك الذكي</p>
     </div>
   </div>
 
   <ul class="sidebar-menu">
     <li class="sidebar-item" onclick="newChat()">
-      <span class="icon">💬</span> <span>محادثة جديدة</span>
+      <span class="icon">💬</span> <span data-i18n="newChat">محادثة جديدة</span>
     </li>
-    <li class="sidebar-item" onclick="showToast('المحادثات قريباً')">
-      <span class="icon">📚</span> <span>المحادثات</span>
+    <li class="sidebar-item" onclick="showToast(t('soon'))">
+      <span class="icon">📚</span> <span data-i18n="chats">المحادثات</span>
     </li>
-    <li class="sidebar-item" onclick="showToast('الاستكشاف قريباً')">
-      <span class="icon">🧭</span> <span>استكشاف</span>
+    <li class="sidebar-item" onclick="showToast(t('soon'))">
+      <span class="icon">🧭</span> <span data-i18n="explore">استكشاف</span>
     </li>
-    <li class="sidebar-item" onclick="showToast('الملفات قريباً')">
-      <span class="icon">📁</span> <span>الملفات</span>
+    <li class="sidebar-item" onclick="showToast(t('soon'))">
+      <span class="icon">📁</span> <span data-i18n="files">الملفات</span>
     </li>
-    <li class="sidebar-item" onclick="showToast('الصور قريباً')">
-      <span class="icon">🖼️</span> <span>الصور</span>
+    <li class="sidebar-item" onclick="showToast(t('soon'))">
+      <span class="icon">🖼️</span> <span data-i18n="images">الصور</span>
     </li>
-    <li class="sidebar-item" onclick="showToast('المفضلة قريباً')">
-      <span class="icon">⭐</span> <span>المفضلة</span>
+    <li class="sidebar-item" onclick="showToast(t('soon'))">
+      <span class="icon">⭐</span> <span data-i18n="favorites">المفضلة</span>
     </li>
     <li class="sidebar-item" onclick="openSettings()">
-      <span class="icon">⚙️</span> <span>الإعدادات</span>
+      <span class="icon">⚙️</span> <span data-i18n="settings">الإعدادات</span>
     </li>
   </ul>
 
   <div class="sidebar-footer">
-    <div class="user" onclick="showToast('مرحباً بك! 👋')">
+    <div class="user" onclick="showToast('👋')">
       <div class="user-avatar">A</div>
       <div class="user-info">
-        <h4>المستخدم</h4>
-        <p>حساب مجاني</p>
+        <h4 data-i18n="user">المستخدم</h4>
+        <p data-i18n="freeAccount">حساب مجاني</p>
       </div>
     </div>
   </div>
 </aside>
 
-<!-- التطبيق -->
 <div class="app">
-  <!-- الشريط العلوي -->
   <div class="top-bar">
     <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
       <span></span>
@@ -897,110 +908,296 @@
 
     <div class="top-title">
       <div class="top-title-logo">✨</div>
-      <h1>AI Chat</h1>
+      <h1 id="topTitle">AI Chat</h1>
     </div>
 
     <div class="top-right">
-      <button class="top-icon-btn" onclick="newChat()" title="محادثة جديدة">✏️</button>
-      <button class="top-icon-btn" onclick="openGoogle()" title="بحث Google">🔍</button>
+      <button class="top-icon-btn" onclick="newChat()">✏️</button>
+      <button class="top-icon-btn" onclick="openGoogle()">🔍</button>
     </div>
   </div>
 
-  <!-- منطقة الدردشة -->
   <div class="chat-area" id="chatArea">
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
         <div class="welcome-logo">✨</div>
-        <h2>مرحباً بك 👋</h2>
-        <p>أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء</p>
+        <h2 data-i18n="welcomeTitle">مرحباً بك 👋</h2>
+        <p data-i18n="welcomeSub">أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء</p>
 
         <div class="suggestions">
-          <div class="suggestion-card" onclick="quickAsk('أعطني أفكار إبداعية')">
+          <div class="suggestion-card" onclick="quickAsk(t('q1'))">
             <span class="emoji">💡</span>
-            <div class="title">أفكار وإبداع</div>
-            <div class="sub">اقتراحات مبتكرة</div>
+            <div class="title" data-i18n="s1">أفكار وإبداع</div>
+            <div class="sub" data-i18n="s1sub">اقتراحات مبتكرة</div>
           </div>
-          <div class="suggestion-card" onclick="quickAsk('علمني شيئاً جديداً')">
+          <div class="suggestion-card" onclick="quickAsk(t('q2'))">
             <span class="emoji">📚</span>
-            <div class="title">تعلّم</div>
-            <div class="sub">معلومات جديدة</div>
+            <div class="title" data-i18n="s2">تعلّم</div>
+            <div class="sub" data-i18n="s2sub">معلومات جديدة</div>
           </div>
-          <div class="suggestion-card" onclick="quickAsk('ساعدني في الكتابة')">
+          <div class="suggestion-card" onclick="quickAsk(t('q3'))">
             <span class="emoji">✍️</span>
-            <div class="title">كتابة</div>
-            <div class="sub">نصوص ومقالات</div>
+            <div class="title" data-i18n="s3">كتابة</div>
+            <div class="sub" data-i18n="s3sub">نصوص ومقالات</div>
           </div>
-          <div class="suggestion-card" onclick="quickAsk('ساعدني في البرمجة')">
+          <div class="suggestion-card" onclick="quickAsk(t('q4'))">
             <span class="emoji">💻</span>
-            <div class="title">برمجة</div>
-            <div class="sub">أكواد ومشاريع</div>
+            <div class="title" data-i18n="s4">برمجة</div>
+            <div class="sub" data-i18n="s4sub">أكواد ومشاريع</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- شريط الإدخال -->
   <div class="input-wrapper">
     <div class="input-box">
       <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
       <div class="input-actions">
-        <button class="input-icon-btn" onclick="attachFile()" title="إرفاق">📎</button>
-        <button class="input-icon-btn" onclick="openImage()" title="صورة">🖼️</button>
+        <button class="input-icon-btn" onclick="attachFile()">📎</button>
+        <button class="input-icon-btn" onclick="openImage()">🖼️</button>
         <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Modal الإعدادات -->
+<!-- نافذة الإعدادات -->
 <div class="modal" id="settingsModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h3>⚙️ الإعدادات</h3>
+      <h3 data-i18n="settingsTitle">⚙️ الإعدادات</h3>
       <button class="modal-close" onclick="closeSettings()">✕</button>
     </div>
-    <div class="modal-item" onclick="showToast('قريباً')">
-      <span>🌙 الوضع الليلي</span>
-      <span>مفعّل</span>
+
+    <div class="modal-item" onclick="toggleTheme()">
+      <span data-i18n="darkMode">🌙 الوضع الليلي</span>
+      <div class="toggle-switch on" id="themeToggle"></div>
     </div>
-    <div class="modal-item" onclick="showToast('قريباً')">
-      <span>🎨 تغيير اللون</span>
+
+    <div class="modal-item" onclick="openColorPicker()">
+      <span data-i18n="changeColor">🎨 تغيير اللون</span>
       <span>›</span>
     </div>
-    <div class="modal-item" onclick="showToast('قريباً')">
-      <span>🔔 الإشعارات</span>
+
+    <div class="modal-item" onclick="toggleLanguage()">
+      <span data-i18n="language">🌐 اللغة</span>
+      <span id="langLabel">العربية</span>
+    </div>
+
+    <div class="modal-item" onclick="showToast(t('soon'))">
+      <span data-i18n="notifications">🔔 الإشعارات</span>
       <span>›</span>
     </div>
-    <div class="modal-item" onclick="showToast('قريباً')">
-      <span>🌐 اللغة</span>
-      <span>العربية</span>
-    </div>
-    <div class="modal-item" onclick="showToast('قريباً')">
-      <span>ℹ️ عن التطبيق</span>
-      <span>v1.0</span>
+
+    <div class="modal-item" onclick="showToast(t('soon'))">
+      <span data-i18n="about">ℹ️ عن التطبيق</span>
+      <span>v2.0</span>
     </div>
   </div>
 </div>
 
-<script>
-  // ===== نجوم الخلفية =====
-  (function createStars() {
-    const bg = document.querySelector('.bg-animated');
-    for (let i = 0; i < 50; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      bg.appendChild(star);
-    }
-  })();
+<!-- نافذة اختيار اللون -->
+<div class="modal" id="colorModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 data-i18n="colorTitle">🎨 اختر اللون</h3>
+      <button class="modal-close" onclick="closeColorPicker()">✕</button>
+    </div>
 
-  // ===== المتغيرات =====
+    <div class="color-grid" id="colorGrid"></div>
+  </div>
+</div>
+
+<script>
+  // ===== إعدادات اللون والترجمة =====
+  const COLORS = [
+    { name: 'purple', main: '#7c3aed', light: '#a855f7' },
+    { name: 'blue', main: '#2563eb', light: '#60a5fa' },
+    { name: 'green', main: '#059669', light: '#34d399' },
+    { name: 'red', main: '#dc2626', light: '#f87171' },
+    { name: 'orange', main: '#ea580c', light: '#fb923c' },
+    { name: 'pink', main: '#db2777', light: '#f472b6' },
+    { name: 'cyan', main: '#0891b2', light: '#22d3ee' },
+    { name: 'indigo', main: '#4f46e5', light: '#818cf8' },
+    { name: 'yellow', main: '#ca8a04', light: '#facc15' },
+    { name: 'teal', main: '#0d9488', light: '#2dd4bf' }
+  ];
+
+  const TRANSLATIONS = {
+    ar: {
+      newChat: 'محادثة جديدة',
+      chats: 'المحادثات',
+      explore: 'استكشاف',
+      files: 'الملفات',
+      images: 'الصور',
+      favorites: 'المفضلة',
+      settings: 'الإعدادات',
+      user: 'المستخدم',
+      freeAccount: 'حساب مجاني',
+      welcomeTitle: 'مرحباً بك 👋',
+      welcomeSub: 'أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء',
+      s1: 'أفكار وإبداع', s1sub: 'اقتراحات مبتكرة',
+      s2: 'تعلّم', s2sub: 'معلومات جديدة',
+      s3: 'كتابة', s3sub: 'نصوص ومقالات',
+      s4: 'برمجة', s4sub: 'أكواد ومشاريع',
+      settingsTitle: '⚙️ الإعدادات',
+      darkMode: '🌙 الوضع الليلي',
+      changeColor: '🎨 تغيير اللون',
+      language: '🌐 اللغة',
+      notifications: '🔔 الإشعارات',
+      about: 'ℹ️ عن التطبيق',
+      colorTitle: '🎨 اختر اللون',
+      placeholder: 'اكتب رسالتك هنا...',
+      soon: '🚧 قريباً',
+      newChatToast: '💬 محادثة جديدة',
+      copied: '📋 تم النسخ',
+      liked: '❤️ شكراً',
+      googleOpening: '🔍 فتح Google',
+      imagesOpening: '🖼️ فتح الصور',
+      fileSelected: '📎 تم اختيار: ',
+      darkOn: '🌙 الوضع الليلي مفعّل',
+      darkOff: '☀️ الوضع النهاري مفعّل',
+      langChanged: '🌐 تم تغيير اللغة',
+      colorChanged: '🎨 تم تغيير اللون',
+      q1: 'أعطني أفكار إبداعية',
+      q2: 'علمني شيئاً جديداً',
+      q3: 'ساعدني في الكتابة',
+      q4: 'ساعدني في البرمجة',
+      systemMsg: 'أنت مساعد ذكي تجيب بالعربية بشكل واضح ومفيد ومهذب.',
+      sideSub: 'مساعدك الذكي'
+    },
+    en: {
+      newChat: 'New Chat',
+      chats: 'Chats',
+      explore: 'Explore',
+      files: 'Files',
+      images: 'Images',
+      favorites: 'Favorites',
+      settings: 'Settings',
+      user: 'User',
+      freeAccount: 'Free Account',
+      welcomeTitle: 'Welcome 👋',
+      welcomeSub: 'I am your smart assistant, ready to help',
+      s1: 'Ideas', s1sub: 'Creative suggestions',
+      s2: 'Learn', s2sub: 'New information',
+      s3: 'Writing', s3sub: 'Texts and articles',
+      s4: 'Coding', s4sub: 'Code and projects',
+      settingsTitle: '⚙️ Settings',
+      darkMode: '🌙 Dark Mode',
+      changeColor: '🎨 Change Color',
+      language: '🌐 Language',
+      notifications: '🔔 Notifications',
+      about: 'ℹ️ About',
+      colorTitle: '🎨 Choose Color',
+      placeholder: 'Type your message...',
+      soon: '🚧 Coming Soon',
+      newChatToast: '💬 New Chat',
+      copied: '📋 Copied',
+      liked: '❤️ Thanks',
+      googleOpening: '🔍 Opening Google',
+      imagesOpening: '🖼️ Opening Images',
+      fileSelected: '📎 Selected: ',
+      darkOn: '🌙 Dark mode on',
+      darkOff: '☀️ Light mode on',
+      langChanged: '🌐 Language changed',
+      colorChanged: '🎨 Color changed',
+      q1: 'Give me creative ideas',
+      q2: 'Teach me something new',
+      q3: 'Help me with writing',
+      q4: 'Help me with coding',
+      systemMsg: 'You are a smart assistant that answers clearly and politely.',
+      sideSub: 'Your smart assistant'
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'ar';
+  let currentColor = localStorage.getItem('color') || 'purple';
+  let isDark = localStorage.getItem('dark') !== 'false';
+
+  function t(key) { return TRANSLATIONS[currentLang][key] || key; }
+
+  // ===== تطبيق اللغة =====
+  function applyLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (TRANSLATIONS[lang][key]) el.textContent = TRANSLATIONS[lang][key];
+    });
+
+    document.getElementById('langLabel').textContent = lang === 'ar' ? 'العربية' : 'English';
+    document.getElementById('userInput').placeholder = t('placeholder');
+    document.getElementById('sideSub').textContent = t('sideSub');
+  }
+
+  function toggleLanguage() {
+    applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
+    showToast(t('langChanged'));
+  }
+
+  // ===== تطبيق اللون =====
+  function applyColor(colorName) {
+    const color = COLORS.find(c => c.name === colorName) || COLORS[0];
+    currentColor = colorName;
+    localStorage.setItem('color', colorName);
+
+    document.documentElement.style.setProperty('--accent', color.main);
+    document.documentElement.style.setProperty('--accent-light', color.light);
+    document.documentElement.style.setProperty('--accent-glow', hexToRgba(color.main, 0.6));
+
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', color.main);
+
+    document.querySelectorAll('.color-option').forEach(el => {
+      el.classList.toggle('selected', el.dataset.color === colorName);
+    });
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  // ===== الوضع الليلي =====
+  function applyTheme(dark) {
+    isDark = dark;
+    localStorage.setItem('dark', dark);
+    const root = document.documentElement;
+
+    if (dark) {
+      root.style.setProperty('--bg-main', '#000000');
+      root.style.setProperty('--bg-sidebar', '#0a0a0f');
+      root.style.setProperty('--bg-bot-bubble', '#111118');
+      root.style.setProperty('--bg-input', '#0f0f18');
+      root.style.setProperty('--text', '#f0f5f4');
+      root.style.setProperty('--text-muted', '#7a7a87');
+      root.style.setProperty('--border', '#1a1a24');
+    } else {
+      root.style.setProperty('--bg-main', '#f5f5f7');
+      root.style.setProperty('--bg-sidebar', '#ffffff');
+      root.style.setProperty('--bg-bot-bubble', '#ffffff');
+      root.style.setProperty('--bg-input', '#ffffff');
+      root.style.setProperty('--text', '#1a1a24');
+      root.style.setProperty('--text-muted', '#6b6b78');
+      root.style.setProperty('--border', '#e0e0e8');
+    }
+
+    document.getElementById('themeToggle').classList.toggle('on', dark);
+  }
+
+  function toggleTheme() {
+    applyTheme(!isDark);
+    showToast(isDark ? t('darkOn') : t('darkOff'));
+  }
+
+  // ===== باقي الكود =====
   const chatArea = document.getElementById('chatArea');
   const messagesEl = document.getElementById('messages');
   const welcomeEl = document.getElementById('welcome');
@@ -1015,11 +1212,8 @@
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-  let history = [
-    { role: 'system', content: 'أنت مساعد ذكي تجيب بالعربية بشكل واضح ومفيد ومهذب.' }
-  ];
+  let history = [{ role: 'system', content: t('systemMsg') }];
 
-  // ===== القائمة الجانبية =====
   function toggleSidebar() {
     sidebar.classList.toggle('open');
     overlay.classList.toggle('show');
@@ -1032,23 +1226,22 @@
     menuBtn.classList.remove('active');
   }
 
-  // ===== Toast =====
   function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
   }
 
-  // ===== Google =====
   function openGoogle() {
     window.open('https://www.google.com', '_blank');
-    showToast('🔍 فتح Google');
+    showToast(t('googleOpening'));
   }
 
   function openImage() {
     window.open('https://images.google.com', '_blank');
-    showToast('🖼️ فتح الصور');
+    showToast(t('imagesOpening'));
   }
 
   function attachFile() {
@@ -1057,12 +1250,11 @@
     input.accept = 'image/*,.pdf,.txt,.doc,.docx';
     input.onchange = (e) => {
       const file = e.target.files[0];
-      if (file) showToast('📎 تم اختيار: ' + file.name);
+      if (file) showToast(t('fileSelected') + file.name);
     };
     input.click();
   }
 
-  // ===== الإعدادات =====
   function openSettings() {
     document.getElementById('settingsModal').classList.add('show');
     closeSidebar();
@@ -1072,29 +1264,33 @@
     document.getElementById('settingsModal').classList.remove('show');
   }
 
-  // ===== محادثة جديدة =====
+  function openColorPicker() {
+    document.getElementById('colorModal').classList.add('show');
+  }
+
+  function closeColorPicker() {
+    document.getElementById('colorModal').classList.remove('show');
+  }
+
   function newChat() {
-    history = [{ role: 'system', content: 'أنت مساعد ذكي تجيب بالعربية بشكل واضح ومفيد ومهذب.' }];
+    history = [{ role: 'system', content: t('systemMsg') }];
     messagesEl.innerHTML = '';
     messagesEl.appendChild(welcomeEl);
     welcomeEl.style.display = 'block';
     closeSidebar();
-    showToast('💬 محادثة جديدة');
+    showToast(t('newChatToast'));
   }
 
-  // ===== اقتراحات سريعة =====
   function quickAsk(text) {
     userInput.value = text;
     sendMessage();
   }
 
-  // ===== الوقت =====
   function getTime() {
     const d = new Date();
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
-  // ===== إرسال رسالة =====
   async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
@@ -1126,17 +1322,14 @@
       if (data.error) throw new Error(data.error.message);
 
       const reply = data.choices[0].message.content;
-      loading.querySelector('.msg-content').innerHTML = escapeHtml(reply);
-      loading.querySelector('.msg-content').classList.remove('loading');
-      
-      // إضافة أزرار التفاعل
+      loading.querySelector('.msg-content').textContent = reply;
       const actions = loading.querySelector('.msg-actions');
       if (actions) actions.style.display = 'flex';
-      
+
       history.push({ role: 'assistant', content: reply });
 
     } catch (err) {
-      loading.querySelector('.msg-content').textContent = '❌ خطأ: ' + err.message;
+      loading.querySelector('.msg-content').textContent = '❌ ' + err.message;
     } finally {
       sendBtn.disabled = false;
       userInput.focus();
@@ -1144,11 +1337,9 @@
     }
   }
 
-  // ===== إضافة رسالة =====
   function addMessage(text, sender) {
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
-
     const avatar = sender === 'user' ? '👤' : '✨';
     const time = getTime();
 
@@ -1156,9 +1347,9 @@
     if (sender === 'bot') {
       actionsHtml = `
         <div class="msg-actions">
-          <button class="msg-action-btn" onclick="copyText(this)" title="نسخ">📋</button>
-          <button class="msg-action-btn" onclick="likeMsg(this)" title="إعجاب">👍</button>
-          <button class="msg-action-btn" onclick="shareMsg(this)" title="مشاركة">🔗</button>
+          <button class="msg-action-btn" onclick="copyText(this)">📋</button>
+          <button class="msg-action-btn" onclick="likeMsg(this)">👍</button>
+          <button class="msg-action-btn" onclick="shareMsg(this)">🔗</button>
         </div>
       `;
     }
@@ -1183,17 +1374,15 @@
     div.innerHTML = `
       <div class="msg-avatar">✨</div>
       <div class="msg-bubble">
-        <div class="msg-content loading">
+        <div class="msg-content">
           <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
           </div>
         </div>
         <div class="msg-actions" style="display:none;">
-          <button class="msg-action-btn" onclick="copyText(this)" title="نسخ">📋</button>
-          <button class="msg-action-btn" onclick="likeMsg(this)" title="إعجاب">👍</button>
-          <button class="msg-action-btn" onclick="shareMsg(this)" title="مشاركة">🔗</button>
+          <button class="msg-action-btn" onclick="copyText(this)">📋</button>
+          <button class="msg-action-btn" onclick="likeMsg(this)">👍</button>
+          <button class="msg-action-btn" onclick="shareMsg(this)">🔗</button>
         </div>
       </div>
     `;
@@ -1202,19 +1391,18 @@
     return div;
   }
 
-  // ===== أزرار التفاعل =====
   function copyText(btn) {
     const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
     navigator.clipboard.writeText(content).then(() => {
       btn.textContent = '✅';
-      showToast('📋 تم النسخ');
+      showToast(t('copied'));
       setTimeout(() => btn.textContent = '📋', 1500);
     });
   }
 
   function likeMsg(btn) {
     btn.textContent = '❤️';
-    showToast('👍 شكراً لتقييمك');
+    showToast(t('liked'));
     setTimeout(() => btn.textContent = '👍', 1500);
   }
 
@@ -1223,7 +1411,7 @@
     if (navigator.share) {
       navigator.share({ text: content });
     } else {
-      showToast('🔗 المشاركة غير مدعومة');
+      copyText(btn);
     }
   }
 
@@ -1233,7 +1421,38 @@
     return div.innerHTML;
   }
 
-  // ===== إدخال تلقائي =====
+  // ===== نجوم الخلفية =====
+  (function createStars() {
+    const bg = document.querySelector('.bg-animated');
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      bg.appendChild(star);
+    }
+  })();
+
+  // ===== شبكة الألوان =====
+  (function buildColorGrid() {
+    const grid = document.getElementById('colorGrid');
+    COLORS.forEach(color => {
+      const el = document.createElement('div');
+      el.className = 'color-option';
+      el.dataset.color = color.name;
+      el.style.background = `linear-gradient(135deg, ${color.main}, ${color.light})`;
+      el.style.color = color.main;
+      el.onclick = () => {
+        applyColor(color.name);
+        showToast(t('colorChanged'));
+        closeColorPicker();
+      };
+      grid.appendChild(el);
+    });
+  })();
+
+  // ===== إعدادات الإدخال =====
   userInput.addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 120) + 'px';
@@ -1246,29 +1465,25 @@
     }
   });
 
+  // ===== الإغلاق بالزر الخلفي =====
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeSettings();
+      closeColorPicker();
+      closeSidebar();
+    }
+  });
+
+  // ===== التهيئة =====
+  applyLanguage(currentLang);
+  applyColor(currentColor);
+  applyTheme(isDark);
   userInput.focus();
 
-  // ===== Service Worker =====
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     });
-  }
-
-  // ===== شريط التثبيت =====
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-  });
-
-  function installApp() {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-    } else {
-      showToast('📱 التطبيق مثبّت');
-    }
   }
 </script>
 
