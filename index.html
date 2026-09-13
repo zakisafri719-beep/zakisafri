@@ -41,26 +41,72 @@
     inset: 0;
   }
 
-  /* خلفية متحركة */
-  .bg-animated { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-  .bg-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; will-change: transform; }
-  .bg-orb.o1 { width: 350px; height: 350px; background: radial-gradient(circle, var(--accent), transparent); top: -100px; right: -100px; animation: float1 18s ease-in-out infinite; }
-  .bg-orb.o2 { width: 300px; height: 300px; background: radial-gradient(circle, var(--accent-light), transparent); bottom: -100px; left: -100px; animation: float2 22s ease-in-out infinite; }
-  .bg-orb.o3 { width: 250px; height: 250px; background: radial-gradient(circle, var(--accent), transparent); top: 40%; left: 40%; animation: float3 25s ease-in-out infinite; opacity: 0.25; }
-  @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-80px, 100px) scale(1.15); } }
-  @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(100px, -80px) scale(1.1); } }
-  @keyframes float3 { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(60px, -60px) scale(0.9); } 66% { transform: translate(-60px, 60px) scale(1.05); } }
+  /* ===== خلفية متحركة ===== */
+  .bg-animated {
+    position: fixed; inset: 0; z-index: 0;
+    overflow: hidden; pointer-events: none;
+  }
+  .bg-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(90px); opacity: 0.35; will-change: transform;
+  }
+  .bg-orb.o1 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, var(--accent), transparent);
+    top: -100px; right: -100px;
+    animation: float1 18s ease-in-out infinite;
+  }
+  .bg-orb.o2 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, var(--accent-light), transparent);
+    bottom: -100px; left: -100px;
+    animation: float2 22s ease-in-out infinite;
+  }
+  .bg-orb.o3 {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, var(--accent), transparent);
+    top: 40%; left: 40%;
+    animation: float3 25s ease-in-out infinite;
+    opacity: 0.25;
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-80px, 100px) scale(1.15); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(100px, -80px) scale(1.1); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -60px) scale(0.9); }
+    66% { transform: translate(-60px, 60px) scale(1.05); }
+  }
 
+  /* ===== أيقونات متوهجة ===== */
   .glow-icon {
     display: flex; align-items: center; justify-content: center;
     color: var(--accent-light);
     filter: drop-shadow(0 0 5px var(--accent-glow));
-    transition: all 0.2s ease; font-size: 22px; line-height: 1;
+    transition: all 0.2s ease;
+    font-size: 22px; line-height: 1;
   }
-  .glow-icon svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .glow-icon:active { color: white; transform: scale(1.1); }
+  .glow-icon svg {
+    width: 1em; height: 1em;
+    fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .glow-icon:active {
+    color: white;
+    transform: scale(1.1);
+  }
 
-  .app { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; height: 100dvh; max-height: 100dvh; }
+  /* ===== التطبيق ===== */
+  .app {
+    position: fixed; inset: 0; z-index: 1;
+    display: flex; flex-direction: column;
+    height: 100dvh; max-height: 100dvh;
+  }
 
   /* ===== الشريط العلوي ===== */
   .top-bar {
@@ -75,7 +121,8 @@
   .menu-btn {
     width: 42px; height: 42px;
     background: transparent; border: none; cursor: pointer;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
     gap: 5px; padding: 8px; border-radius: 12px;
   }
   .menu-btn:active { transform: scale(0.92); }
@@ -89,7 +136,10 @@
   .menu-btn.active span:nth-child(2) { opacity: 0; }
   .menu-btn.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-  .top-title { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
+  .top-title {
+    display: flex; align-items: center; gap: 10px;
+    flex: 1; justify-content: center;
+  }
   .top-title-logo {
     display: flex; align-items: center; justify-content: center;
     font-size: 24px; color: var(--accent-light);
@@ -112,10 +162,16 @@
     position: relative; z-index: 2; min-height: 0;
   }
   .chat-area::-webkit-scrollbar { width: 3px; }
-  .chat-area::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+  .chat-area::-webkit-scrollbar-thumb {
+    background: var(--accent); border-radius: 2px;
+  }
   .messages { max-width: 1000px; margin: 0 auto; }
 
-  .welcome { text-align: center; max-width: 700px; margin: 20px auto; padding: 20px; }
+  /* ===== شاشة الترحيب ===== */
+  .welcome {
+    text-align: center; max-width: 700px;
+    margin: 20px auto; padding: 20px;
+  }
   .welcome-logo {
     width: 90px; height: 90px; margin: 0 auto 20px;
     display: flex; align-items: center; justify-content: center;
@@ -123,30 +179,53 @@
     filter: drop-shadow(0 0 15px var(--accent-glow-strong));
   }
   .welcome h2 { font-size: 26px; margin-bottom: 12px; color: white; }
-  .welcome p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; line-height: 1.7; }
-
-  .suggestions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 600px; margin: 0 auto; }
+  .welcome p {
+    color: var(--text-muted); font-size: 15px;
+    margin-bottom: 28px; line-height: 1.7;
+  }
+  .suggestions {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 12px; max-width: 600px; margin: 0 auto;
+  }
   .suggestion-card {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
-    padding: 14px; border-radius: 14px; cursor: pointer;
-    text-align: right; transition: all 0.2s;
+    padding: 14px; border-radius: 14px;
+    cursor: pointer; text-align: right;
+    transition: all 0.2s;
     display: flex; align-items: center; gap: 12px;
   }
-  .suggestion-card:active { border-color: var(--accent); transform: scale(0.97); }
-  .suggestion-card .sug-icon { flex-shrink: 0; font-size: 24px; display: flex; }
+  .suggestion-card:active {
+    border-color: var(--accent); transform: scale(0.97);
+  }
+  .suggestion-card .sug-icon {
+    flex-shrink: 0; font-size: 24px; display: flex;
+  }
   .suggestion-card .sug-text { flex: 1; min-width: 0; }
-  .suggestion-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .suggestion-card .title {
+    font-size: 14px; font-weight: 600;
+    color: var(--text); margin-bottom: 3px;
+  }
   .suggestion-card .sub { font-size: 12px; color: var(--text-muted); }
 
-  .msg { display: flex; gap: 10px; margin-bottom: 20px; }
+  /* ===== الرسائل ===== */
+  .msg {
+    display: flex; gap: 10px; margin-bottom: 20px;
+  }
   .msg-avatar {
     width: 40px; height: 40px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; font-size: 22px;
   }
-  .msg.user .msg-avatar { color: white; background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
-  .msg.bot .msg-avatar { color: var(--accent-light); filter: drop-shadow(0 0 5px var(--accent-glow)); background: transparent; }
+  .msg.user .msg-avatar {
+    color: white;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  }
+  .msg.bot .msg-avatar {
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 5px var(--accent-glow));
+    background: transparent;
+  }
   .msg-bubble { flex: 1; max-width: calc(100% - 60px); min-width: 0; }
   .msg-content {
     background: var(--bg-bot-bubble);
@@ -159,22 +238,42 @@
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none; color: white;
   }
-  .msg.user .msg-bubble { display: flex; flex-direction: column; align-items: flex-start; }
+  .msg.user .msg-bubble {
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
   .msg.bot { flex-direction: row-reverse; }
-  .msg.bot .msg-bubble { display: flex; flex-direction: column; align-items: flex-end; }
+  .msg.bot .msg-bubble {
+    display: flex; flex-direction: column; align-items: flex-end;
+  }
   .msg.bot .msg-content { text-align: right; }
 
-  .msg-time { font-size: 11px; color: var(--text-muted); margin-top: 6px; padding: 0 5px; }
-  .msg-actions { display: flex; gap: 4px; margin-top: 8px; padding: 0 5px; opacity: 0.7; }
+  .msg-time {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 6px; padding: 0 5px;
+  }
+  .msg-actions {
+    display: flex; gap: 4px; margin-top: 8px;
+    padding: 0 5px; opacity: 0.7; flex-wrap: wrap;
+  }
   .msg-action-btn {
     background: transparent; border: none; cursor: pointer;
     width: 32px; height: 32px;
     display: flex; align-items: center; justify-content: center;
     font-size: 16px; border-radius: 8px;
+    transition: all 0.2s;
   }
   .msg-action-btn:active { transform: scale(0.9); }
   .msg-action-btn.saved { color: #fbbf24; }
+  .msg-action-btn.speaking {
+    color: var(--accent-light);
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
 
+  /* ===== مؤشر الكتابة ===== */
   .typing-bubble {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
@@ -183,7 +282,8 @@
     width: fit-content;
   }
   .typing-bubble span {
-    width: 7px; height: 7px; background: var(--accent-light); border-radius: 50%;
+    width: 7px; height: 7px;
+    background: var(--accent-light); border-radius: 50%;
     animation: typingBounce 1.4s ease-in-out infinite;
     box-shadow: 0 0 6px var(--accent-glow);
   }
@@ -192,6 +292,60 @@
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
     30% { transform: translateY(-6px) scale(1.15); opacity: 1; }
+  }
+
+  /* ===== الرسائل مع صور ===== */
+  .msg-image {
+    max-width: 100%; max-height: 300px;
+    border-radius: 12px; margin-bottom: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    object-fit: cover;
+  }
+  .msg.user .msg-image {
+    border-color: var(--accent-light);
+    max-width: 250px;
+  }
+
+  /* ===== معاينة الصورة قبل الإرسال ===== */
+  .image-preview {
+    display: none;
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 8px 12px;
+    background: rgba(10, 10, 15, 0.95);
+    border-top: 1px solid var(--border);
+  }
+  .image-preview.show { display: block; }
+  .image-preview-inner {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px;
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .image-preview-inner img {
+    width: 60px; height: 60px;
+    border-radius: 8px; object-fit: cover;
+    border: 1px solid var(--border);
+  }
+  .image-preview-info { flex: 1; }
+  .image-preview-info .name {
+    font-size: 13px; font-weight: 600;
+    color: var(--text); margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .image-preview-info .size { font-size: 11px; color: var(--text-muted); }
+  .image-preview-close {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: transparent;
+    border: none; cursor: pointer;
+    color: #ef4444; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .image-preview-close:active {
+    background: rgba(239, 68, 68, 0.15);
   }
 
   /* ===== شريط الإدخال ===== */
@@ -212,20 +366,42 @@
     display: flex; align-items: center; gap: 6px;
     box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
   }
-  .input-box:focus-within { box-shadow: 0 0 30px rgba(124, 58, 237, 0.45); }
+  .input-box:focus-within {
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.45);
+  }
   .input-box textarea {
-    flex: 1; background: transparent; border: none; outline: none;
-    color: var(--text); font-size: 15.5px; padding: 10px 0;
-    resize: none; max-height: 110px; font-family: inherit; line-height: 1.5;
+    flex: 1; background: transparent;
+    border: none; outline: none;
+    color: var(--text); font-size: 15.5px;
+    padding: 10px 0; resize: none;
+    max-height: 110px; font-family: inherit;
+    line-height: 1.5;
   }
   .input-box textarea::placeholder { color: var(--text-muted); }
+
   .input-actions { display: flex; gap: 2px; align-items: center; }
+
   .input-icon-btn {
-    width: 38px; height: 38px; background: transparent; border: none;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    border-radius: 50%;
+    width: 38px; height: 38px;
+    background: transparent; border: none;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    border-radius: 50%; transition: all 0.2s;
   }
   .input-icon-btn:active { transform: scale(0.88); }
+  .input-icon-btn.recording {
+    background: rgba(239, 68, 68, 0.2);
+    animation: recPulse 1s infinite;
+  }
+  @keyframes recPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  }
+  .input-icon-btn.search-active {
+    background: rgba(124, 58, 237, 0.25);
+    color: var(--accent-light);
+  }
+
   .send-btn {
     width: 44px; height: 44px; border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
@@ -245,13 +421,18 @@
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     color: white; padding: 11px 22px;
     border-radius: 30px; font-size: 13px; font-weight: 600;
-    z-index: 9999; opacity: 0; transition: all 0.25s;
+    z-index: 9999; opacity: 0;
+    transition: all 0.25s;
     box-shadow: 0 10px 30px var(--accent-glow-strong);
-    pointer-events: none; max-width: 90%;
+    pointer-events: none; max-width: 90%; text-align: center;
   }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* ===== Sidebar ===== */
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+<style>
+  /* ===== القائمة الجانبية ===== */
   .sidebar {
     position: fixed; top: 0; right: -320px;
     width: 290px; height: 100dvh;
@@ -269,7 +450,8 @@
   .sidebar.open { right: 0; }
   .sidebar-header {
     display: flex; align-items: center; gap: 10px;
-    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
     margin-bottom: 10px;
   }
   .sidebar-logo {
@@ -278,26 +460,41 @@
     font-size: 30px; color: var(--accent-light);
     filter: drop-shadow(0 0 8px var(--accent-glow));
   }
-  .sidebar-header h2 { font-size: 15px; margin-bottom: 2px; color: white; }
+  .sidebar-header h2 {
+    font-size: 15px; margin-bottom: 2px; color: white;
+  }
   .sidebar-header p { font-size: 10px; color: var(--text-muted); }
+
   .sidebar-menu { list-style: none; }
   .sidebar-item {
     display: flex; align-items: center; gap: 10px;
-    padding: 4px 6px; border-radius: 10px; cursor: pointer;
-    color: var(--text-muted); font-size: 14px; margin-bottom: 0;
-    transition: background 0.15s; line-height: 1.2;
+    padding: 6px; border-radius: 10px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 14px; margin-bottom: 0;
+    transition: background 0.15s;
+    line-height: 1.2;
   }
   .sidebar-item .icon-wrap {
     width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
   .sidebar-item .glow-icon { font-size: 20px; }
-  .sidebar-item:active { background: rgba(124, 58, 237, 0.1); color: white; }
-  .sidebar-footer { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
+  .sidebar-item:active {
+    background: rgba(124, 58, 237, 0.1);
+    color: white;
+  }
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
   .sidebar-footer .user {
     display: flex; align-items: center; gap: 10px;
     padding: 8px; border-radius: 10px;
-    background: rgba(124, 58, 237, 0.08); cursor: pointer;
+    background: rgba(124, 58, 237, 0.08);
+    cursor: pointer;
   }
   .user-avatar {
     width: 34px; height: 34px;
@@ -308,9 +505,13 @@
   .user-info h4 { font-size: 12px; color: white; }
   .user-info p { font-size: 10px; color: var(--text-muted); }
 
+  /* ===== Overlay ===== */
   .overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-    z-index: 150; opacity: 0; visibility: hidden; transition: opacity 0.2s;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 150;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.2s;
   }
   .overlay.show { opacity: 1; visibility: visible; }
 
@@ -321,7 +522,8 @@
     z-index: 300;
     display: flex; align-items: center; justify-content: center;
     padding: 20px; opacity: 0; visibility: hidden;
-    transition: all 0.25s; backdrop-filter: blur(10px);
+    transition: all 0.25s;
+    backdrop-filter: blur(10px);
   }
   .modal.show { opacity: 1; visibility: visible; }
   .modal-content {
@@ -331,28 +533,33 @@
     max-width: 500px; width: 100%;
     max-height: 85vh; overflow-y: auto;
     padding: 20px;
-    transform: scale(0.9); transition: transform 0.25s;
+    transform: scale(0.9);
+    transition: transform 0.25s;
   }
   .modal.show .modal-content { transform: scale(1); }
   .modal-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 15px; padding-bottom: 12px;
+    display: flex; justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
   .modal-header h3 { font-size: 16px; color: white; }
   .modal-close {
-    background: transparent; border: none; cursor: pointer;
-    width: 34px; height: 34px;
+    background: transparent; border: none;
+    cursor: pointer; width: 34px; height: 34px;
     display: flex; align-items: center; justify-content: center;
     border-radius: 10px;
   }
   .modal-close:active { background: rgba(255,255,255,0.1); }
 
   .modal-item {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; justify-content: space-between;
+    align-items: center;
     padding: 11px 10px; border-radius: 12px;
     background: rgba(124, 58, 237, 0.05);
-    margin-bottom: 7px; cursor: pointer; transition: background 0.15s;
+    margin-bottom: 7px; cursor: pointer;
+    transition: background 0.15s;
   }
   .modal-item:active { background: rgba(124, 58, 237, 0.15); }
   .modal-item-left {
@@ -360,32 +567,54 @@
     font-size: 14px; color: var(--text);
   }
   .modal-item-left .glow-icon { font-size: 20px; }
-  .modal-item > span:last-child { color: var(--text-muted); font-size: 13px; }
+  .modal-item > span:last-child {
+    color: var(--text-muted); font-size: 13px;
+  }
 
-  .color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px 0; }
+  /* ===== شبكة الألوان ===== */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; padding: 10px 0;
+  }
   .color-option {
-    width: 100%; aspect-ratio: 1; border-radius: 50%;
-    cursor: pointer; border: 3px solid transparent;
-    transition: all 0.2s; position: relative;
+    width: 100%; aspect-ratio: 1;
+    border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
   }
   .color-option:active { transform: scale(0.9); }
-  .color-option.selected { border-color: white; box-shadow: 0 0 20px currentColor; }
+  .color-option.selected {
+    border-color: white;
+    box-shadow: 0 0 20px currentColor;
+  }
   .color-option.selected::after {
-    content: '✓'; position: absolute; inset: 0;
+    content: '✓';
+    position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
     color: white; font-size: 18px; font-weight: bold;
   }
 
+  /* ===== Toggle ===== */
   .toggle-switch {
-    position: relative; width: 46px; height: 26px;
-    background: var(--border); border-radius: 13px;
-    cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+    position: relative;
+    width: 46px; height: 26px;
+    background: var(--border);
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
   }
-  .toggle-switch.on { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+  .toggle-switch.on {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  }
   .toggle-switch::after {
-    content: ''; position: absolute; top: 3px; right: 3px;
-    width: 20px; height: 20px; background: white;
-    border-radius: 50%; transition: right 0.2s;
+    content: '';
+    position: absolute; top: 3px; right: 3px;
+    width: 20px; height: 20px;
+    background: white; border-radius: 50%;
+    transition: right 0.2s;
   }
   .toggle-switch.on::after { right: calc(100% - 23px); }
 
@@ -399,6 +628,7 @@
     display: flex; flex-direction: column;
   }
   .page.open { transform: translateX(0); }
+
   .page-header {
     display: flex; align-items: center; gap: 12px;
     padding: 14px 15px;
@@ -409,22 +639,26 @@
     flex-shrink: 0;
   }
   .page-back {
-    background: transparent; border: none; cursor: pointer;
-    width: 40px; height: 40px;
+    background: transparent; border: none;
+    cursor: pointer; width: 40px; height: 40px;
     display: flex; align-items: center; justify-content: center;
     border-radius: 12px;
   }
   .page-back:active { background: rgba(124,58,237,0.1); }
-  .page-header h2 { font-size: 17px; color: white; flex: 1; }
+  .page-header h2 {
+    font-size: 17px; color: white; flex: 1;
+  }
   .page-body {
     flex: 1; overflow-y: auto;
     padding: 16px;
     padding-bottom: max(20px, env(safe-area-inset-bottom));
   }
   .page-body::-webkit-scrollbar { width: 3px; }
-  .page-body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+  .page-body::-webkit-scrollbar-thumb {
+    background: var(--accent); border-radius: 2px;
+  }
 
-  /* قائمة محادثات */
+  /* ===== قائمة المحادثات ===== */
   .chat-item {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
@@ -433,11 +667,11 @@
     margin-bottom: 10px;
     cursor: pointer;
     transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex; align-items: center; gap: 12px;
   }
-  .chat-item:active { border-color: var(--accent); transform: scale(0.98); }
+  .chat-item:active {
+    border-color: var(--accent); transform: scale(0.98);
+  }
   .chat-item-icon {
     width: 40px; height: 40px;
     border-radius: 50%;
@@ -448,8 +682,8 @@
   }
   .chat-item-info { flex: 1; min-width: 0; }
   .chat-item-title {
-    font-size: 14px; font-weight: 600; color: var(--text);
-    margin-bottom: 3px;
+    font-size: 14px; font-weight: 600;
+    color: var(--text); margin-bottom: 3px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .chat-item-sub {
@@ -459,24 +693,29 @@
   .chat-item-delete {
     width: 34px; height: 34px;
     border-radius: 50%;
-    background: transparent;
-    border: none; cursor: pointer;
+    background: transparent; border: none;
+    cursor: pointer; color: #ef4444; font-size: 16px;
     display: flex; align-items: center; justify-content: center;
-    color: #ef4444; font-size: 16px;
     flex-shrink: 0;
   }
-  .chat-item-delete:active { background: rgba(239, 68, 68, 0.15); }
+  .chat-item-delete:active {
+    background: rgba(239, 68, 68, 0.15);
+  }
 
+  /* ===== الحالة الفارغة ===== */
   .empty-state {
-    text-align: center;
-    padding: 60px 20px;
+    text-align: center; padding: 60px 20px;
     color: var(--text-muted);
   }
-  .empty-state .emoji { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
-  .empty-state h3 { font-size: 16px; color: var(--text); margin-bottom: 8px; }
+  .empty-state .emoji {
+    font-size: 60px; margin-bottom: 15px; opacity: 0.5;
+  }
+  .empty-state h3 {
+    font-size: 16px; color: var(--text); margin-bottom: 8px;
+  }
   .empty-state p { font-size: 13px; line-height: 1.7; }
 
-  /* استكشاف */
+  /* ===== الاستكشاف ===== */
   .explore-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -491,12 +730,19 @@
     transition: all 0.2s;
     text-align: center;
   }
-  .explore-card:active { border-color: var(--accent); transform: scale(0.97); }
-  .explore-card .emoji { font-size: 32px; display: block; margin-bottom: 10px; }
-  .explore-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .explore-card:active {
+    border-color: var(--accent); transform: scale(0.97);
+  }
+  .explore-card .emoji {
+    font-size: 32px; display: block; margin-bottom: 10px;
+  }
+  .explore-card .title {
+    font-size: 14px; font-weight: 600;
+    color: var(--text); margin-bottom: 4px;
+  }
   .explore-card .sub { font-size: 11px; color: var(--text-muted); }
 
-  /* ملفات */
+  /* ===== رفع الملفات ===== */
   .upload-area {
     border: 2px dashed var(--border);
     border-radius: 16px;
@@ -506,20 +752,26 @@
     transition: all 0.2s;
     margin-bottom: 16px;
   }
-  .upload-area:active { border-color: var(--accent); background: rgba(124, 58, 237, 0.05); }
-  .upload-area .emoji { font-size: 50px; margin-bottom: 12px; display: block; }
-  .upload-area h3 { font-size: 15px; color: var(--text); margin-bottom: 5px; }
+  .upload-area:active {
+    border-color: var(--accent);
+    background: rgba(124, 58, 237, 0.05);
+  }
+  .upload-area .emoji {
+    font-size: 50px; margin-bottom: 12px; display: block;
+  }
+  .upload-area h3 {
+    font-size: 15px; color: var(--text); margin-bottom: 5px;
+  }
   .upload-area p { font-size: 12px; color: var(--text-muted); }
 
+  /* ===== الملفات ===== */
   .file-item {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 12px 14px;
     margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex; align-items: center; gap: 12px;
   }
   .file-icon {
     width: 40px; height: 40px;
@@ -531,13 +783,13 @@
   }
   .file-info { flex: 1; min-width: 0; }
   .file-name {
-    font-size: 13px; font-weight: 600; color: var(--text);
-    margin-bottom: 3px;
+    font-size: 13px; font-weight: 600;
+    color: var(--text); margin-bottom: 3px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .file-size { font-size: 11px; color: var(--text-muted); }
 
-  /* صور */
+  /* ===== الصور ===== */
   .images-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -551,9 +803,12 @@
     cursor: pointer;
     position: relative;
   }
-  .image-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .image-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .image-thumb:active { transform: scale(0.95); }
 
-  /* مفضلة */
+  /* ===== المفضلة ===== */
   .fav-item {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
@@ -562,10 +817,9 @@
     margin-bottom: 10px;
   }
   .fav-item-content {
-    font-size: 14px; line-height: 1.7; color: var(--text);
-    margin-bottom: 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    font-size: 14px; line-height: 1.7;
+    color: var(--text); margin-bottom: 10px;
+    white-space: pre-wrap; word-wrap: break-word;
   }
   .fav-item-actions {
     display: flex; gap: 8px; justify-content: flex-end;
@@ -573,21 +827,55 @@
     padding-top: 10px;
   }
   .fav-btn {
-    background: transparent; border: none; cursor: pointer;
-    color: var(--text-muted); font-size: 12px;
-    padding: 6px 12px; border-radius: 8px;
+    background: transparent; border: none;
+    cursor: pointer; color: var(--text-muted);
+    font-size: 12px; padding: 6px 12px;
+    border-radius: 8px;
     display: flex; align-items: center; gap: 6px;
   }
-  .fav-btn:active { background: rgba(124, 58, 237, 0.15); color: var(--accent-light); }
+  .fav-btn:active {
+    background: rgba(124, 58, 237, 0.15);
+    color: var(--accent-light);
+  }
 
+  /* ===== الإحصائيات ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 28px; font-weight: 700;
+    color: var(--accent-light);
+    margin-bottom: 4px;
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+  }
+  .stat-card .label {
+    font-size: 12px; color: var(--text-muted);
+  }
+
+  /* ===== جوال ===== */
   @media (max-width: 768px) {
     .sidebar { width: 260px; right: -280px; }
     .suggestions { grid-template-columns: 1fr; }
     .welcome h2 { font-size: 22px; }
     .welcome-logo { font-size: 60px; width: 75px; height: 75px; }
     .chat-area { padding: 16px 14px; padding-bottom: 20px; }
-    .input-wrapper { padding: 8px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+    .input-wrapper {
+      padding: 8px 12px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    }
     .msg-content { font-size: 15.5px; padding: 13px 16px; }
+    .explore-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -647,6 +935,12 @@
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </span></div>
       <span data-i18n="favorites">المفضلة</span>
+    </li>
+    <li class="sidebar-item" onclick="openPage('statsPage')">
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </span></div>
+      <span data-i18n="stats">الإحصائيات</span>
     </li>
     <li class="sidebar-item" onclick="openSettings()">
       <div class="icon-wrap"><span class="glow-icon">
@@ -742,16 +1036,33 @@
     </div>
   </div>
 
+  <!-- معاينة الصورة -->
+  <div class="image-preview" id="imagePreview">
+    <div class="image-preview-inner">
+      <img id="previewImg" src="" alt="preview">
+      <div class="image-preview-info">
+        <div class="name" id="previewName">صورة.jpg</div>
+        <div class="size" id="previewSize">120 KB</div>
+      </div>
+      <button class="image-preview-close" onclick="clearImagePreview()">✕</button>
+    </div>
+  </div>
+
   <div class="input-wrapper">
     <div class="input-box">
       <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
       <div class="input-actions">
-        <button class="input-icon-btn" onclick="attachFile()">
+        <button class="input-icon-btn" id="searchBtn" onclick="toggleSearch()" title="بحث في الإنترنت">
           <span class="glow-icon" style="font-size:19px;">
-            <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </span>
         </button>
-        <button class="input-icon-btn" onclick="openImage()">
+        <button class="input-icon-btn" id="micBtn" onclick="toggleVoiceInput()" title="إدخال صوتي">
+          <span class="glow-icon" style="font-size:19px;">
+            <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </span>
+        </button>
+        <button class="input-icon-btn" onclick="pickImage()" title="إرسال صورة">
           <span class="glow-icon" style="font-size:19px;">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </span>
@@ -775,7 +1086,7 @@
       </span>
     </button>
     <h2 data-i18n="chatsPageTitle">💬 المحادثات</h2>
-    <button class="page-back" onclick="clearAllChats()" title="حذف الكل">
+    <button class="page-back" onclick="clearAllChats()">
       <span class="glow-icon" style="font-size:20px;color:#ef4444;">
         <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
       </span>
@@ -808,7 +1119,7 @@
       </span>
     </button>
     <h2 data-i18n="filesPageTitle">📁 الملفات</h2>
-    <button class="page-back" onclick="clearAllFiles()" title="حذف الكل">
+    <button class="page-back" onclick="clearAllFiles()">
       <span class="glow-icon" style="font-size:20px;color:#ef4444;">
         <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
       </span>
@@ -833,7 +1144,7 @@
       </span>
     </button>
     <h2 data-i18n="imagesPageTitle">🖼️ الصور</h2>
-    <button class="page-back" onclick="clearAllImages()" title="حذف الكل">
+    <button class="page-back" onclick="clearAllImages()">
       <span class="glow-icon" style="font-size:20px;color:#ef4444;">
         <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
       </span>
@@ -860,6 +1171,19 @@
     <h2 data-i18n="favoritesPageTitle">⭐ المفضلة</h2>
   </div>
   <div class="page-body" id="favoritesList"></div>
+</div>
+
+<!-- ===== صفحة الإحصائيات ===== -->
+<div class="page" id="statsPage">
+  <div class="page-header">
+    <button class="page-back" onclick="closePage('statsPage')">
+      <span class="glow-icon" style="font-size:22px;">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </span>
+    </button>
+    <h2 data-i18n="statsPageTitle">📊 الإحصائيات</h2>
+  </div>
+  <div class="page-body" id="statsBody"></div>
 </div>
 
 <!-- ===== Toast ===== -->
@@ -901,6 +1225,14 @@
       <span id="langLabel">العربية</span>
     </div>
 
+    <div class="modal-item" onclick="exportChat()">
+      <div class="modal-item-left">
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        <span data-i18n="exportChat">تصدير المحادثة</span>
+      </div>
+      <span>›</span>
+    </div>
+
     <div class="modal-item" onclick="showToast(t('soon'))">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
@@ -909,12 +1241,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v3.0 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v4.0 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v3.0</span>
+      <span>v4.0</span>
     </div>
   </div>
 </div>
@@ -934,7 +1266,7 @@
   </div>
 </div>
 <script>
-  // ============ البيانات الأساسية ============
+  // ============ الألوان ============
   const COLORS = [
     { name: 'purple', main: '#7c3aed', light: '#a855f7' },
     { name: 'blue', main: '#2563eb', light: '#60a5fa' },
@@ -948,11 +1280,13 @@
     { name: 'teal', main: '#0d9488', light: '#2dd4bf' }
   ];
 
+  // ============ الترجمات ============
   const TRANSLATIONS = {
     ar: {
       newChat: 'محادثة جديدة', chats: 'المحادثات', explore: 'استكشاف',
       files: 'الملفات', images: 'الصور', favorites: 'المفضلة',
-      settings: 'الإعدادات', user: 'المستخدم', freeAccount: 'حساب مجاني',
+      stats: 'الإحصائيات', settings: 'الإعدادات',
+      user: 'المستخدم', freeAccount: 'حساب مجاني',
       welcomeTitle: 'مرحباً بك 👋',
       welcomeSub: 'أنا AI Chat، مساعدك الذكي',
       s1: 'أفكار وإبداع', s1sub: 'اقتراحات مبتكرة',
@@ -961,31 +1295,33 @@
       s4: 'برمجة', s4sub: 'أكواد ومشاريع',
       settingsTitle: '⚙️ الإعدادات',
       darkMode: 'الوضع الليلي', changeColor: 'تغيير اللون',
-      language: 'اللغة', notifications: 'الإشعارات', about: 'عن التطبيق',
+      language: 'اللغة', notifications: 'الإشعارات',
+      about: 'عن التطبيق', exportChat: 'تصدير المحادثة',
       colorTitle: '🎨 اختر اللون',
       placeholder: 'اكتب رسالتك هنا...', soon: '🚧 قريباً',
       newChatToast: '💬 محادثة جديدة', copied: '📋 تم النسخ',
       liked: '❤️ شكراً', googleOpening: '🔍 فتح Google',
-      imagesOpening: '🖼️ فتح الصور', fileSelected: '📎 تم اختيار: ',
+      fileSelected: '📎 تم اختيار: ',
       darkOn: '🌙 الوضع الليلي مفعّل', darkOff: '☀️ الوضع النهاري مفعّل',
       langChanged: '🌐 تم تغيير اللغة', colorChanged: '🎨 تم تغيير اللون',
       q1: 'أعطني أفكار إبداعية', q2: 'علمني شيئاً جديداً',
       q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
-      sideSub: 'بواسطة Zaki', installTitle: 'تثبيت التطبيق',
-      installSub: 'اضغط للتثبيت', installBtn: 'تثبيت',
+      sideSub: 'بواسطة Zaki',
       chatsPageTitle: '💬 المحادثات', explorePageTitle: '🧭 استكشاف',
       filesPageTitle: '📁 الملفات', imagesPageTitle: '🖼️ الصور',
-      favoritesPageTitle: '⭐ المفضلة',
+      favoritesPageTitle: '⭐ المفضلة', statsPageTitle: '📊 الإحصائيات',
       uploadFiles: 'رفع ملفات', uploadFilesSub: 'PDF, DOCX, TXT والمزيد',
       uploadImages: 'رفع صور', uploadImagesSub: 'PNG, JPG, GIF',
       emptyChats: 'لا توجد محادثات بعد', emptyChatsSub: 'ابدأ محادثة جديدة وسيتم حفظها هنا',
       emptyFiles: 'لا توجد ملفات', emptyFilesSub: 'ارفع ملفاتك لعرضها هنا',
       emptyImages: 'لا توجد صور', emptyImagesSub: 'ارفع صورك لعرضها هنا',
       emptyFavorites: 'لا توجد رسائل محفوظة', emptyFavoritesSub: 'اضغط ❤️ على أي رسالة لحفظها',
-      savedToast: '⭐ تم الحفظ في المفضلة',
-      removedToast: '🗑️ تم الحذف',
-      deletedChat: '🗑️ تم حذف المحادثة',
-      clearedAll: '🗑️ تم حذف الكل',
+      savedToast: '⭐ تم الحفظ في المفضلة', removedToast: '🗑️ تم الحذف',
+      deletedChat: '🗑️ تم حذف المحادثة', clearedAll: '🗑️ تم حذف الكل',
+      searchOn: '🔍 البحث في الإنترنت مفعّل', searchOff: '❌ البحث في الإنترنت مغلق',
+      listening: '🎤 جاري الاستماع...', voiceStopped: '🎤 توقف التسجيل',
+      searchingWeb: '🔍 جاري البحث في الإنترنت...', searchResults: 'نتائج البحث',
+      exporting: '📄 جاري تصدير المحادثة...', exported: '✅ تم تصدير المحادثة',
       systemMsg: `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki". 
       
 هويتك الثابتة:
@@ -996,6 +1332,11 @@
 - إذا سُئلت "من صنعك؟" أجب: "طوّرني Zaki"
 - لا تذكر OpenAI أو ChatGPT أبداً
 
+قدراتك:
+- تحليل الصور والإجابة عن أسئلتها
+- البحث في الإنترنت
+- الإجابة بالعربية والإنجليزية
+
 أسلوبك:
 - أجب بالعربية الفصحى بوضوح ودقة
 - نظّم إجاباتك بنقاط عند الحاجة
@@ -1005,7 +1346,8 @@
     en: {
       newChat: 'New Chat', chats: 'Chats', explore: 'Explore',
       files: 'Files', images: 'Images', favorites: 'Favorites',
-      settings: 'Settings', user: 'User', freeAccount: 'Free Account',
+      stats: 'Stats', settings: 'Settings',
+      user: 'User', freeAccount: 'Free Account',
       welcomeTitle: 'Welcome 👋',
       welcomeSub: 'I am AI Chat, your smart assistant',
       s1: 'Ideas', s1sub: 'Creative suggestions',
@@ -1014,31 +1356,33 @@
       s4: 'Coding', s4sub: 'Code and projects',
       settingsTitle: '⚙️ Settings',
       darkMode: 'Dark Mode', changeColor: 'Change Color',
-      language: 'Language', notifications: 'Notifications', about: 'About',
+      language: 'Language', notifications: 'Notifications',
+      about: 'About', exportChat: 'Export Chat',
       colorTitle: '🎨 Choose Color',
       placeholder: 'Type your message...', soon: '🚧 Coming Soon',
       newChatToast: '💬 New Chat', copied: '📋 Copied',
       liked: '❤️ Thanks', googleOpening: '🔍 Opening Google',
-      imagesOpening: '🖼️ Opening Images', fileSelected: '📎 Selected: ',
+      fileSelected: '📎 Selected: ',
       darkOn: '🌙 Dark mode on', darkOff: '☀️ Light mode on',
       langChanged: '🌐 Language changed', colorChanged: '🎨 Color changed',
       q1: 'Give me creative ideas', q2: 'Teach me something new',
       q3: 'Help me with writing', q4: 'Help me with coding',
-      sideSub: 'By Zaki', installTitle: 'Install App',
-      installSub: 'Tap to install', installBtn: 'Install',
+      sideSub: 'By Zaki',
       chatsPageTitle: '💬 Chats', explorePageTitle: '🧭 Explore',
       filesPageTitle: '📁 Files', imagesPageTitle: '🖼️ Images',
-      favoritesPageTitle: '⭐ Favorites',
+      favoritesPageTitle: '⭐ Favorites', statsPageTitle: '📊 Stats',
       uploadFiles: 'Upload Files', uploadFilesSub: 'PDF, DOCX, TXT & more',
       uploadImages: 'Upload Images', uploadImagesSub: 'PNG, JPG, GIF',
       emptyChats: 'No chats yet', emptyChatsSub: 'Start a new chat and it will be saved here',
       emptyFiles: 'No files', emptyFilesSub: 'Upload your files to view them here',
       emptyImages: 'No images', emptyImagesSub: 'Upload your images to view them here',
       emptyFavorites: 'No saved messages', emptyFavoritesSub: 'Tap ❤️ on any message to save it',
-      savedToast: '⭐ Saved to favorites',
-      removedToast: '🗑️ Removed',
-      deletedChat: '🗑️ Chat deleted',
-      clearedAll: '🗑️ All cleared',
+      savedToast: '⭐ Saved to favorites', removedToast: '🗑️ Removed',
+      deletedChat: '🗑️ Chat deleted', clearedAll: '🗑️ All cleared',
+      searchOn: '🔍 Web search ON', searchOff: '❌ Web search OFF',
+      listening: '🎤 Listening...', voiceStopped: '🎤 Recording stopped',
+      searchingWeb: '🔍 Searching the web...', searchResults: 'Search results',
+      exporting: '📄 Exporting chat...', exported: '✅ Chat exported',
       systemMsg: `You are "AI Chat", a smart assistant developed by "Zaki".
 
 Your fixed identity:
@@ -1049,6 +1393,11 @@ Your fixed identity:
 - If asked "Who made you?" answer: "Zaki developed me"
 - Never mention OpenAI or ChatGPT
 
+Your capabilities:
+- Analyze images and answer questions about them
+- Search the web
+- Answer in Arabic and English
+
 Your style:
 - Answer clearly and accurately
 - Organize with bullet points when needed
@@ -1057,7 +1406,7 @@ Your style:
     }
   };
 
-  // ============ المتغيرات ============
+  // ============ المتغيرات العامة ============
   let currentLang = localStorage.getItem('lang') || 'ar';
   let currentColor = localStorage.getItem('color') || 'purple';
   let isDark = localStorage.getItem('dark') !== 'false';
@@ -1067,10 +1416,38 @@ Your style:
   let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
   let filesList = JSON.parse(localStorage.getItem('filesList') || '[]');
   let imagesList = JSON.parse(localStorage.getItem('imagesList') || '[]');
+  let stats = JSON.parse(localStorage.getItem('stats') || '{"messages": 0, "chats": 0, "images": 0, "searches": 0}');
+
+  // متغيرات جديدة (للجزء 5)
+  let webSearchEnabled = false;
+  let selectedImage = null;
+  let recognition = null;
+  let isRecording = false;
+  let currentSpeakingBtn = null;
+
+  // ============ API ============
+  const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
+  const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
+  const API_KEY = API_KEY_PART1 + API_KEY_PART2;
+  const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+  const MODEL_TEXT = 'meta-llama/llama-4-maverick-17b-128e-instruct';
+  const MODEL_VISION = 'meta-llama/llama-4-maverick-17b-128e-instruct';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
-  // ============ دوال الإعدادات ============
+  // ============ عناصر DOM ============
+  const chatArea = document.getElementById('chatArea');
+  const messagesEl = document.getElementById('messages');
+  const welcomeEl = document.getElementById('welcome');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById('menuBtn');
+
+  history = [{ role: 'system', content: t('systemMsg') }];
+
+  // ============ تطبيق اللغة ============
   function applyLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
@@ -1098,8 +1475,10 @@ Your style:
     renderChatsList();
     renderFavoritesList();
     renderExplore();
+    renderStats();
   }
 
+  // ============ تطبيق اللون ============
   function hexToRgba(hex, alpha) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -1125,6 +1504,7 @@ Your style:
     });
   }
 
+  // ============ تطبيق الثيم ============
   function applyTheme(dark) {
     isDark = dark;
     localStorage.setItem('dark', dark);
@@ -1166,17 +1546,7 @@ Your style:
     showToast(t('langChanged'));
   }
 
-  function openColorPicker() {
-    document.getElementById('settingsModal').classList.remove('show');
-    setTimeout(() => {
-      document.getElementById('colorModal').classList.add('show');
-    }, 200);
-  }
-
-  function closeColorPicker() {
-    document.getElementById('colorModal').classList.remove('show');
-  }
-
+  // ============ Settings & Colors ============
   function openSettings() {
     closeSidebar();
     setTimeout(() => {
@@ -1188,22 +1558,35 @@ Your style:
     document.getElementById('settingsModal').classList.remove('show');
   }
 
-  // ============ عناصر DOM ============
-  const chatArea = document.getElementById('chatArea');
-  const messagesEl = document.getElementById('messages');
-  const welcomeEl = document.getElementById('welcome');
-  const userInput = document.getElementById('userInput');
-  const sendBtn = document.getElementById('sendBtn');
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  const menuBtn = document.getElementById('menuBtn');
+  function openColorPicker() {
+    document.getElementById('settingsModal').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('colorModal').classList.add('show');
+    }, 200);
+  }
 
-  const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
-  const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
-  const API_KEY = API_KEY_PART1 + API_KEY_PART2;
-  const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+  function closeColorPicker() {
+    document.getElementById('colorModal').classList.remove('show');
+  }
 
-  history = [{ role: 'system', content: t('systemMsg') }];
+  function rebuildColorGrid() {
+    const grid = document.getElementById('colorGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    COLORS.forEach(color => {
+      const el = document.createElement('div');
+      el.className = 'color-option' + (color.name === currentColor ? ' selected' : '');
+      el.dataset.color = color.name;
+      el.style.background = `linear-gradient(135deg, ${color.main}, ${color.light})`;
+      el.style.color = color.main;
+      el.onclick = () => {
+        applyColor(color.name);
+        showToast(t('colorChanged'));
+        closeColorPicker();
+      };
+      grid.appendChild(el);
+    });
+  }
 
   // ============ Sidebar ============
   function toggleSidebar() {
@@ -1228,6 +1611,7 @@ Your style:
       if (pageId === 'filesPage') renderFilesList();
       if (pageId === 'imagesPage') renderImagesGrid();
       if (pageId === 'favoritesPage') renderFavoritesList();
+      if (pageId === 'statsPage') renderStats();
     }, 150);
   }
 
@@ -1249,16 +1633,7 @@ Your style:
     showToast(t('googleOpening'));
   }
 
-  function openImage() {
-    window.open('https://images.google.com', '_blank');
-    showToast(t('imagesOpening'));
-  }
-
-  function attachFile() {
-    openPage('filesPage');
-  }
-
-  // ============ محادثة جديدة ============
+  // ============ New Chat ============
   function newChat() {
     saveCurrentChat();
     history = [{ role: 'system', content: t('systemMsg') }];
@@ -1266,6 +1641,7 @@ Your style:
     messagesEl.innerHTML = '';
     messagesEl.appendChild(welcomeEl);
     welcomeEl.style.display = 'block';
+    clearImagePreview();
     closeSidebar();
     showToast(t('newChatToast'));
   }
@@ -1280,18 +1656,27 @@ Your style:
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
-  // ============ حفظ المحادثات ============
+  // ============ Save Chat ============
   function saveCurrentChat() {
     const userMessages = history.filter(m => m.role === 'user');
     if (userMessages.length === 0) return;
 
     if (!currentChatId) {
       currentChatId = Date.now().toString();
+      stats.chats++;
+      localStorage.setItem('stats', JSON.stringify(stats));
     }
 
-    const title = userMessages[0].content.substring(0, 40);
-    const existingIndex = allChats.findIndex(c => c.id === currentChatId);
+    const firstMsg = userMessages[0];
+    let title = 'محادثة';
+    if (typeof firstMsg.content === 'string') {
+      title = firstMsg.content.substring(0, 40);
+    } else if (Array.isArray(firstMsg.content)) {
+      const textPart = firstMsg.content.find(p => p.type === 'text');
+      title = textPart ? textPart.text.substring(0, 40) : '📷 صورة';
+    }
 
+    const existingIndex = allChats.findIndex(c => c.id === currentChatId);
     const chatData = {
       id: currentChatId,
       title: title,
@@ -1304,10 +1689,10 @@ Your style:
     } else {
       allChats.unshift(chatData);
     }
-
     localStorage.setItem('allChats', JSON.stringify(allChats));
   }
 
+  // ============ Render Chats ============
   function renderChatsList() {
     const list = document.getElementById('chatsList');
     if (!list) return;
@@ -1325,7 +1710,8 @@ Your style:
 
     list.innerHTML = allChats.map(chat => {
       const date = new Date(chat.updatedAt);
-      const dateStr = date.toLocaleDateString(currentLang === 'ar' ? 'ar' : 'en') + ' ' + date.toLocaleTimeString(currentLang === 'ar' ? 'ar' : 'en', { hour: '2-digit', minute: '2-digit' });
+      const dateStr = date.toLocaleDateString(currentLang === 'ar' ? 'ar' : 'en') + ' ' +
+        date.toLocaleTimeString(currentLang === 'ar' ? 'ar' : 'en', { hour: '2-digit', minute: '2-digit' });
       return `
         <div class="chat-item" onclick="loadChat('${chat.id}')">
           <div class="chat-item-icon">💬</div>
@@ -1351,7 +1737,13 @@ Your style:
 
     chat.messages.forEach(msg => {
       if (msg.role === 'user') {
-        addMessage(msg.content, 'user', false);
+        if (typeof msg.content === 'string') {
+          addMessage(msg.content, 'user', false);
+        } else if (Array.isArray(msg.content)) {
+          const textPart = msg.content.find(p => p.type === 'text');
+          const imgPart = msg.content.find(p => p.type === 'image_url');
+          addMessage(textPart ? textPart.text : '', 'user', false, imgPart ? imgPart.image_url.url : null);
+        }
       } else if (msg.role === 'assistant') {
         addMessage(msg.content, 'bot', true);
       }
@@ -1365,9 +1757,7 @@ Your style:
   function deleteChat(chatId) {
     allChats = allChats.filter(c => c.id !== chatId);
     localStorage.setItem('allChats', JSON.stringify(allChats));
-    if (currentChatId === chatId) {
-      currentChatId = null;
-    }
+    if (currentChatId === chatId) currentChatId = null;
     renderChatsList();
     showToast(t('deletedChat'));
   }
@@ -1381,14 +1771,14 @@ Your style:
     showToast(t('clearedAll'));
   }
 
-  // ============ الاستكشاف ============
+  // ============ Explore ============
   function renderExplore() {
     const grid = document.getElementById('exploreGrid');
     if (!grid) return;
 
-    const exploreItems = currentLang === 'ar' ? [
+    const items = currentLang === 'ar' ? [
       { emoji: '💡', title: 'أفكار مشاريع', prompt: 'أعطني 5 أفكار مشاريع رقمية مربحة' },
-      { emoji: '📝', title: 'كتابة مقال', prompt: 'ساعدني في كتابة مقال عن...' },
+      { emoji: '📝', title: 'كتابة مقال', prompt: 'ساعدني في كتابة مقال عن التكنولوجيا' },
       { emoji: '💻', title: 'تعلم برمجة', prompt: 'اشرح لي أساسيات البرمجة بلغة Python' },
       { emoji: '🌍', title: 'تعلم لغة', prompt: 'علمني 10 كلمات إنجليزية جديدة' },
       { emoji: '📊', title: 'تحليل بيانات', prompt: 'كيف أحلل بيانات باستخدام Excel؟' },
@@ -1401,7 +1791,7 @@ Your style:
       { emoji: '🎯', title: 'تطوير الذات', prompt: 'كيف أتخلص من التسويف؟' }
     ] : [
       { emoji: '💡', title: 'Project Ideas', prompt: 'Give me 5 profitable digital project ideas' },
-      { emoji: '📝', title: 'Write Article', prompt: 'Help me write an article about...' },
+      { emoji: '📝', title: 'Write Article', prompt: 'Help me write an article about technology' },
       { emoji: '💻', title: 'Learn Code', prompt: 'Explain Python programming basics' },
       { emoji: '🌍', title: 'Learn Language', prompt: 'Teach me 10 new English words' },
       { emoji: '📊', title: 'Data Analysis', prompt: 'How to analyze data with Excel?' },
@@ -1414,7 +1804,7 @@ Your style:
       { emoji: '🎯', title: 'Self Dev', prompt: 'How to stop procrastinating?' }
     ];
 
-    grid.innerHTML = exploreItems.map(item => `
+    grid.innerHTML = items.map(item => `
       <div class="explore-card" onclick="useExplore('${escapeHtml(item.prompt)}')">
         <span class="emoji">${item.emoji}</span>
         <div class="title">${item.title}</div>
@@ -1431,7 +1821,7 @@ Your style:
     }, 300);
   }
 
-  // ============ الملفات ============
+  // ============ Files ============
   function uploadFiles() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -1441,10 +1831,7 @@ Your style:
       const files = Array.from(e.target.files);
       files.forEach(file => {
         filesList.unshift({
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          date: Date.now()
+          name: file.name, size: file.size, type: file.type, date: Date.now()
         });
       });
       localStorage.setItem('filesList', JSON.stringify(filesList));
@@ -1457,8 +1844,7 @@ Your style:
   function renderFilesList() {
     const list = document.getElementById('filesList');
     if (!list) return;
-
-    if (filesList.length === 0) return;
+    if (filesList.length === 0) { list.innerHTML = ''; return; }
 
     list.innerHTML = filesList.map((file, i) => {
       const size = formatSize(file.size);
@@ -1488,7 +1874,6 @@ Your style:
     filesList = [];
     localStorage.setItem('filesList', JSON.stringify(filesList));
     renderFilesList();
-    document.getElementById('filesList').innerHTML = '';
     showToast(t('clearedAll'));
   }
 
@@ -1508,7 +1893,7 @@ Your style:
     return '📁';
   }
 
-  // ============ الصور ============
+  // ============ Images ============
   function uploadImages() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -1521,14 +1906,14 @@ Your style:
         const reader = new FileReader();
         reader.onload = (ev) => {
           imagesList.unshift({
-            data: ev.target.result,
-            name: file.name,
-            date: Date.now()
+            data: ev.target.result, name: file.name, date: Date.now()
           });
           loaded++;
           if (loaded === files.length) {
             localStorage.setItem('imagesList', JSON.stringify(imagesList));
             renderImagesGrid();
+            stats.images += files.length;
+            localStorage.setItem('stats', JSON.stringify(stats));
             showToast('🖼️ ' + files.length + (currentLang === 'ar' ? ' صورة' : ' image(s)'));
           }
         };
@@ -1541,8 +1926,7 @@ Your style:
   function renderImagesGrid() {
     const grid = document.getElementById('imagesGrid');
     if (!grid) return;
-
-    if (imagesList.length === 0) return;
+    if (imagesList.length === 0) { grid.innerHTML = ''; return; }
 
     grid.innerHTML = imagesList.map((img, i) => `
       <div class="image-thumb" onclick="viewImage(${i})">
@@ -1563,11 +1947,10 @@ Your style:
     imagesList = [];
     localStorage.setItem('imagesList', JSON.stringify(imagesList));
     renderImagesGrid();
-    document.getElementById('imagesGrid').innerHTML = '';
     showToast(t('clearedAll'));
   }
 
-  // ============ المفضلة ============
+  // ============ Favorites ============
   function renderFavoritesList() {
     const list = document.getElementById('favoritesList');
     if (!list) return;
@@ -1621,6 +2004,37 @@ Your style:
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 
+  // ============ Stats ============
+  function renderStats() {
+    const body = document.getElementById('statsBody');
+    if (!body) return;
+
+    body.innerHTML = `
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="number">${stats.messages}</div>
+          <div class="label">${currentLang === 'ar' ? 'رسائل' : 'Messages'}</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">${allChats.length}</div>
+          <div class="label">${currentLang === 'ar' ? 'محادثات' : 'Chats'}</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">${stats.images}</div>
+          <div class="label">${currentLang === 'ar' ? 'صور' : 'Images'}</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">${stats.searches}</div>
+          <div class="label">${currentLang === 'ar' ? 'عمليات بحث' : 'Searches'}</div>
+        </div>
+      </div>
+      <div class="stat-card" style="margin-top:12px;">
+        <div class="number" style="font-size:16px;">AI Chat v4.0</div>
+        <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
+      </div>
+    `;
+  }
+
   // ============ Scroll ============
   let userScrolledUp = false;
 
@@ -1659,76 +2073,15 @@ Your style:
     }, 300);
   });
 
-  // ============ إرسال ============
-  async function sendMessage() {
-    const text = userInput.value.trim();
-    if (!text) return;
-
-    welcomeEl.style.display = 'none';
-    userScrolledUp = false;
-
-    const userMsgEl = addMessage(text, 'user');
-    userInput.value = '';
-    userInput.style.height = 'auto';
-    history.push({ role: 'user', content: text });
-
-    setTimeout(() => focusElement(userMsgEl), 50);
-
-    const loading = addMessageTyping();
-    sendBtn.disabled = true;
-
-    setTimeout(() => focusElement(loading), 100);
-
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-          model: 'openai/gpt-oss-20b',
-          messages: history,
-          temperature: 0.6,
-          max_tokens: 1500
-        })
-      });
-
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-
-      const reply = data.choices[0].message.content;
-      const loadingContent = loading.querySelector('.msg-content');
-      loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
-
-      const actions = loading.querySelector('.msg-actions');
-      if (actions) {
-        actions.innerHTML = `
-          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </button>
-          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="msg-action-btn glow-icon" onclick="saveFav(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </button>
-        `;
-        actions.style.display = 'flex';
-      }
-
-      history.push({ role: 'assistant', content: reply });
-      setTimeout(() => focusElement(loading), 100);
-      saveCurrentChat();
-
-    } catch (err) {
-      loading.querySelector('.msg-content').textContent = '❌ ' + err.message;
-    } finally {
-      sendBtn.disabled = false;
-    }
+  // ============ Escape HTML ============
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 
-  function addMessage(text, sender, noSave) {
+  // ============ Add Message ============
+  function addMessage(text, sender, noSave, imageUrl) {
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
     const avatar = sender === 'user'
@@ -1736,19 +2089,27 @@ Your style:
       : '✦';
     const time = getTime();
 
+    let imgHtml = '';
+    if (imageUrl) {
+      imgHtml = `<img src="${imageUrl}" class="msg-image" onclick="viewMsgImage('${imageUrl.substring(0, 50)}...')">`;
+    }
+
     let actionsHtml = '';
     if (sender === 'bot') {
       const isSaved = favorites.some(f => f.content === text);
       actionsHtml = `
         <div class="msg-actions">
-          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
+          <button class="msg-action-btn glow-icon" onclick="copyText(this)" title="نسخ">
             <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
-          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
+          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)" title="إعجاب">
             <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </button>
-          <button class="msg-action-btn glow-icon ${isSaved ? 'saved' : ''}" onclick="saveFav(this)">
+          <button class="msg-action-btn glow-icon ${isSaved ? 'saved' : ''}" onclick="saveFav(this)" title="حفظ">
             <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="speakText(this)" title="قراءة صوتية">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           </button>
         </div>
       `;
@@ -1757,6 +2118,7 @@ Your style:
     div.innerHTML = `
       <div class="msg-avatar">${avatar}</div>
       <div class="msg-bubble">
+        ${imgHtml}
         <div class="msg-content">${escapeHtml(text)}</div>
         ${actionsHtml}
         <div class="msg-time">${time}</div>
@@ -1785,6 +2147,11 @@ Your style:
     return div;
   }
 
+  function viewMsgImage(src) {
+    const w = window.open('');
+    w.document.write(`<html><head><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh;}img{max-width:100%;max-height:100%;}</style></head><body><img src="${src}"></body></html>`);
+  }
+
   function copyText(btn) {
     const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
     navigator.clipboard.writeText(content).then(() => showToast(t('copied')));
@@ -1797,33 +2164,7 @@ Your style:
     toggleFavorite(btn, content);
   }
 
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  // ============ شبكة الألوان ============
-  function rebuildColorGrid() {
-    const grid = document.getElementById('colorGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    COLORS.forEach(color => {
-      const el = document.createElement('div');
-      el.className = 'color-option' + (color.name === currentColor ? ' selected' : '');
-      el.dataset.color = color.name;
-      el.style.background = `linear-gradient(135deg, ${color.main}, ${color.light})`;
-      el.style.color = color.main;
-      el.onclick = () => {
-        applyColor(color.name);
-        showToast(t('colorChanged'));
-        closeColorPicker();
-      };
-      grid.appendChild(el);
-    });
-  }
-
-  // ============ الإدخال ============
+  // ============ Input Events ============
   userInput.addEventListener('keypress', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -1846,10 +2187,425 @@ Your style:
       closePage('filesPage');
       closePage('imagesPage');
       closePage('favoritesPage');
+      closePage('statsPage');
     }
   });
 
-  // ============ التثبيت ============
+  // ============ Export Chat ============
+  function exportChat() {
+    showToast(t('exporting'));
+    const userMessages = history.filter(m => m.role !== 'system');
+    if (userMessages.length === 0) {
+      showToast('⚠️ لا توجد رسائل');
+      return;
+    }
+
+    let html = `
+    <!DOCTYPE html>
+    <html dir="${currentLang === 'ar' ? 'rtl' : 'ltr'}" lang="${currentLang}">
+    <head>
+      <meta charset="UTF-8">
+      <title>AI Chat - محادثة</title>
+      <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f5f5f7; color: #1a1a24; }
+        h1 { color: #7c3aed; text-align: center; }
+        .msg { padding: 12px 18px; margin: 10px 0; border-radius: 12px; }
+        .user { background: #7c3aed; color: white; margin-left: 20%; }
+        .bot { background: white; border: 1px solid #e0e0e8; margin-right: 20%; }
+        .time { font-size: 11px; opacity: 0.6; margin-top: 5px; }
+        .footer { text-align: center; margin-top: 40px; color: #6b6b78; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <h1>AI Chat - محادثة</h1>
+      <p style="text-align:center;color:#6b6b78;">بواسطة Zaki</p>
+    `;
+
+    userMessages.forEach(msg => {
+      const content = typeof msg.content === 'string' ? msg.content : '[صورة]';
+      const cls = msg.role === 'user' ? 'user' : 'bot';
+      html += `<div class="msg ${cls}">${escapeHtml(content)}</div>`;
+    });
+
+    html += `<div class="footer">تم إنشاؤه بواسطة AI Chat - ${new Date().toLocaleString()}</div></body></html>`;
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ai-chat-${Date.now()}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    closeSettings();
+    showToast(t('exported'));
+  }
+
+  // ============ التهيئة الأولية ============
+  applyLanguage(currentLang);
+  applyColor(currentColor);
+  applyTheme(isDark);
+  rebuildColorGrid();
+  renderExplore();
+
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>
+  // ========================================
+  // ===== الميزات الجديدة في v4.0 =====
+  // ========================================
+
+  // ============ 1. البحث في الإنترنت (DuckDuckGo) ============
+  async function searchWeb(query) {
+    try {
+      const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      let results = [];
+
+      // Abstract (الملخص)
+      if (data.Abstract) {
+        results.push({
+          title: data.AbstractSource || 'Wikipedia',
+          snippet: data.Abstract,
+          url: data.AbstractURL
+        });
+      }
+
+      // Related Topics (المواضيع ذات الصلة)
+      if (data.RelatedTopics && data.RelatedTopics.length > 0) {
+        data.RelatedTopics.slice(0, 4).forEach(topic => {
+          if (topic.Text && topic.FirstURL) {
+            results.push({
+              title: topic.Text.substring(0, 60),
+              snippet: topic.Text,
+              url: topic.FirstURL
+            });
+          }
+        });
+      }
+
+      return results;
+    } catch (err) {
+      console.error('Search error:', err);
+      return [];
+    }
+  }
+
+  function formatSearchResults(results, query) {
+    if (results.length === 0) return '';
+
+    let text = `🔍 **نتائج البحث عن: ${query}**\n\n`;
+    results.forEach((r, i) => {
+      text += `${i + 1}. **${r.title}**\n${r.snippet}\n\n`;
+    });
+    text += `---\n\n**بناءً على هذه النتائج، أجب عن السؤال:**\n`;
+    return text;
+  }
+
+  function toggleSearch() {
+    webSearchEnabled = !webSearchEnabled;
+    const btn = document.getElementById('searchBtn');
+    if (btn) {
+      btn.classList.toggle('search-active', webSearchEnabled);
+    }
+    showToast(webSearchEnabled ? t('searchOn') : t('searchOff'));
+  }
+
+  // ============ 2. رفع الصور للذكاء (Vision) ============
+  function pickImage() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // التحقق من الحجم (4MB)
+      if (file.size > 4 * 1024 * 1024) {
+        showToast('❌ الصورة كبيرة جداً (الحد 4MB)');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        selectedImage = {
+          data: ev.target.result,
+          name: file.name,
+          size: file.size,
+          type: file.type
+        };
+
+        // عرض المعاينة
+        const preview = document.getElementById('imagePreview');
+        const img = document.getElementById('previewImg');
+        const nameEl = document.getElementById('previewName');
+        const sizeEl = document.getElementById('previewSize');
+
+        img.src = ev.target.result;
+        nameEl.textContent = file.name;
+        sizeEl.textContent = formatSize(file.size);
+        preview.classList.add('show');
+
+        showToast('🖼️ تم اختيار الصورة');
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }
+
+  function clearImagePreview() {
+    selectedImage = null;
+    const preview = document.getElementById('imagePreview');
+    if (preview) preview.classList.remove('show');
+  }
+
+  // ============ 3. الإدخال الصوتي (Voice Input) ============
+  function initVoiceRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      showToast('❌ الإدخال الصوتي غير مدعوم في متصفحك');
+      return null;
+    }
+
+    const rec = new SpeechRecognition();
+    rec.lang = currentLang === 'ar' ? 'ar-SA' : 'en-US';
+    rec.continuous = false;
+    rec.interimResults = false;
+
+    rec.onstart = () => {
+      isRecording = true;
+      const btn = document.getElementById('micBtn');
+      if (btn) btn.classList.add('recording');
+      showToast(t('listening'));
+    };
+
+    rec.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      userInput.value = transcript;
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 110) + 'px';
+      showToast('✅ ' + transcript.substring(0, 30));
+    };
+
+    rec.onerror = (e) => {
+      console.error('Speech error:', e);
+      showToast('❌ خطأ في التسجيل');
+      stopVoiceInput();
+    };
+
+    rec.onend = () => {
+      isRecording = false;
+      const btn = document.getElementById('micBtn');
+      if (btn) btn.classList.remove('recording');
+    };
+
+    return rec;
+  }
+
+  function toggleVoiceInput() {
+    if (isRecording) {
+      stopVoiceInput();
+      return;
+    }
+
+    if (!recognition) {
+      recognition = initVoiceRecognition();
+      if (!recognition) return;
+    }
+
+    recognition.lang = currentLang === 'ar' ? 'ar-SA' : 'en-US';
+
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error(err);
+      showToast('❌ خطأ في بدء التسجيل');
+    }
+  }
+
+  function stopVoiceInput() {
+    if (recognition) {
+      try { recognition.stop(); } catch(e) {}
+    }
+    isRecording = false;
+    const btn = document.getElementById('micBtn');
+    if (btn) btn.classList.remove('recording');
+  }
+
+  // ============ 4. القراءة الصوتية (Text to Speech) ============
+  function speakText(btn) {
+    // إيقاف أي قراءة سابقة
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      if (currentSpeakingBtn) {
+        currentSpeakingBtn.classList.remove('speaking');
+      }
+      if (currentSpeakingBtn === btn) {
+        currentSpeakingBtn = null;
+        return;
+      }
+    }
+
+    const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
+
+    const utterance = new SpeechSynthesisUtterance(content);
+    utterance.lang = currentLang === 'ar' ? 'ar-SA' : 'en-US';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    utterance.onstart = () => {
+      btn.classList.add('speaking');
+      currentSpeakingBtn = btn;
+    };
+
+    utterance.onend = () => {
+      btn.classList.remove('speaking');
+      currentSpeakingBtn = null;
+    };
+
+    utterance.onerror = () => {
+      btn.classList.remove('speaking');
+      currentSpeakingBtn = null;
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // ============ 5. إرسال الرسالة (المُحدّث) ============
+  async function sendMessage() {
+    const text = userInput.value.trim();
+    const hasImage = selectedImage !== null;
+
+    // التحقق: يجب أن يكون هناك نص أو صورة
+    if (!text && !hasImage) return;
+
+    welcomeEl.style.display = 'none';
+    userScrolledUp = false;
+
+    // إعداد محتوى الرسالة
+    let messageContent;
+    const imageData = hasImage ? selectedImage.data : null;
+
+    if (hasImage) {
+      // مع صورة: نص + صورة
+      messageContent = [];
+      if (text) {
+        messageContent.push({ type: 'text', text: text });
+      } else {
+        messageContent.push({ type: 'text', text: 'صف لي هذه الصورة بالتفصيل' });
+      }
+      messageContent.push({
+        type: 'image_url',
+        image_url: { url: selectedImage.data }
+      });
+    } else {
+      // نص فقط
+      messageContent = text;
+    }
+
+    // إضافة الرسالة للمحادثة
+    const userMsgEl = addMessage(text || '📷 صورة', 'user', false, imageData);
+    userInput.value = '';
+    userInput.style.height = 'auto';
+    clearImagePreview();
+
+    // البحث في الإنترنت إذا كان مفعّلاً
+    let finalContent = messageContent;
+    if (webSearchEnabled && text) {
+      showToast(t('searchingWeb'));
+      const results = await searchWeb(text);
+      if (results.length > 0) {
+        const searchText = formatSearchResults(results, text);
+        if (typeof messageContent === 'string') {
+          finalContent = searchText + messageContent;
+        } else {
+          finalContent = [...messageContent];
+          finalContent[0].text = searchText + finalContent[0].text;
+        }
+        stats.searches++;
+        localStorage.setItem('stats', JSON.stringify(stats));
+      }
+    }
+
+    history.push({ role: 'user', content: finalContent });
+
+    setTimeout(() => focusElement(userMsgEl), 50);
+
+    const loading = addMessageTyping();
+    sendBtn.disabled = true;
+
+    setTimeout(() => focusElement(loading), 100);
+
+    // اختيار النموذج
+    const model = hasImage ? MODEL_VISION : MODEL_TEXT;
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: history,
+          temperature: 0.7,
+          max_tokens: 4096,
+          top_p: 0.95
+        })
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+
+      const reply = data.choices[0].message.content;
+      const loadingContent = loading.querySelector('.msg-content');
+      loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
+
+      // إضافة أزرار التفاعل
+      const actions = loading.querySelector('.msg-actions');
+      if (actions) {
+        actions.innerHTML = `
+          <button class="msg-action-btn glow-icon" onclick="copyText(this)" title="نسخ">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)" title="إعجاب">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="saveFav(this)" title="حفظ">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="speakText(this)" title="قراءة صوتية">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          </button>
+        `;
+        actions.style.display = 'flex';
+      }
+
+      history.push({ role: 'assistant', content: reply });
+
+      // تحديث الإحصائيات
+      stats.messages += 2;
+      localStorage.setItem('stats', JSON.stringify(stats));
+
+      setTimeout(() => focusElement(loading), 100);
+      saveCurrentChat();
+
+    } catch (err) {
+      loading.querySelector('.msg-content').textContent = '❌ ' + err.message;
+    } finally {
+      sendBtn.disabled = false;
+    }
+  }
+
+  // ============ 6. Install Banner ============
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -1879,10 +2635,10 @@ Your style:
     banner.innerHTML = `
       <img src="file_000000000cc482118a017dbfa6f8ed8b.png" style="width:40px;height:40px;border-radius:10px;">
       <div style="flex:1;">
-        <div style="font-weight:bold;font-size:14px;">${t('installTitle')}</div>
-        <div style="font-size:11px;opacity:0.9;">${t('installSub')}</div>
+        <div style="font-weight:bold;font-size:14px;">${t('installTitle') || 'تثبيت التطبيق'}</div>
+        <div style="font-size:11px;opacity:0.9;">${t('installSub') || 'اضغط للتثبيت'}</div>
       </div>
-      <button id="installBtn" style="background:white;color:var(--accent);border:none;padding:8px 14px;border-radius:10px;font-weight:bold;font-size:13px;cursor:pointer;">${t('installBtn')}</button>
+      <button id="installBtn" style="background:white;color:var(--accent);border:none;padding:8px 14px;border-radius:10px;font-weight:bold;font-size:13px;cursor:pointer;">${t('installBtn') || 'تثبيت'}</button>
       <button id="closeInstallBtn" style="background:transparent;border:none;color:white;font-size:20px;cursor:pointer;padding:0 5px;">✕</button>
     `;
     document.body.appendChild(banner);
@@ -1904,18 +2660,11 @@ Your style:
     };
   }
 
-  // ============ التهيئة ============
-  applyLanguage(currentLang);
-  applyColor(currentColor);
-  applyTheme(isDark);
-  rebuildColorGrid();
-  renderExplore();
+  // ============ التهيئة النهائية ============
+  setTimeout(() => {
+    if (typeof renderStats === 'function') renderStats();
+  }, 100);
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    });
-  }
 </script>
 
 </body>
