@@ -26,14 +26,17 @@
     --text: #f0f5f4;
     --text-muted: #7a7a87;
     --border: #1a1a24;
+    --input-height: 70px;
   }
 
   html, body {
     background: var(--bg-main);
     color: var(--text);
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
     overscroll-behavior: none;
+    position: fixed;
   }
 
   /* ===== الخلفية ===== */
@@ -53,23 +56,9 @@
     animation: floatOrb 20s ease-in-out infinite;
   }
 
-  .bg-orb.o1 {
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, var(--accent), transparent);
-    top: -100px; right: -100px;
-  }
-  .bg-orb.o2 {
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, var(--accent-light), transparent);
-    bottom: -100px; left: -100px;
-    animation-delay: -7s;
-  }
-  .bg-orb.o3 {
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, var(--accent), transparent);
-    top: 50%; left: 50%;
-    animation-delay: -14s;
-  }
+  .bg-orb.o1 { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent), transparent); top: -100px; right: -100px; }
+  .bg-orb.o2 { width: 350px; height: 350px; background: radial-gradient(circle, var(--accent-light), transparent); bottom: -100px; left: -100px; animation-delay: -7s; }
+  .bg-orb.o3 { width: 300px; height: 300px; background: radial-gradient(circle, var(--accent), transparent); top: 50%; left: 50%; animation-delay: -14s; }
 
   @keyframes floatOrb {
     0%, 100% { transform: translate(0, 0) scale(1); }
@@ -92,14 +81,13 @@
     50% { opacity: 0.8; }
   }
 
-  /* ===== ====== نمط الأيقونات ====== ===== */
+  /* ===== أيقونات متوهجة ===== */
   .glow-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 6px var(--accent-glow-strong))
-            drop-shadow(0 0 12px var(--accent-glow));
+    filter: drop-shadow(0 0 6px var(--accent-glow-strong)) drop-shadow(0 0 12px var(--accent-glow));
     transition: all 0.3s ease;
     font-size: 22px;
     line-height: 1;
@@ -115,21 +103,20 @@
     stroke-linejoin: round;
   }
 
-  .glow-icon:hover, .glow-icon:active {
+  .glow-icon:active {
     color: white;
-    filter: drop-shadow(0 0 8px var(--accent-light))
-            drop-shadow(0 0 20px var(--accent-glow-strong))
-            drop-shadow(0 0 30px var(--accent-glow));
+    filter: drop-shadow(0 0 8px var(--accent-light)) drop-shadow(0 0 20px var(--accent-glow-strong));
     transform: scale(1.15);
   }
 
-  /* ===== التطبيق ===== */
+  /* ===== الحاوية الرئيسية ===== */
   .app {
-    position: relative;
+    position: fixed;
+    inset: 0;
     z-index: 1;
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
 
   /* ===== الشريط العلوي ===== */
@@ -137,12 +124,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 15px;
-    padding-top: max(12px, env(safe-area-inset-top));
-    background: rgba(10, 10, 15, 0.85);
+    padding: 10px 15px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    background: rgba(10, 10, 15, 0.9);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
-    position: relative;
+    flex-shrink: 0;
     z-index: 100;
   }
 
@@ -156,7 +143,6 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    transition: all 0.3s;
     padding: 8px;
     border-radius: 12px;
   }
@@ -185,14 +171,12 @@
   }
 
   .top-title-logo {
-    width: 38px; height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 26px;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 8px var(--accent-glow-strong))
-            drop-shadow(0 0 16px var(--accent-glow));
+    filter: drop-shadow(0 0 8px var(--accent-glow-strong)) drop-shadow(0 0 16px var(--accent-glow));
     animation: logoPulse 3s ease-in-out infinite;
   }
 
@@ -201,11 +185,7 @@
     50% { filter: drop-shadow(0 0 12px var(--accent-light)) drop-shadow(0 0 28px var(--accent-glow-strong)); }
   }
 
-  .top-title h1 {
-    font-size: 15px;
-    font-weight: 700;
-    color: white;
-  }
+  .top-title h1 { font-size: 15px; font-weight: 700; color: white; }
 
   .top-right { display: flex; gap: 5px; }
 
@@ -218,138 +198,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
   }
 
   .top-icon-btn:active { transform: scale(0.92); }
-
-  /* ===== القائمة الجانبية ===== */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    right: -320px;
-    width: 300px;
-    height: 100vh;
-    background: var(--bg-sidebar);
-    border-left: 1px solid var(--border);
-    z-index: 200;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    padding-top: max(20px, env(safe-area-inset-top));
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
-    overflow-y: auto;
-  }
-
-  .sidebar.open { right: 0; }
-
-  .sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-  }
-
-  .sidebar-logo {
-    width: 55px; height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    color: var(--accent-light);
-    filter: drop-shadow(0 0 10px var(--accent-glow-strong))
-            drop-shadow(0 0 20px var(--accent-glow));
-  }
-
-  .sidebar-header h2 { font-size: 16px; margin-bottom: 3px; color: white; }
-  .sidebar-header p { font-size: 11px; color: var(--text-muted); }
-
-  .sidebar-menu { list-style: none; }
-
-  .sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 8px;
-    border-radius: 12px;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 4px;
-    transition: all 0.3s;
-    position: relative;
-  }
-
-  .sidebar-item .icon-wrap {
-    width: 42px; height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .sidebar-item:active {
-    background: rgba(124, 58, 237, 0.1);
-    color: white;
-  }
-
-  .sidebar-item:active .glow-icon { transform: scale(1.2); }
-
-  .sidebar-footer {
-    margin-top: auto;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-
-  .sidebar-footer .user {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    background: rgba(124, 58, 237, 0.08);
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .user-avatar {
-    width: 42px; height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    color: var(--accent-light);
-    filter: drop-shadow(0 0 6px var(--accent-glow-strong));
-  }
-
-  .user-info h4 { font-size: 13px; color: white; }
-  .user-info p { font-size: 10px; color: var(--text-muted); }
-
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-    backdrop-filter: blur(4px);
-  }
-
-  .overlay.show { opacity: 1; visibility: visible; }
 
   /* ===== منطقة الدردشة ===== */
   .chat-area {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 20px 15px;
-    padding-bottom: calc(170px + env(safe-area-inset-bottom));
+    padding-bottom: 140px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
     position: relative;
     z-index: 2;
-    scroll-behavior: smooth;
   }
 
   .chat-area::-webkit-scrollbar { width: 4px; }
@@ -360,10 +223,11 @@
 
   .messages { max-width: 900px; margin: 0 auto; }
 
+  /* ===== شاشة الترحيب ===== */
   .welcome {
     text-align: center;
     max-width: 700px;
-    margin: 30px auto;
+    margin: 20px auto;
     padding: 20px;
     animation: fadeInUp 0.6s ease;
   }
@@ -381,8 +245,7 @@
     justify-content: center;
     font-size: 80px;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 15px var(--accent-glow-strong))
-            drop-shadow(0 0 35px var(--accent-glow));
+    filter: drop-shadow(0 0 15px var(--accent-glow-strong)) drop-shadow(0 0 35px var(--accent-glow));
     animation: logoFloat 4s ease-in-out infinite;
   }
 
@@ -391,18 +254,8 @@
     50% { transform: translateY(-10px) scale(1.05); }
   }
 
-  .welcome h2 {
-    font-size: 26px;
-    margin-bottom: 10px;
-    color: white;
-  }
-
-  .welcome p {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 30px;
-    line-height: 1.7;
-  }
+  .welcome h2 { font-size: 26px; margin-bottom: 10px; color: white; }
+  .welcome p { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; line-height: 1.7; }
 
   .suggestions {
     display: grid;
@@ -415,7 +268,7 @@
   .suggestion-card {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
-    padding: 16px;
+    padding: 14px;
     border-radius: 16px;
     cursor: pointer;
     text-align: right;
@@ -432,12 +285,9 @@
   }
 
   .suggestion-card .sug-icon {
-    width: 40px; height: 40px;
     flex-shrink: 0;
+    font-size: 26px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
   }
 
   .suggestion-card .sug-text { flex: 1; }
@@ -447,8 +297,8 @@
   /* ===== الرسائل ===== */
   .msg {
     display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 18px;
     animation: msgSlide 0.4s ease;
   }
 
@@ -458,13 +308,13 @@
   }
 
   .msg-avatar {
-    width: 40px; height: 40px;
+    width: 38px; height: 38px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .msg.user .msg-avatar {
@@ -478,17 +328,18 @@
     background: transparent;
   }
 
-  .msg-bubble { flex: 1; max-width: calc(100% - 60px); }
+  .msg-bubble { flex: 1; max-width: calc(100% - 55px); min-width: 0; }
 
   .msg-content {
     background: var(--bg-bot-bubble);
     padding: 14px 18px;
     border-radius: 16px;
-    line-height: 1.8;
-    font-size: 14.5px;
+    line-height: 1.9;
+    font-size: 15px;
     word-wrap: break-word;
     white-space: pre-wrap;
     border: 1px solid var(--border);
+    letter-spacing: 0.2px;
   }
 
   .msg.user .msg-content {
@@ -525,7 +376,6 @@
     align-items: center;
     justify-content: center;
     font-size: 18px;
-    transition: all 0.3s;
     border-radius: 10px;
   }
 
@@ -555,35 +405,32 @@
 
   /* ===== شريط الإدخال ===== */
   .input-wrapper {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 15px;
-    padding-bottom: max(15px, env(safe-area-inset-bottom));
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 60%, transparent);
-    z-index: 50;
-    pointer-events: none;
+    flex-shrink: 0;
+    padding: 10px 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    z-index: 60;
+    transition: padding-bottom 0.2s;
   }
 
   .input-box {
     max-width: 900px;
     margin: 0 auto;
     background: var(--bg-input);
-    border: 1px solid var(--border);
+    border: 1px solid var(--accent);
     border-radius: 28px;
     padding: 6px 6px 6px 14px;
     display: flex;
     align-items: center;
     gap: 6px;
     transition: all 0.3s;
-    pointer-events: auto;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.25);
   }
 
   .input-box:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 30px rgba(124, 58, 237, 0.3), 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 0 35px rgba(124, 58, 237, 0.5);
   }
 
   .input-box textarea {
@@ -592,10 +439,10 @@
     border: none;
     outline: none;
     color: var(--text);
-    font-size: 14.5px;
+    font-size: 15px;
     padding: 12px 0;
     resize: none;
-    max-height: 120px;
+    max-height: 100px;
     font-family: inherit;
     line-height: 1.5;
   }
@@ -609,14 +456,13 @@
   }
 
   .input-icon-btn {
-    width: 40px; height: 40px;
+    width: 38px; height: 38px;
     background: transparent;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
     border-radius: 50%;
   }
 
@@ -627,21 +473,16 @@
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
-    color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
     box-shadow: 0 0 25px var(--accent-glow);
+    flex-shrink: 0;
   }
 
-  .send-btn:active {
-    transform: scale(0.9);
-    box-shadow: 0 0 40px var(--accent-glow-strong);
-  }
-
-  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .send-btn:active { transform: scale(0.9); }
+  .send-btn:disabled { opacity: 0.4; }
 
   .send-btn .glow-icon {
     font-size: 20px;
@@ -652,7 +493,7 @@
   /* ===== Toast ===== */
   .toast {
     position: fixed;
-    bottom: 120px;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
@@ -670,10 +511,123 @@
     text-align: center;
   }
 
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ===== القائمة الجانبية ===== */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100vh;
+    background: var(--bg-sidebar);
+    border-left: 1px solid var(--border);
+    z-index: 200;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 18px 18px;
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+    overflow-y: auto;
   }
+
+  .sidebar.open { right: 0; }
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .sidebar-logo {
+    width: 50px; height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 10px var(--accent-glow-strong)) drop-shadow(0 0 20px var(--accent-glow));
+  }
+
+  .sidebar-header h2 { font-size: 16px; margin-bottom: 3px; color: white; }
+  .sidebar-header p { font-size: 11px; color: var(--text-muted); }
+
+  .sidebar-menu { list-style: none; }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 6px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 2px;
+    transition: all 0.3s;
+  }
+
+  .sidebar-item .icon-wrap {
+    width: 38px; height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-item:active {
+    background: rgba(124, 58, 237, 0.1);
+    color: white;
+  }
+
+  .sidebar-item:active .glow-icon { transform: scale(1.2); }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+  }
+
+  .sidebar-footer .user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(124, 58, 237, 0.08);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .user-avatar {
+    width: 38px; height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 6px var(--accent-glow-strong));
+  }
+
+  .user-info h4 { font-size: 13px; color: white; }
+  .user-info p { font-size: 10px; color: var(--text-muted); }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 150;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .overlay.show { opacity: 1; visibility: visible; }
 
   /* ===== Modal ===== */
   .modal {
@@ -701,7 +655,7 @@
     width: 100%;
     max-height: 80vh;
     overflow-y: auto;
-    padding: 25px;
+    padding: 22px;
     transform: scale(0.9);
     transition: transform 0.3s;
   }
@@ -712,12 +666,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--border);
   }
 
-  .modal-header h3 { font-size: 18px; color: white; }
+  .modal-header h3 { font-size: 17px; color: white; }
 
   .modal-close {
     background: transparent;
@@ -727,7 +681,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
     border-radius: 10px;
   }
 
@@ -737,10 +690,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 10px;
+    padding: 12px 10px;
     border-radius: 12px;
     background: rgba(124, 58, 237, 0.05);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     cursor: pointer;
     transition: all 0.3s;
   }
@@ -750,12 +703,12 @@
   .modal-item-left {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     font-size: 14px;
     color: var(--text);
   }
 
-  .modal-item-left .glow-icon { font-size: 24px; }
+  .modal-item-left .glow-icon { font-size: 22px; }
   .modal-item > span:last-child { color: var(--text-muted); font-size: 13px; }
 
   /* ===== شبكة الألوان ===== */
@@ -763,7 +716,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 12px;
-    padding: 15px 0;
+    padding: 10px 0;
   }
 
   .color-option {
@@ -825,12 +778,12 @@
 
   /* ===== جوال ===== */
   @media (max-width: 768px) {
-    .sidebar { width: 280px; right: -300px; }
+    .sidebar { width: 270px; right: -290px; }
     .suggestions { grid-template-columns: 1fr; }
     .welcome h2 { font-size: 22px; }
     .welcome-logo { font-size: 65px; width: 80px; height: 80px; }
-    .chat-area { padding: 15px 12px; padding-bottom: calc(180px + env(safe-area-inset-bottom)); }
-    .input-wrapper { padding: 10px 12px; padding-bottom: max(15px, env(safe-area-inset-bottom)); }
+    .chat-area { padding: 15px 12px; padding-bottom: 140px; }
+    .input-wrapper { padding: 8px 10px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
@@ -848,9 +801,7 @@
 <!-- القائمة الجانبية -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-logo">
-      <span class="glow-icon">✦</span>
-    </div>
+    <div class="sidebar-logo"><span class="glow-icon">✦</span></div>
     <div>
       <h2 id="sideTitle">AI Chat</h2>
       <p id="sideSub">مساعدك الذكي</p>
@@ -989,7 +940,7 @@
     </div>
   </div>
 
-  <div class="input-wrapper">
+  <div class="input-wrapper" id="inputWrapper">
     <div class="input-box">
       <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
       <div class="input-actions">
@@ -1015,7 +966,7 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- نافذة الإعدادات -->
+<!-- الإعدادات -->
 <div class="modal" id="settingsModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -1029,9 +980,7 @@
 
     <div class="modal-item" onclick="toggleTheme()">
       <div class="modal-item-left">
-        <span class="glow-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </span>
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
         <span data-i18n="darkMode">الوضع الليلي</span>
       </div>
       <div class="toggle-switch on" id="themeToggle"></div>
@@ -1039,9 +988,7 @@
 
     <div class="modal-item" onclick="openColorPicker()">
       <div class="modal-item-left">
-        <span class="glow-icon">
-          <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-        </span>
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></span>
         <span data-i18n="changeColor">تغيير اللون</span>
       </div>
       <span>›</span>
@@ -1049,9 +996,7 @@
 
     <div class="modal-item" onclick="toggleLanguage()">
       <div class="modal-item-left">
-        <span class="glow-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </span>
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
         <span data-i18n="language">اللغة</span>
       </div>
       <span id="langLabel">العربية</span>
@@ -1059,9 +1004,7 @@
 
     <div class="modal-item" onclick="showToast(t('soon'))">
       <div class="modal-item-left">
-        <span class="glow-icon">
-          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        </span>
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
         <span data-i18n="notifications">الإشعارات</span>
       </div>
       <span>›</span>
@@ -1069,17 +1012,15 @@
 
     <div class="modal-item" onclick="showToast(t('soon'))">
       <div class="modal-item-left">
-        <span class="glow-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        </span>
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v2.0</span>
+      <span>v2.1</span>
     </div>
   </div>
 </div>
 
-<!-- نافذة الألوان -->
+<!-- الألوان -->
 <div class="modal" id="colorModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -1131,7 +1072,7 @@
       langChanged: '🌐 تم تغيير اللغة', colorChanged: '🎨 تم تغيير اللون',
       q1: 'أعطني أفكار إبداعية', q2: 'علمني شيئاً جديداً',
       q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
-      systemMsg: 'أنت مساعد ذكي تجيب بالعربية بشكل واضح ومفيد ومهذب.',
+      systemMsg: 'أنت مساعد ذكي محترف. أجب بالعربية الفصحى، بوضوح ودقة. نظّم إجاباتك بنقاط عند الحاجة، واستخدم أمثلة عملية. كن موجزاً ومفيداً.',
       sideSub: 'مساعدك الذكي', installTitle: 'تثبيت التطبيق',
       installSub: 'اضغط للتثبيت', installBtn: 'تثبيت'
     },
@@ -1157,7 +1098,7 @@
       langChanged: '🌐 Language changed', colorChanged: '🎨 Color changed',
       q1: 'Give me creative ideas', q2: 'Teach me something new',
       q3: 'Help me with writing', q4: 'Help me with coding',
-      systemMsg: 'You are a smart assistant that answers clearly and politely.',
+      systemMsg: 'You are a professional smart assistant. Answer clearly and accurately. Organize with bullet points when needed. Be concise and helpful.',
       sideSub: 'Your smart assistant', installTitle: 'Install App',
       installSub: 'Tap to install', installBtn: 'Install'
     }
@@ -1187,6 +1128,11 @@
     document.getElementById('langLabel').textContent = lang === 'ar' ? 'العربية' : 'English';
     document.getElementById('userInput').placeholder = t('placeholder');
     document.getElementById('sideSub').textContent = t('sideSub');
+
+    // تحديث رسالة النظام
+    if (history.length > 0 && history[0].role === 'system') {
+      history[0].content = t('systemMsg');
+    }
   }
 
   function toggleLanguage() {
@@ -1257,6 +1203,8 @@
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
   const menuBtn = document.getElementById('menuBtn');
+  const appEl = document.querySelector('.app');
+  const inputWrapper = document.getElementById('inputWrapper');
 
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
@@ -1342,6 +1290,52 @@
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
+  // ===== إصلاح الكيبورد =====
+  function setupKeyboardFix() {
+    if (window.visualViewport) {
+      const updateViewport = () => {
+        const vv = window.visualViewport;
+        const offsetTop = vv.offsetTop;
+        const height = vv.height;
+        
+        appEl.style.height = height + 'px';
+        appEl.style.top = offsetTop + 'px';
+        appEl.style.position = 'fixed';
+        
+        chatArea.scrollTop = chatArea.scrollHeight;
+      };
+      
+      window.visualViewport.addEventListener('resize', updateViewport);
+      window.visualViewport.addEventListener('scroll', updateViewport);
+      updateViewport();
+    } else {
+      // بديل للجوالات القديمة
+      window.addEventListener('resize', () => {
+        appEl.style.height = window.innerHeight + 'px';
+        setTimeout(() => {
+          chatArea.scrollTop = chatArea.scrollHeight;
+        }, 300);
+      });
+    }
+  }
+
+  // ===== Scroll إلى الأسفل دائماً =====
+  function scrollToBottom() {
+    setTimeout(() => {
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }, 50);
+    setTimeout(() => {
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }, 200);
+  }
+
+  userInput.addEventListener('focus', scrollToBottom);
+  userInput.addEventListener('input', () => {
+    userInput.style.height = 'auto';
+    userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
+    scrollToBottom();
+  });
+
   async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
@@ -1354,6 +1348,7 @@
 
     const loading = addMessageTyping();
     sendBtn.disabled = true;
+    scrollToBottom();
 
     try {
       const res = await fetch(API_URL, {
@@ -1365,7 +1360,8 @@
         body: JSON.stringify({
           model: 'openai/gpt-oss-20b',
           messages: history,
-          temperature: 0.7
+          temperature: 0.7,
+          max_tokens: 2048
         })
       });
 
@@ -1384,7 +1380,7 @@
     } finally {
       sendBtn.disabled = false;
       userInput.focus();
-      chatArea.scrollTop = chatArea.scrollHeight;
+      scrollToBottom();
     }
   }
 
@@ -1423,7 +1419,7 @@
     `;
 
     messagesEl.appendChild(div);
-    chatArea.scrollTop = chatArea.scrollHeight;
+    scrollToBottom();
     return div;
   }
 
@@ -1434,9 +1430,7 @@
       <div class="msg-avatar">✦</div>
       <div class="msg-bubble">
         <div class="msg-content">
-          <div class="typing-indicator">
-            <span></span><span></span><span></span>
-          </div>
+          <div class="typing-indicator"><span></span><span></span><span></span></div>
         </div>
         <div class="msg-actions" style="display:none;">
           <button class="msg-action-btn glow-icon" onclick="copyText(this)">
@@ -1452,28 +1446,21 @@
       </div>
     `;
     messagesEl.appendChild(div);
-    chatArea.scrollTop = chatArea.scrollHeight;
+    scrollToBottom();
     return div;
   }
 
   function copyText(btn) {
     const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
-    navigator.clipboard.writeText(content).then(() => {
-      showToast(t('copied'));
-    });
+    navigator.clipboard.writeText(content).then(() => showToast(t('copied')));
   }
 
-  function likeMsg(btn) {
-    showToast(t('liked'));
-  }
+  function likeMsg(btn) { showToast(t('liked')); }
 
   function shareMsg(btn) {
     const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
-    if (navigator.share) {
-      navigator.share({ text: content });
-    } else {
-      copyText(btn);
-    }
+    if (navigator.share) navigator.share({ text: content });
+    else copyText(btn);
   }
 
   function escapeHtml(text) {
@@ -1512,11 +1499,6 @@
       grid.appendChild(el);
     });
   })();
-
-  userInput.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-  });
 
   userInput.addEventListener('keypress', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -1602,6 +1584,7 @@
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
+  setupKeyboardFix();
   userInput.focus();
 
   if ('serviceWorker' in navigator) {
