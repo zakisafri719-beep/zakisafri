@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ai-chat-v10';
+const CACHE_NAME = 'ai-chat-v11';
 const urlsToCache = ['./', './index.html'];
 
 self.addEventListener('install', event => {
