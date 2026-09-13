@@ -586,6 +586,15 @@
       </button>
     </div>
 
+    <!-- ⚠️ زر وضع التفكير الجديد -->
+    <div class="modal-item" onclick="toggleThinking()">
+      <div class="modal-item-left">
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
+        <span data-i18n="thinkingMode">وضع التفكير</span>
+      </div>
+      <div class="toggle-switch" id="thinkingToggle"></div>
+    </div>
+
     <div class="modal-item" onclick="toggleTheme()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
@@ -626,12 +635,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v4.2 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v4.3 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v4.2</span>
+      <span>v4.3</span>
     </div>
   </div>
 </div>
@@ -706,6 +715,9 @@
       listening: '🎤 جاري الاستماع...', searchingWeb: '🔍 جاري البحث في الإنترنت...',
       exporting: '📄 جاري تصدير المحادثة...', exported: '✅ تم تصدير المحادثة',
       imageSelected: '🖼️ تم اختيار الصورة', imageTooBig: '❌ الصورة كبيرة جداً (الحد 4MB)',
+      thinkingMode: 'وضع التفكير',
+      thinkingOn: '🧠 وضع التفكير مفعّل (أبطأ - أذكى)',
+      thinkingOff: '⚡ الوضع السريع مفعّل',
       systemMsg: `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki". 
 
 هويتك الثابتة:
@@ -767,6 +779,9 @@
       listening: '🎤 Listening...', searchingWeb: '🔍 Searching the web...',
       exporting: '📄 Exporting chat...', exported: '✅ Chat exported',
       imageSelected: '🖼️ Image selected', imageTooBig: '❌ Image too big (max 4MB)',
+      thinkingMode: 'Thinking Mode',
+      thinkingOn: '🧠 Thinking mode ON (slower - smarter)',
+      thinkingOff: '⚡ Fast mode ON',
       systemMsg: `You are "AI Chat", a smart assistant developed by "Zaki".
 
 Your fixed identity:
@@ -795,6 +810,7 @@ Your style:
   let currentLang = localStorage.getItem('lang') || 'ar';
   let currentColor = localStorage.getItem('color') || 'purple';
   let isDark = localStorage.getItem('dark') !== 'false';
+  let useThinking = localStorage.getItem('useThinking') !== 'false';
   let history = [];
   let currentChatId = null;
   let allChats = JSON.parse(localStorage.getItem('allChats') || '[]');
@@ -809,23 +825,26 @@ Your style:
   let isRecording = false;
   let currentSpeakingBtn = null;
 
+  // ============ API والنماذج ============
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-  const MODEL = 'qwen/qwen3.6-27b';
+
+  // 🧠 نموذج التفكير (Qwen - أذكى لكن يستهلك أكثر)
+  const MODEL_THINKING = 'qwen/qwen3.6-27b';
+
+  // ⚡ النموذج السريع (Llama-4-Scout - يدعم الصور، بدون تفكير)
+  const MODEL_FAST = 'meta-llama/llama-4-scout-17b-16e-instruct';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
   // ============ إخفاء التفكير ============
   function cleanReply(text) {
     if (!text) return '';
-    // حذف <think>...</think>
     text = text.replace(/<think>[\s\S]*?<\/think>/gi, '');
-    // حذف أي وسوم أخرى مشابهة
     text = text.replace(/<reasoning>[\s\S]*?<\/reasoning>/gi, '');
     text = text.replace(/<analysis>[\s\S]*?<\/analysis>/gi, '');
-    // حذف الأسطر الفارغة الزائدة
     text = text.replace(/\n{3,}/g, '\n\n');
     return text.trim();
   }
@@ -869,6 +888,7 @@ Your style:
     renderFavoritesList();
     renderExplore();
     renderStats();
+    applyThinkingMode(useThinking);
   }
 
   // ============ اللون ============
@@ -937,6 +957,19 @@ Your style:
     applyLanguage(newLang);
     rebuildColorGrid();
     showToast(t('langChanged'));
+  }
+
+  // ============ وضع التفكير ============
+  function applyThinkingMode(thinking) {
+    useThinking = thinking;
+    localStorage.setItem('useThinking', thinking);
+    const toggle = document.getElementById('thinkingToggle');
+    if (toggle) toggle.classList.toggle('on', thinking);
+  }
+
+  function toggleThinking() {
+    applyThinkingMode(!useThinking);
+    showToast(useThinking ? t('thinkingOn') : t('thinkingOff'));
   }
 
   // ============ Settings & Colors ============
@@ -1018,7 +1051,7 @@ Your style:
     toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
   }
 
   function openGoogle() {
@@ -1418,7 +1451,7 @@ Your style:
         </div>
       </div>
       <div class="stat-card" style="margin-top:12px;">
-        <div class="number" style="font-size:16px;">AI Chat v4.2</div>
+        <div class="number" style="font-size:16px;">AI Chat v4.3</div>
         <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
       </div>
     `;
@@ -1778,6 +1811,10 @@ Your style:
 
     setTimeout(() => focusElement(loading), 100);
 
+    // ⚠️ اختيار النموذج حسب وضع التفكير
+    const model = useThinking ? MODEL_THINKING : MODEL_FAST;
+    const maxTokens = useThinking ? 800 : 1500;
+
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
@@ -1786,10 +1823,10 @@ Your style:
           'Authorization': `Bearer ${API_KEY}`
         },
         body: JSON.stringify({
-          model: MODEL,
+          model: model,
           messages: history,
           temperature: 0.7,
-          max_tokens: 4096,
+          max_tokens: maxTokens,
           top_p: 0.95
         })
       });
@@ -1970,6 +2007,7 @@ h1{color:#7c3aed;text-align:center;}
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
+  applyThinkingMode(useThinking);
   rebuildColorGrid();
   renderExplore();
 
@@ -1981,4 +2019,4 @@ h1{color:#7c3aed;text-align:center;}
 </script>
 
 </body>
-</html>
+</htm
