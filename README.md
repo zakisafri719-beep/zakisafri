@@ -1,2 +1,204 @@
-# zakisafri
-zaki
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دردشة الذكاء الاصطناعي</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+
+  body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .chat-container {
+    width: 100%;
+    max-width: 700px;
+    height: 90vh;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .header h1 { font-size: 22px; margin-bottom: 5px; }
+  .header p { font-size: 13px; opacity: 0.9; }
+
+  .chat-box {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #f8f9fa;
+  }
+
+  .message {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .user {
+    background: #667eea;
+    color: white;
+    margin-right: auto;
+    border-bottom-right-radius: 5px;
+  }
+
+  .bot {
+    background: #e9ecef;
+    color: #333;
+    margin-left: auto;
+    border-bottom-left-radius: 5px;
+  }
+
+  .input-area {
+    display: flex;
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #eee;
+    gap: 10px;
+  }
+
+  .input-area input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 2px solid #e9ecef;
+    border-radius: 25px;
+    outline: none;
+    font-size: 15px;
+    transition: border 0.3s;
+  }
+
+  .input-area input:focus { border-color: #667eea; }
+
+  .input-area button {
+    padding: 14px 25px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: transform 0.2s;
+  }
+
+  .input-area button:hover { transform: scale(1.05); }
+  .input-area button:disabled { opacity: 0.6; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="header">
+    <h1>🤖 دردشة الذكاء الاصطناعي</h1>
+    <p>اسألني أي شيء</p>
+  </div>
+
+  <div class="chat-box" id="chatBox">
+    <div class="message bot">مرحباً! 👋 كيف يمكنني مساعدتك اليوم؟</div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="اكتب رسالتك..." autocomplete="off">
+    <button id="sendBtn" onclick="sendMessage()">إرسال</button>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById('chatBox');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
+
+  // ⚠️ ضع مفتاح Groq هنا
+  const API_KEY = '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';
+  const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+  let history = [
+    { role: 'system', content: 'أنت مساعد ذكي تجيب بالعربية بشكل واضح ومفيد.' }
+  ];
+
+  async function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    userInput.value = '';
+    history.push({ role: 'user', content: text });
+
+    const loading = addMessage('⏳ يكتب...', 'bot');
+    sendBtn.disabled = true;
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'openai/gpt-oss-20b',
+          messages: history,
+          temperature: 0.7
+        })
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+
+      const reply = data.choices[0].message.content;
+      loading.remove();
+      addMessage(reply, 'bot');
+      history.push({ role: 'assistant', content: reply });
+
+    } catch (err) {
+      loading.remove();
+      addMessage('❌ خطأ: ' + err.message, 'bot');
+    } finally {
+      sendBtn.disabled = false;
+      userInput.focus();
+    }
+  }
+
+  function addMessage(text, sender) {
+    const div = document.createElement('div');
+    div.className = `message ${sender}`;
+    div.textContent = text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return div;
+  }
+
+  userInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  userInput.focus();
+</script>
+
+</body>
+</html>
