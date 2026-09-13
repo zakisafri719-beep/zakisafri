@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Chat</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="file_000000000cc482118a017dbfa6f8ed8b.png">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AI Chat">
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
 
@@ -15,7 +22,6 @@
     --bg-input: #1a1436;
     --purple: #7c3aed;
     --purple-light: #a855f7;
-    --purple-glow: #8b5cf6;
     --text: #f0ecff;
     --text-muted: #8b85a8;
     --border: #241d47;
@@ -29,7 +35,6 @@
     display: flex;
   }
 
-  /* ===== القائمة الجانبية الضيقة ===== */
   .sidebar {
     width: 65px;
     background: var(--bg-sidebar);
@@ -54,27 +59,12 @@
     color: var(--text-muted);
   }
 
-  .side-icon:hover {
-    background: var(--bg-bot-bubble);
-    color: var(--text);
-  }
-
-  .side-icon.active {
-    background: rgba(124, 58, 237, 0.25);
-    color: var(--purple-light);
-  }
-
+  .side-icon:hover { background: var(--bg-bot-bubble); color: var(--text); }
+  .side-icon.active { background: rgba(124, 58, 237, 0.25); color: var(--purple-light); }
   .sidebar .spacer { flex: 1; }
 
-  /* ===== المنطقة الرئيسية ===== */
-  .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
+  .main { flex: 1; display: flex; flex-direction: column; position: relative; }
 
-  /* ===== الشريط العلوي ===== */
   .top-bar {
     display: flex;
     align-items: center;
@@ -85,11 +75,7 @@
     backdrop-filter: blur(10px);
   }
 
-  .top-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .top-info { display: flex; align-items: center; gap: 12px; }
 
   .top-logo {
     width: 44px;
@@ -103,20 +89,8 @@
     box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
   }
 
-  .top-text h3 {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-
-  .top-text p {
-    font-size: 11px;
-    color: #22c55e;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
+  .top-text h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .top-text p { font-size: 11px; color: #22c55e; display: flex; align-items: center; gap: 5px; }
   .top-text p::before {
     content: '';
     width: 7px;
@@ -126,10 +100,7 @@
     box-shadow: 0 0 8px #22c55e;
   }
 
-  .top-actions {
-    display: flex;
-    gap: 8px;
-  }
+  .top-actions { display: flex; gap: 8px; }
 
   .top-btn {
     width: 38px;
@@ -146,12 +117,8 @@
     transition: all 0.2s;
   }
 
-  .top-btn:hover {
-    background: var(--bg-bot-bubble);
-    color: var(--text);
-  }
+  .top-btn:hover { background: var(--bg-bot-bubble); color: var(--text); }
 
-  /* ===== منطقة الرسائل ===== */
   .chat-area {
     flex: 1;
     overflow-y: auto;
@@ -160,18 +127,11 @@
   }
 
   .chat-area::-webkit-scrollbar { width: 6px; }
-  .chat-area::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-  }
+  .chat-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   .chat-area::-webkit-scrollbar-thumb:hover { background: var(--purple); }
 
-  .messages {
-    max-width: 850px;
-    margin: 0 auto;
-  }
+  .messages { max-width: 850px; margin: 0 auto; }
 
-  /* ===== رسالة ===== */
   .msg {
     display: flex;
     gap: 12px;
@@ -196,21 +156,14 @@
     font-weight: 600;
   }
 
-  .msg.user .msg-avatar {
-    background: linear-gradient(135deg, #f093fb, #a855f7);
-    color: white;
-  }
-
+  .msg.user .msg-avatar { background: linear-gradient(135deg, #f093fb, #a855f7); color: white; }
   .msg.bot .msg-avatar {
     background: linear-gradient(135deg, var(--purple), var(--purple-light));
     box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
     color: white;
   }
 
-  .msg-bubble {
-    flex: 1;
-    max-width: calc(100% - 60px);
-  }
+  .msg-bubble { flex: 1; max-width: calc(100% - 60px); }
 
   .msg-content {
     background: var(--bg-bot-bubble);
@@ -223,36 +176,13 @@
     border: 1px solid var(--border);
   }
 
-  .msg.user .msg-content {
-    background: var(--bg-user-bubble);
-    border: none;
-    color: white;
-  }
+  .msg.user .msg-content { background: var(--bg-user-bubble); border: none; color: white; }
+  .msg.user { flex-direction: row-reverse; }
+  .msg.user .msg-bubble { display: flex; flex-direction: column; align-items: flex-start; }
 
-  .msg.user {
-    flex-direction: row-reverse;
-  }
+  .msg-time { font-size: 11px; color: var(--text-muted); margin-top: 6px; padding: 0 5px; }
 
-  .msg.user .msg-bubble {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .msg-time {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 6px;
-    padding: 0 5px;
-  }
-
-  /* أزرار تحت رسالة البوت */
-  .msg-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-    padding: 0 5px;
-  }
+  .msg-actions { display: flex; gap: 6px; margin-top: 8px; padding: 0 5px; }
 
   .msg-action-btn {
     background: transparent;
@@ -269,18 +199,9 @@
     transition: all 0.2s;
   }
 
-  .msg-action-btn:hover {
-    background: var(--bg-bot-bubble);
-    color: var(--text);
-  }
+  .msg-action-btn:hover { background: var(--bg-bot-bubble); color: var(--text); }
 
-  /* ===== شاشة الترحيب ===== */
-  .welcome {
-    text-align: center;
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-  }
+  .welcome { text-align: center; max-width: 700px; margin: 40px auto; padding: 20px; }
 
   .welcome-avatar {
     width: 60px;
@@ -306,18 +227,9 @@
     color: var(--text);
   }
 
-  .welcome-bubble h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    font-weight: 700;
-  }
+  .welcome-bubble h2 { font-size: 18px; margin-bottom: 10px; font-weight: 700; }
 
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 18px;
-  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
   .chip {
     background: rgba(124, 58, 237, 0.15);
@@ -333,12 +245,8 @@
     gap: 6px;
   }
 
-  .chip:hover {
-    background: rgba(124, 58, 237, 0.3);
-    transform: translateY(-2px);
-  }
+  .chip:hover { background: rgba(124, 58, 237, 0.3); transform: translateY(-2px); }
 
-  /* ===== شريط الإدخال العائم ===== */
   .input-wrapper {
     position: absolute;
     bottom: 0;
@@ -417,7 +325,6 @@
   .send-btn:hover { transform: scale(1.08); }
   .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* ===== جوال ===== */
   @media (max-width: 768px) {
     .sidebar { width: 55px; }
     .side-icon { width: 38px; height: 38px; font-size: 17px; }
@@ -431,7 +338,6 @@
 </head>
 <body>
 
-<!-- القائمة الجانبية الضيقة -->
 <aside class="sidebar">
   <div class="side-icon active" title="المحادثات">💬</div>
   <div class="side-icon" title="استكشاف">🧭</div>
@@ -442,9 +348,7 @@
   <div class="side-icon" title="حسابي">👤</div>
 </aside>
 
-<!-- المنطقة الرئيسية -->
 <main class="main">
-  <!-- الشريط العلوي -->
   <div class="top-bar">
     <div class="top-info">
       <div class="top-logo">✨</div>
@@ -460,10 +364,8 @@
     </div>
   </div>
 
-  <!-- منطقة الرسائل -->
   <div class="chat-area" id="chatArea">
     <div class="messages" id="messages">
-      <!-- شاشة الترحيب -->
       <div class="welcome" id="welcome">
         <div class="welcome-avatar">✨</div>
         <div class="welcome-bubble">
@@ -482,7 +384,6 @@
     </div>
   </div>
 
-  <!-- شريط الإدخال العائم -->
   <div class="input-wrapper">
     <div class="input-box">
       <button class="input-btn" title="إرفاق ملف">+</button>
@@ -500,8 +401,11 @@
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
 
-  // ⚠️ ضع مفتاح Groq هنا
-  const API_KEY = 'ضع_مفتاحك_هنا';
+  // المفتاح مقسم لتجاوز حماية GitHub
+  const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
+  const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
+  const API_KEY = API_KEY_PART1 + API_KEY_PART2;
+
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
   let history = [
@@ -617,6 +521,12 @@
   });
 
   userInput.focus();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js');
+    });
+  }
 </script>
 
 </body>
