@@ -18,9 +18,9 @@
     --accent: #7c3aed;
     --accent-light: #a855f7;
     --accent-glow: rgba(124, 58, 237, 0.6);
+    --accent-glow-strong: rgba(124, 58, 237, 0.9);
     --bg-main: #000000;
     --bg-sidebar: #0a0a0f;
-    --bg-user-bubble: #7c3aed;
     --bg-bot-bubble: #111118;
     --bg-input: #0f0f18;
     --text: #f0f5f4;
@@ -36,7 +36,7 @@
     overscroll-behavior: none;
   }
 
-  /* ===== الخلفية المتحركة ===== */
+  /* ===== الخلفية ===== */
   .bg-animated {
     position: fixed;
     inset: 0;
@@ -51,7 +51,6 @@
     filter: blur(80px);
     opacity: 0.4;
     animation: floatOrb 20s ease-in-out infinite;
-    transition: background 0.5s;
   }
 
   .bg-orb.o1 {
@@ -59,14 +58,12 @@
     background: radial-gradient(circle, var(--accent), transparent);
     top: -100px; right: -100px;
   }
-
   .bg-orb.o2 {
     width: 350px; height: 350px;
     background: radial-gradient(circle, var(--accent-light), transparent);
     bottom: -100px; left: -100px;
     animation-delay: -7s;
   }
-
   .bg-orb.o3 {
     width: 300px; height: 300px;
     background: radial-gradient(circle, var(--accent), transparent);
@@ -83,8 +80,7 @@
 
   .star {
     position: absolute;
-    width: 2px;
-    height: 2px;
+    width: 2px; height: 2px;
     background: white;
     border-radius: 50%;
     opacity: 0.3;
@@ -96,7 +92,38 @@
     50% { opacity: 0.8; }
   }
 
-  /* ===== حاوية التطبيق ===== */
+  /* ===== ====== نمط الأيقونات ====== ===== */
+  .glow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 6px var(--accent-glow-strong))
+            drop-shadow(0 0 12px var(--accent-glow));
+    transition: all 0.3s ease;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .glow-icon svg {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .glow-icon:hover, .glow-icon:active {
+    color: white;
+    filter: drop-shadow(0 0 8px var(--accent-light))
+            drop-shadow(0 0 20px var(--accent-glow-strong))
+            drop-shadow(0 0 30px var(--accent-glow));
+    transform: scale(1.15);
+  }
+
+  /* ===== التطبيق ===== */
   .app {
     position: relative;
     z-index: 1;
@@ -120,9 +147,7 @@
   }
 
   .menu-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 42px; height: 42px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -132,30 +157,24 @@
     align-items: center;
     gap: 5px;
     transition: all 0.3s;
-    padding: 10px;
+    padding: 8px;
+    border-radius: 12px;
   }
 
-  .menu-btn:active {
-    background: rgba(124, 58, 237, 0.15);
-    transform: scale(0.95);
-  }
+  .menu-btn:active { transform: scale(0.92); }
 
   .menu-btn span {
     display: block;
-    width: 22px;
-    height: 2.5px;
+    width: 22px; height: 2.5px;
     background: var(--accent-light);
     border-radius: 2px;
     transition: all 0.3s;
+    box-shadow: 0 0 6px var(--accent-glow);
   }
 
-  .menu-btn.active span:nth-child(1) {
-    transform: translateY(7.5px) rotate(45deg);
-  }
+  .menu-btn.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
   .menu-btn.active span:nth-child(2) { opacity: 0; }
-  .menu-btn.active span:nth-child(3) {
-    transform: translateY(-7.5px) rotate(-45deg);
-  }
+  .menu-btn.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
   .top-title {
     display: flex;
@@ -166,42 +185,35 @@
   }
 
   .top-title-logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    width: 38px; height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 0 20px var(--accent-glow);
-    animation: pulseGlow 3s ease-in-out infinite;
+    font-size: 26px;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 8px var(--accent-glow-strong))
+            drop-shadow(0 0 16px var(--accent-glow));
+    animation: logoPulse 3s ease-in-out infinite;
   }
 
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 15px var(--accent-glow); }
-    50% { box-shadow: 0 0 30px var(--accent-glow); }
+  @keyframes logoPulse {
+    0%, 100% { filter: drop-shadow(0 0 8px var(--accent-glow-strong)) drop-shadow(0 0 16px var(--accent-glow)); }
+    50% { filter: drop-shadow(0 0 12px var(--accent-light)) drop-shadow(0 0 28px var(--accent-glow-strong)); }
   }
 
   .top-title h1 {
     font-size: 15px;
     font-weight: 700;
-    background: linear-gradient(135deg, #fff, var(--accent-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white;
   }
 
   .top-right { display: flex; gap: 5px; }
 
   .top-icon-btn {
-    width: 42px;
-    height: 42px;
+    width: 42px; height: 42px;
     border-radius: 12px;
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -209,11 +221,7 @@
     transition: all 0.3s;
   }
 
-  .top-icon-btn:active {
-    background: rgba(124, 58, 237, 0.15);
-    color: var(--accent-light);
-    transform: scale(0.95);
-  }
+  .top-icon-btn:active { transform: scale(0.92); }
 
   /* ===== القائمة الجانبية ===== */
   .sidebar {
@@ -239,25 +247,24 @@
   .sidebar-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
     margin-bottom: 20px;
   }
 
   .sidebar-logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    width: 55px; height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    box-shadow: 0 0 25px var(--accent-glow);
+    font-size: 40px;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 10px var(--accent-glow-strong))
+            drop-shadow(0 0 20px var(--accent-glow));
   }
 
-  .sidebar-header h2 { font-size: 16px; margin-bottom: 3px; }
+  .sidebar-header h2 { font-size: 16px; margin-bottom: 3px; color: white; }
   .sidebar-header p { font-size: 11px; color: var(--text-muted); }
 
   .sidebar-menu { list-style: none; }
@@ -266,37 +273,30 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 14px 15px;
+    padding: 12px 8px;
     border-radius: 12px;
     cursor: pointer;
     color: var(--text-muted);
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     transition: all 0.3s;
     position: relative;
-    overflow: hidden;
   }
 
-  .sidebar-item::before {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--accent);
-    transform: scaleY(0);
-    transition: transform 0.3s;
+  .sidebar-item .icon-wrap {
+    width: 42px; height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   .sidebar-item:active {
     background: rgba(124, 58, 237, 0.1);
-    color: var(--text);
+    color: white;
   }
 
-  .sidebar-item:active::before { transform: scaleY(1); }
-
-  .sidebar-item .icon { font-size: 20px; }
+  .sidebar-item:active .glow-icon { transform: scale(1.2); }
 
   .sidebar-footer {
     margin-top: auto;
@@ -316,19 +316,16 @@
   }
 
   .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    width: 42px; height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    font-weight: 700;
-    color: white;
+    font-size: 30px;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 6px var(--accent-glow-strong));
   }
 
-  .user-info h4 { font-size: 13px; }
+  .user-info h4 { font-size: 13px; color: white; }
   .user-info p { font-size: 10px; color: var(--text-muted); }
 
   .overlay {
@@ -348,7 +345,8 @@
   .chat-area {
     flex: 1;
     overflow-y: auto;
-    padding: 20px 15px 130px;
+    padding: 20px 15px;
+    padding-bottom: calc(170px + env(safe-area-inset-bottom));
     position: relative;
     z-index: 2;
     scroll-behavior: smooth;
@@ -376,16 +374,15 @@
   }
 
   .welcome-logo {
-    width: 90px;
-    height: 90px;
+    width: 100px; height: 100px;
     margin: 0 auto 25px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 44px;
-    box-shadow: 0 0 60px var(--accent-glow);
+    font-size: 80px;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 15px var(--accent-glow-strong))
+            drop-shadow(0 0 35px var(--accent-glow));
     animation: logoFloat 4s ease-in-out infinite;
   }
 
@@ -397,10 +394,7 @@
   .welcome h2 {
     font-size: 26px;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, #fff, var(--accent-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white;
   }
 
   .welcome p {
@@ -426,33 +420,31 @@
     cursor: pointer;
     text-align: right;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .suggestion-card:active {
     border-color: var(--accent);
     transform: scale(0.97);
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
   }
 
-  .suggestion-card .emoji {
-    font-size: 22px;
-    margin-bottom: 8px;
-    display: block;
+  .suggestion-card .sug-icon {
+    width: 40px; height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
   }
 
-  .suggestion-card .title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
+  .suggestion-card .sug-text { flex: 1; }
+  .suggestion-card .title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .suggestion-card .sub { font-size: 11px; color: var(--text-muted); }
 
-  .suggestion-card .sub {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  /* الرسائل */
+  /* ===== الرسائل ===== */
   .msg {
     display: flex;
     gap: 12px;
@@ -466,26 +458,24 @@
   }
 
   .msg-avatar {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
     flex-shrink: 0;
-    font-weight: 700;
+    font-size: 26px;
   }
 
   .msg.user .msg-avatar {
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
     color: white;
-    box-shadow: 0 0 20px var(--accent-glow);
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
   }
 
   .msg.bot .msg-avatar {
-    background: linear-gradient(135deg, #1e1e2a, var(--accent));
-    color: white;
+    color: var(--accent-light);
+    filter: drop-shadow(0 0 6px var(--accent-glow-strong));
+    background: transparent;
   }
 
   .msg-bubble { flex: 1; max-width: calc(100% - 60px); }
@@ -505,7 +495,7 @@
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
     color: white;
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
   }
 
   .msg.user { flex-direction: row-reverse; }
@@ -523,29 +513,23 @@
     gap: 6px;
     margin-top: 8px;
     padding: 0 5px;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .msg-action-btn {
     background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
+    border: none;
     cursor: pointer;
-    font-size: 14px;
+    width: 34px; height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 18px;
     transition: all 0.3s;
+    border-radius: 10px;
   }
 
-  .msg-action-btn:active {
-    background: rgba(124, 58, 237, 0.15);
-    border-color: var(--accent);
-    transform: scale(0.95);
-  }
+  .msg-action-btn:active { transform: scale(0.9); }
 
   .typing-indicator {
     display: flex;
@@ -554,11 +538,11 @@
   }
 
   .typing-indicator span {
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     background: var(--accent-light);
     border-radius: 50%;
     animation: typing 1.4s infinite;
+    box-shadow: 0 0 6px var(--accent-glow);
   }
 
   .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
@@ -576,7 +560,7 @@
     left: 0;
     right: 0;
     padding: 12px 15px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
     background: linear-gradient(to top, rgba(0,0,0,0.95) 60%, transparent);
     z-index: 50;
     pointer-events: none;
@@ -588,10 +572,10 @@
     background: var(--bg-input);
     border: 1px solid var(--border);
     border-radius: 28px;
-    padding: 8px 8px 8px 16px;
+    padding: 6px 6px 6px 14px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.3s;
     pointer-events: auto;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
@@ -620,58 +604,55 @@
 
   .input-actions {
     display: flex;
-    gap: 4px;
+    gap: 2px;
     align-items: center;
   }
 
   .input-icon-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 40px; height: 40px;
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    font-size: 17px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
+    border-radius: 50%;
   }
 
-  .input-icon-btn:active {
-    background: rgba(124, 58, 237, 0.15);
-    color: var(--accent-light);
-    transform: scale(0.9);
-  }
+  .input-icon-btn:active { transform: scale(0.88); }
 
   .send-btn {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
     color: white;
-    font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
-    box-shadow: 0 0 20px var(--accent-glow);
+    box-shadow: 0 0 25px var(--accent-glow);
   }
 
   .send-btn:active {
     transform: scale(0.9);
-    box-shadow: 0 0 35px var(--accent-glow);
+    box-shadow: 0 0 40px var(--accent-glow-strong);
   }
 
   .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+  .send-btn .glow-icon {
+    font-size: 20px;
+    color: white;
+    filter: drop-shadow(0 0 4px rgba(255,255,255,0.8));
+  }
+
   /* ===== Toast ===== */
   .toast {
     position: fixed;
-    bottom: 110px;
+    bottom: 120px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
@@ -683,7 +664,7 @@
     z-index: 9999;
     opacity: 0;
     transition: all 0.4s;
-    box-shadow: 0 10px 30px var(--accent-glow);
+    box-shadow: 0 10px 30px var(--accent-glow-strong);
     pointer-events: none;
     max-width: 90%;
     text-align: center;
@@ -694,7 +675,7 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* ===== Modal عام ===== */
+  /* ===== Modal ===== */
   .modal {
     position: fixed;
     inset: 0;
@@ -736,27 +717,27 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .modal-header h3 { font-size: 18px; color: var(--accent-light); }
+  .modal-header h3 { font-size: 18px; color: white; }
 
   .modal-close {
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    font-size: 24px;
     cursor: pointer;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    width: 36px; height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.3s;
+    border-radius: 10px;
   }
 
-  .modal-close:active { background: rgba(255,255,255,0.1); color: white; }
+  .modal-close:active { background: rgba(255,255,255,0.1); }
 
   .modal-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 14px 10px;
     border-radius: 12px;
     background: rgba(124, 58, 237, 0.05);
     margin-bottom: 10px;
@@ -765,9 +746,19 @@
   }
 
   .modal-item:active { background: rgba(124, 58, 237, 0.15); }
-  .modal-item span { font-size: 14px; }
 
-  /* ===== اختيار اللون ===== */
+  .modal-item-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .modal-item-left .glow-icon { font-size: 24px; }
+  .modal-item > span:last-child { color: var(--text-muted); font-size: 13px; }
+
+  /* ===== شبكة الألوان ===== */
   .color-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -789,7 +780,7 @@
 
   .color-option.selected {
     border-color: white;
-    box-shadow: 0 0 20px currentColor;
+    box-shadow: 0 0 25px currentColor;
   }
 
   .color-option.selected::after {
@@ -804,48 +795,48 @@
     font-weight: bold;
   }
 
-  /* ===== مفتاح تبديل ===== */
+  /* ===== Toggle ===== */
   .toggle-switch {
     position: relative;
-    width: 50px;
-    height: 28px;
+    width: 50px; height: 28px;
     background: var(--border);
     border-radius: 14px;
     cursor: pointer;
     transition: all 0.3s;
+    flex-shrink: 0;
   }
 
   .toggle-switch.on {
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    box-shadow: 0 0 15px var(--accent-glow);
   }
 
   .toggle-switch::after {
     content: '';
     position: absolute;
-    top: 3px;
-    right: 3px;
-    width: 22px;
-    height: 22px;
+    top: 3px; right: 3px;
+    width: 22px; height: 22px;
     background: white;
     border-radius: 50%;
     transition: all 0.3s;
   }
 
-  .toggle-switch.on::after {
-    right: calc(100% - 25px);
-  }
+  .toggle-switch.on::after { right: calc(100% - 25px); }
 
+  /* ===== جوال ===== */
   @media (max-width: 768px) {
     .sidebar { width: 280px; right: -300px; }
     .suggestions { grid-template-columns: 1fr; }
     .welcome h2 { font-size: 22px; }
-    .chat-area { padding: 15px 10px 140px; }
-    .input-wrapper { padding: 10px 10px; padding-bottom: max(15px, env(safe-area-inset-bottom)); }
+    .welcome-logo { font-size: 65px; width: 80px; height: 80px; }
+    .chat-area { padding: 15px 12px; padding-bottom: calc(180px + env(safe-area-inset-bottom)); }
+    .input-wrapper { padding: 10px 12px; padding-bottom: max(15px, env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
 <body>
 
+<!-- الخلفية -->
 <div class="bg-animated">
   <div class="bg-orb o1"></div>
   <div class="bg-orb o2"></div>
@@ -854,9 +845,12 @@
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
+<!-- القائمة الجانبية -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-logo">✨</div>
+    <div class="sidebar-logo">
+      <span class="glow-icon">✦</span>
+    </div>
     <div>
       <h2 id="sideTitle">AI Chat</h2>
       <p id="sideSub">مساعدك الذكي</p>
@@ -865,31 +859,54 @@
 
   <ul class="sidebar-menu">
     <li class="sidebar-item" onclick="newChat()">
-      <span class="icon">💬</span> <span data-i18n="newChat">محادثة جديدة</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </span></div>
+      <span data-i18n="newChat">محادثة جديدة</span>
     </li>
     <li class="sidebar-item" onclick="showToast(t('soon'))">
-      <span class="icon">📚</span> <span data-i18n="chats">المحادثات</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </span></div>
+      <span data-i18n="chats">المحادثات</span>
     </li>
     <li class="sidebar-item" onclick="showToast(t('soon'))">
-      <span class="icon">🧭</span> <span data-i18n="explore">استكشاف</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      </span></div>
+      <span data-i18n="explore">استكشاف</span>
     </li>
     <li class="sidebar-item" onclick="showToast(t('soon'))">
-      <span class="icon">📁</span> <span data-i18n="files">الملفات</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </span></div>
+      <span data-i18n="files">الملفات</span>
     </li>
     <li class="sidebar-item" onclick="showToast(t('soon'))">
-      <span class="icon">🖼️</span> <span data-i18n="images">الصور</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </span></div>
+      <span data-i18n="images">الصور</span>
     </li>
     <li class="sidebar-item" onclick="showToast(t('soon'))">
-      <span class="icon">⭐</span> <span data-i18n="favorites">المفضلة</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </span></div>
+      <span data-i18n="favorites">المفضلة</span>
     </li>
     <li class="sidebar-item" onclick="openSettings()">
-      <span class="icon">⚙️</span> <span data-i18n="settings">الإعدادات</span>
+      <div class="icon-wrap"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </span></div>
+      <span data-i18n="settings">الإعدادات</span>
     </li>
   </ul>
 
   <div class="sidebar-footer">
     <div class="user" onclick="showToast('👋')">
-      <div class="user-avatar">A</div>
+      <div class="user-avatar"><span class="glow-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </span></div>
       <div class="user-info">
         <h4 data-i18n="user">المستخدم</h4>
         <p data-i18n="freeAccount">حساب مجاني</p>
@@ -901,49 +918,71 @@
 <div class="app">
   <div class="top-bar">
     <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
 
     <div class="top-title">
-      <div class="top-title-logo">✨</div>
+      <div class="top-title-logo"><span class="glow-icon">✦</span></div>
       <h1 id="topTitle">AI Chat</h1>
     </div>
 
     <div class="top-right">
-      <button class="top-icon-btn" onclick="newChat()">✏️</button>
-      <button class="top-icon-btn" onclick="openGoogle()">🔍</button>
+      <button class="top-icon-btn" onclick="newChat()">
+        <span class="glow-icon" style="font-size:20px;">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </span>
+      </button>
+      <button class="top-icon-btn" onclick="openGoogle()">
+        <span class="glow-icon" style="font-size:20px;">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+      </button>
     </div>
   </div>
 
   <div class="chat-area" id="chatArea">
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
-        <div class="welcome-logo">✨</div>
+        <div class="welcome-logo"><span class="glow-icon">✦</span></div>
         <h2 data-i18n="welcomeTitle">مرحباً بك 👋</h2>
         <p data-i18n="welcomeSub">أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء</p>
 
         <div class="suggestions">
           <div class="suggestion-card" onclick="quickAsk(t('q1'))">
-            <span class="emoji">💡</span>
-            <div class="title" data-i18n="s1">أفكار وإبداع</div>
-            <div class="sub" data-i18n="s1sub">اقتراحات مبتكرة</div>
+            <div class="sug-icon"><span class="glow-icon">
+              <svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+            </span></div>
+            <div class="sug-text">
+              <div class="title" data-i18n="s1">أفكار وإبداع</div>
+              <div class="sub" data-i18n="s1sub">اقتراحات مبتكرة</div>
+            </div>
           </div>
           <div class="suggestion-card" onclick="quickAsk(t('q2'))">
-            <span class="emoji">📚</span>
-            <div class="title" data-i18n="s2">تعلّم</div>
-            <div class="sub" data-i18n="s2sub">معلومات جديدة</div>
+            <div class="sug-icon"><span class="glow-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span></div>
+            <div class="sug-text">
+              <div class="title" data-i18n="s2">تعلّم</div>
+              <div class="sub" data-i18n="s2sub">معلومات جديدة</div>
+            </div>
           </div>
           <div class="suggestion-card" onclick="quickAsk(t('q3'))">
-            <span class="emoji">✍️</span>
-            <div class="title" data-i18n="s3">كتابة</div>
-            <div class="sub" data-i18n="s3sub">نصوص ومقالات</div>
+            <div class="sug-icon"><span class="glow-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </span></div>
+            <div class="sug-text">
+              <div class="title" data-i18n="s3">كتابة</div>
+              <div class="sub" data-i18n="s3sub">نصوص ومقالات</div>
+            </div>
           </div>
           <div class="suggestion-card" onclick="quickAsk(t('q4'))">
-            <span class="emoji">💻</span>
-            <div class="title" data-i18n="s4">برمجة</div>
-            <div class="sub" data-i18n="s4sub">أكواد ومشاريع</div>
+            <div class="sug-icon"><span class="glow-icon">
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </span></div>
+            <div class="sug-text">
+              <div class="title" data-i18n="s4">برمجة</div>
+              <div class="sub" data-i18n="s4sub">أكواد ومشاريع</div>
+            </div>
           </div>
         </div>
       </div>
@@ -954,9 +993,21 @@
     <div class="input-box">
       <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
       <div class="input-actions">
-        <button class="input-icon-btn" onclick="attachFile()">📎</button>
-        <button class="input-icon-btn" onclick="openImage()">🖼️</button>
-        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        <button class="input-icon-btn" onclick="attachFile()">
+          <span class="glow-icon" style="font-size:20px;">
+            <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          </span>
+        </button>
+        <button class="input-icon-btn" onclick="openImage()">
+          <span class="glow-icon" style="font-size:20px;">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </span>
+        </button>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+          <span class="glow-icon">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -969,50 +1020,81 @@
   <div class="modal-content">
     <div class="modal-header">
       <h3 data-i18n="settingsTitle">⚙️ الإعدادات</h3>
-      <button class="modal-close" onclick="closeSettings()">✕</button>
+      <button class="modal-close" onclick="closeSettings()">
+        <span class="glow-icon" style="font-size:22px;">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+      </button>
     </div>
 
     <div class="modal-item" onclick="toggleTheme()">
-      <span data-i18n="darkMode">🌙 الوضع الليلي</span>
+      <div class="modal-item-left">
+        <span class="glow-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <span data-i18n="darkMode">الوضع الليلي</span>
+      </div>
       <div class="toggle-switch on" id="themeToggle"></div>
     </div>
 
     <div class="modal-item" onclick="openColorPicker()">
-      <span data-i18n="changeColor">🎨 تغيير اللون</span>
+      <div class="modal-item-left">
+        <span class="glow-icon">
+          <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+        </span>
+        <span data-i18n="changeColor">تغيير اللون</span>
+      </div>
       <span>›</span>
     </div>
 
     <div class="modal-item" onclick="toggleLanguage()">
-      <span data-i18n="language">🌐 اللغة</span>
+      <div class="modal-item-left">
+        <span class="glow-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <span data-i18n="language">اللغة</span>
+      </div>
       <span id="langLabel">العربية</span>
     </div>
 
     <div class="modal-item" onclick="showToast(t('soon'))">
-      <span data-i18n="notifications">🔔 الإشعارات</span>
+      <div class="modal-item-left">
+        <span class="glow-icon">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </span>
+        <span data-i18n="notifications">الإشعارات</span>
+      </div>
       <span>›</span>
     </div>
 
     <div class="modal-item" onclick="showToast(t('soon'))">
-      <span data-i18n="about">ℹ️ عن التطبيق</span>
+      <div class="modal-item-left">
+        <span class="glow-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </span>
+        <span data-i18n="about">عن التطبيق</span>
+      </div>
       <span>v2.0</span>
     </div>
   </div>
 </div>
 
-<!-- نافذة اختيار اللون -->
+<!-- نافذة الألوان -->
 <div class="modal" id="colorModal">
   <div class="modal-content">
     <div class="modal-header">
       <h3 data-i18n="colorTitle">🎨 اختر اللون</h3>
-      <button class="modal-close" onclick="closeColorPicker()">✕</button>
+      <button class="modal-close" onclick="closeColorPicker()">
+        <span class="glow-icon" style="font-size:22px;">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+      </button>
     </div>
-
     <div class="color-grid" id="colorGrid"></div>
   </div>
 </div>
 
 <script>
-  // ===== إعدادات اللون والترجمة =====
   const COLORS = [
     { name: 'purple', main: '#7c3aed', light: '#a855f7' },
     { name: 'blue', main: '#2563eb', light: '#60a5fa' },
@@ -1028,15 +1110,9 @@
 
   const TRANSLATIONS = {
     ar: {
-      newChat: 'محادثة جديدة',
-      chats: 'المحادثات',
-      explore: 'استكشاف',
-      files: 'الملفات',
-      images: 'الصور',
-      favorites: 'المفضلة',
-      settings: 'الإعدادات',
-      user: 'المستخدم',
-      freeAccount: 'حساب مجاني',
+      newChat: 'محادثة جديدة', chats: 'المحادثات', explore: 'استكشاف',
+      files: 'الملفات', images: 'الصور', favorites: 'المفضلة',
+      settings: 'الإعدادات', user: 'المستخدم', freeAccount: 'حساب مجاني',
       welcomeTitle: 'مرحباً بك 👋',
       welcomeSub: 'أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء',
       s1: 'أفكار وإبداع', s1sub: 'اقتراحات مبتكرة',
@@ -1044,41 +1120,25 @@
       s3: 'كتابة', s3sub: 'نصوص ومقالات',
       s4: 'برمجة', s4sub: 'أكواد ومشاريع',
       settingsTitle: '⚙️ الإعدادات',
-      darkMode: '🌙 الوضع الليلي',
-      changeColor: '🎨 تغيير اللون',
-      language: '🌐 اللغة',
-      notifications: '🔔 الإشعارات',
-      about: 'ℹ️ عن التطبيق',
+      darkMode: 'الوضع الليلي', changeColor: 'تغيير اللون',
+      language: 'اللغة', notifications: 'الإشعارات', about: 'عن التطبيق',
       colorTitle: '🎨 اختر اللون',
-      placeholder: 'اكتب رسالتك هنا...',
-      soon: '🚧 قريباً',
-      newChatToast: '💬 محادثة جديدة',
-      copied: '📋 تم النسخ',
-      liked: '❤️ شكراً',
-      googleOpening: '🔍 فتح Google',
-      imagesOpening: '🖼️ فتح الصور',
-      fileSelected: '📎 تم اختيار: ',
-      darkOn: '🌙 الوضع الليلي مفعّل',
-      darkOff: '☀️ الوضع النهاري مفعّل',
-      langChanged: '🌐 تم تغيير اللغة',
-      colorChanged: '🎨 تم تغيير اللون',
-      q1: 'أعطني أفكار إبداعية',
-      q2: 'علمني شيئاً جديداً',
-      q3: 'ساعدني في الكتابة',
-      q4: 'ساعدني في البرمجة',
+      placeholder: 'اكتب رسالتك هنا...', soon: '🚧 قريباً',
+      newChatToast: '💬 محادثة جديدة', copied: '📋 تم النسخ',
+      liked: '❤️ شكراً', googleOpening: '🔍 فتح Google',
+      imagesOpening: '🖼️ فتح الصور', fileSelected: '📎 تم اختيار: ',
+      darkOn: '🌙 الوضع الليلي مفعّل', darkOff: '☀️ الوضع النهاري مفعّل',
+      langChanged: '🌐 تم تغيير اللغة', colorChanged: '🎨 تم تغيير اللون',
+      q1: 'أعطني أفكار إبداعية', q2: 'علمني شيئاً جديداً',
+      q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
       systemMsg: 'أنت مساعد ذكي تجيب بالعربية بشكل واضح ومفيد ومهذب.',
-      sideSub: 'مساعدك الذكي'
+      sideSub: 'مساعدك الذكي', installTitle: 'تثبيت التطبيق',
+      installSub: 'اضغط للتثبيت', installBtn: 'تثبيت'
     },
     en: {
-      newChat: 'New Chat',
-      chats: 'Chats',
-      explore: 'Explore',
-      files: 'Files',
-      images: 'Images',
-      favorites: 'Favorites',
-      settings: 'Settings',
-      user: 'User',
-      freeAccount: 'Free Account',
+      newChat: 'New Chat', chats: 'Chats', explore: 'Explore',
+      files: 'Files', images: 'Images', favorites: 'Favorites',
+      settings: 'Settings', user: 'User', freeAccount: 'Free Account',
       welcomeTitle: 'Welcome 👋',
       welcomeSub: 'I am your smart assistant, ready to help',
       s1: 'Ideas', s1sub: 'Creative suggestions',
@@ -1086,30 +1146,20 @@
       s3: 'Writing', s3sub: 'Texts and articles',
       s4: 'Coding', s4sub: 'Code and projects',
       settingsTitle: '⚙️ Settings',
-      darkMode: '🌙 Dark Mode',
-      changeColor: '🎨 Change Color',
-      language: '🌐 Language',
-      notifications: '🔔 Notifications',
-      about: 'ℹ️ About',
+      darkMode: 'Dark Mode', changeColor: 'Change Color',
+      language: 'Language', notifications: 'Notifications', about: 'About',
       colorTitle: '🎨 Choose Color',
-      placeholder: 'Type your message...',
-      soon: '🚧 Coming Soon',
-      newChatToast: '💬 New Chat',
-      copied: '📋 Copied',
-      liked: '❤️ Thanks',
-      googleOpening: '🔍 Opening Google',
-      imagesOpening: '🖼️ Opening Images',
-      fileSelected: '📎 Selected: ',
-      darkOn: '🌙 Dark mode on',
-      darkOff: '☀️ Light mode on',
-      langChanged: '🌐 Language changed',
-      colorChanged: '🎨 Color changed',
-      q1: 'Give me creative ideas',
-      q2: 'Teach me something new',
-      q3: 'Help me with writing',
-      q4: 'Help me with coding',
+      placeholder: 'Type your message...', soon: '🚧 Coming Soon',
+      newChatToast: '💬 New Chat', copied: '📋 Copied',
+      liked: '❤️ Thanks', googleOpening: '🔍 Opening Google',
+      imagesOpening: '🖼️ Opening Images', fileSelected: '📎 Selected: ',
+      darkOn: '🌙 Dark mode on', darkOff: '☀️ Light mode on',
+      langChanged: '🌐 Language changed', colorChanged: '🎨 Color changed',
+      q1: 'Give me creative ideas', q2: 'Teach me something new',
+      q3: 'Help me with writing', q4: 'Help me with coding',
       systemMsg: 'You are a smart assistant that answers clearly and politely.',
-      sideSub: 'Your smart assistant'
+      sideSub: 'Your smart assistant', installTitle: 'Install App',
+      installSub: 'Tap to install', installBtn: 'Install'
     }
   };
 
@@ -1119,7 +1169,6 @@
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
-  // ===== تطبيق اللغة =====
   function applyLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
@@ -1131,6 +1180,10 @@
       if (TRANSLATIONS[lang][key]) el.textContent = TRANSLATIONS[lang][key];
     });
 
+    document.querySelectorAll('[data-install-title]').forEach(el => el.textContent = t('installTitle'));
+    document.querySelectorAll('[data-install-sub]').forEach(el => el.textContent = t('installSub'));
+    document.querySelectorAll('[data-install-btn]').forEach(el => el.textContent = t('installBtn'));
+
     document.getElementById('langLabel').textContent = lang === 'ar' ? 'العربية' : 'English';
     document.getElementById('userInput').placeholder = t('placeholder');
     document.getElementById('sideSub').textContent = t('sideSub');
@@ -1141,7 +1194,6 @@
     showToast(t('langChanged'));
   }
 
-  // ===== تطبيق اللون =====
   function applyColor(colorName) {
     const color = COLORS.find(c => c.name === colorName) || COLORS[0];
     currentColor = colorName;
@@ -1150,6 +1202,7 @@
     document.documentElement.style.setProperty('--accent', color.main);
     document.documentElement.style.setProperty('--accent-light', color.light);
     document.documentElement.style.setProperty('--accent-glow', hexToRgba(color.main, 0.6));
+    document.documentElement.style.setProperty('--accent-glow-strong', hexToRgba(color.main, 0.9));
 
     document.querySelector('meta[name="theme-color"]').setAttribute('content', color.main);
 
@@ -1165,7 +1218,6 @@
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
-  // ===== الوضع الليلي =====
   function applyTheme(dark) {
     isDark = dark;
     localStorage.setItem('dark', dark);
@@ -1197,7 +1249,6 @@
     showToast(isDark ? t('darkOn') : t('darkOff'));
   }
 
-  // ===== باقي الكود =====
   const chatArea = document.getElementById('chatArea');
   const messagesEl = document.getElementById('messages');
   const welcomeEl = document.getElementById('welcome');
@@ -1340,16 +1391,24 @@
   function addMessage(text, sender) {
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
-    const avatar = sender === 'user' ? '👤' : '✨';
+    const avatar = sender === 'user'
+      ? '<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+      : '✦';
     const time = getTime();
 
     let actionsHtml = '';
     if (sender === 'bot') {
       actionsHtml = `
         <div class="msg-actions">
-          <button class="msg-action-btn" onclick="copyText(this)">📋</button>
-          <button class="msg-action-btn" onclick="likeMsg(this)">👍</button>
-          <button class="msg-action-btn" onclick="shareMsg(this)">🔗</button>
+          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="shareMsg(this)">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
         </div>
       `;
     }
@@ -1372,7 +1431,7 @@
     const div = document.createElement('div');
     div.className = 'msg bot';
     div.innerHTML = `
-      <div class="msg-avatar">✨</div>
+      <div class="msg-avatar">✦</div>
       <div class="msg-bubble">
         <div class="msg-content">
           <div class="typing-indicator">
@@ -1380,9 +1439,15 @@
           </div>
         </div>
         <div class="msg-actions" style="display:none;">
-          <button class="msg-action-btn" onclick="copyText(this)">📋</button>
-          <button class="msg-action-btn" onclick="likeMsg(this)">👍</button>
-          <button class="msg-action-btn" onclick="shareMsg(this)">🔗</button>
+          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="shareMsg(this)">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
         </div>
       </div>
     `;
@@ -1394,16 +1459,12 @@
   function copyText(btn) {
     const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
     navigator.clipboard.writeText(content).then(() => {
-      btn.textContent = '✅';
       showToast(t('copied'));
-      setTimeout(() => btn.textContent = '📋', 1500);
     });
   }
 
   function likeMsg(btn) {
-    btn.textContent = '❤️';
     showToast(t('liked'));
-    setTimeout(() => btn.textContent = '👍', 1500);
   }
 
   function shareMsg(btn) {
@@ -1421,7 +1482,7 @@
     return div.innerHTML;
   }
 
-  // ===== نجوم الخلفية =====
+  // نجوم الخلفية
   (function createStars() {
     const bg = document.querySelector('.bg-animated');
     for (let i = 0; i < 50; i++) {
@@ -1434,7 +1495,7 @@
     }
   })();
 
-  // ===== شبكة الألوان =====
+  // شبكة الألوان
   (function buildColorGrid() {
     const grid = document.getElementById('colorGrid');
     COLORS.forEach(color => {
@@ -1452,7 +1513,6 @@
     });
   })();
 
-  // ===== إعدادات الإدخال =====
   userInput.addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 120) + 'px';
@@ -1465,7 +1525,6 @@
     }
   });
 
-  // ===== الإغلاق بالزر الخلفي =====
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeSettings();
@@ -1474,7 +1533,72 @@
     }
   });
 
-  // ===== التهيئة =====
+  // شريط التثبيت
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (!window.matchMedia('(display-mode: standalone)').matches) {
+        if (!localStorage.getItem('installDismissed')) showInstallBanner();
+      }
+    }, 3000);
+  });
+
+  function showInstallBanner() {
+    if (document.getElementById('installBanner')) return;
+    const banner = document.createElement('div');
+    banner.id = 'installBanner';
+    banner.style.cssText = `
+      position: fixed; top: 15px; left: 15px; right: 15px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      color: white; padding: 14px 18px; border-radius: 14px;
+      display: flex; align-items: center; gap: 12px; z-index: 9999;
+      box-shadow: 0 8px 30px var(--accent-glow-strong);
+      font-family: Tahoma, sans-serif;
+      animation: slideDown 0.4s ease;
+    `;
+    banner.innerHTML = `
+      <img src="file_000000000cc482118a017dbfa6f8ed8b.png" style="width:40px;height:40px;border-radius:10px;">
+      <div style="flex:1;">
+        <div style="font-weight:bold;font-size:14px;" data-install-title>تثبيت التطبيق</div>
+        <div style="font-size:11px;opacity:0.9;" data-install-sub>اضغط للتثبيت</div>
+      </div>
+      <button id="installBtn" style="background:white;color:var(--accent);border:none;padding:8px 14px;border-radius:10px;font-weight:bold;font-size:13px;cursor:pointer;" data-install-btn>تثبيت</button>
+      <button id="closeInstallBtn" style="background:transparent;border:none;color:white;font-size:20px;cursor:pointer;padding:0 5px;">✕</button>
+    `;
+    document.body.appendChild(banner);
+
+    applyLanguage(currentLang);
+
+    document.getElementById('installBtn').onclick = async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        banner.remove();
+        deferredPrompt = null;
+      } else {
+        alert('افتح قائمة Chrome (⋮) ثم اختر "تثبيت التطبيق"');
+      }
+    };
+
+    document.getElementById('closeInstallBtn').onclick = () => {
+      localStorage.setItem('installDismissed', 'true');
+      banner.remove();
+    };
+  }
+
+  const styleAnim = document.createElement('style');
+  styleAnim.textContent = `@keyframes slideDown {
+    from { transform: translateY(-120%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }`;
+  document.head.appendChild(styleAnim);
+
+  // التهيئة
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
