@@ -626,12 +626,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v4.1 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v4.2 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v4.1</span>
+      <span>v4.2</span>
     </div>
   </div>
 </div>
@@ -716,6 +716,12 @@
 - إذا سُئلت "من صنعك؟" أجب: "طوّرني Zaki"
 - لا تذكر OpenAI أو ChatGPT أبداً
 
+مهم جداً:
+- لا تُظهر خطوات تفكيرك أو تحليلك
+- أجب مباشرة دون مقدمات
+- لا تكتب "بالتأكيد" أو "سأساعدك" أو "دعني أفكر"
+- ابدأ إجابتك بالمحتوى الفعلي مباشرة
+
 أسلوبك:
 - أجب بالعربية الفصحى بوضوح ودقة
 - نظّم إجاباتك بنقاط عند الحاجة
@@ -771,6 +777,12 @@ Your fixed identity:
 - If asked "Who made you?" answer: "Zaki developed me"
 - Never mention OpenAI or ChatGPT
 
+Important:
+- Do NOT show your thinking steps or analysis
+- Answer directly without preambles
+- Do not write "Sure" or "Let me think" or "I will help"
+- Start your answer with the actual content directly
+
 Your style:
 - Answer clearly and accurately
 - Organize with bullet points when needed
@@ -797,7 +809,6 @@ Your style:
   let isRecording = false;
   let currentSpeakingBtn = null;
 
-  // ⚠️ النموذج الجديد
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
@@ -805,6 +816,19 @@ Your style:
   const MODEL = 'qwen/qwen3.6-27b';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
+
+  // ============ إخفاء التفكير ============
+  function cleanReply(text) {
+    if (!text) return '';
+    // حذف <think>...</think>
+    text = text.replace(/<think>[\s\S]*?<\/think>/gi, '');
+    // حذف أي وسوم أخرى مشابهة
+    text = text.replace(/<reasoning>[\s\S]*?<\/reasoning>/gi, '');
+    text = text.replace(/<analysis>[\s\S]*?<\/analysis>/gi, '');
+    // حذف الأسطر الفارغة الزائدة
+    text = text.replace(/\n{3,}/g, '\n\n');
+    return text.trim();
+  }
 
   // ============ عناصر DOM ============
   const chatArea = document.getElementById('chatArea');
@@ -1114,7 +1138,7 @@ Your style:
           addMessage(textPart ? textPart.text : '', 'user', false, imgPart ? imgPart.image_url.url : null);
         }
       } else if (msg.role === 'assistant') {
-        addMessage(msg.content, 'bot', true);
+        addMessage(cleanReply(msg.content), 'bot', true);
       }
     });
 
@@ -1394,7 +1418,7 @@ Your style:
         </div>
       </div>
       <div class="stat-card" style="margin-top:12px;">
-        <div class="number" style="font-size:16px;">AI Chat v4.1</div>
+        <div class="number" style="font-size:16px;">AI Chat v4.2</div>
         <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
       </div>
     `;
@@ -1773,7 +1797,10 @@ Your style:
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
 
-      const reply = data.choices[0].message.content;
+      // ⚠️ إخفاء التفكير
+      let reply = data.choices[0].message.content;
+      reply = cleanReply(reply);
+
       const loadingContent = loading.querySelector('.msg-content');
       loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
 
@@ -1838,7 +1865,7 @@ h1{color:#7c3aed;text-align:center;}
 <p style="text-align:center;color:#6b6b78;">بواسطة Zaki</p>`;
 
     userMessages.forEach(msg => {
-      const content = typeof msg.content === 'string' ? msg.content : '[صورة]';
+      const content = typeof msg.content === 'string' ? cleanReply(msg.content) : '[صورة]';
       const cls = msg.role === 'user' ? 'user' : 'bot';
       html += `<div class="msg ${cls}">${escapeHtml(content)}</div>`;
     });
