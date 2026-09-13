@@ -23,13 +23,13 @@
     --bg-sidebar: #0a0a0f;
     --bg-bot-bubble: #111118;
     --bg-input: #0f0f18;
+    --bg-page: #06060b;
     --text: #f0f5f4;
     --text-muted: #7a7a87;
     --border: #1a1a24;
   }
 
   html { height: 100%; overflow: hidden; }
-
   body {
     background: var(--bg-main);
     color: var(--text);
@@ -41,712 +41,544 @@
     inset: 0;
   }
 
-  /* ===== خلفية متحركة ===== */
-  .bg-animated {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .bg-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.35;
-    will-change: transform;
-  }
-
-  .bg-orb.o1 {
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, var(--accent), transparent);
-    top: -100px; right: -100px;
-    animation: float1 18s ease-in-out infinite;
-  }
-
-  .bg-orb.o2 {
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, var(--accent-light), transparent);
-    bottom: -100px; left: -100px;
-    animation: float2 22s ease-in-out infinite;
-  }
-
-  .bg-orb.o3 {
-    width: 250px; height: 250px;
-    background: radial-gradient(circle, var(--accent), transparent);
-    top: 40%; left: 40%;
-    animation: float3 25s ease-in-out infinite;
-    opacity: 0.25;
-  }
-
-  @keyframes float1 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-80px, 100px) scale(1.15); }
-  }
-  @keyframes float2 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(100px, -80px) scale(1.1); }
-  }
-  @keyframes float3 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(60px, -60px) scale(0.9); }
-    66% { transform: translate(-60px, 60px) scale(1.05); }
-  }
+  /* خلفية متحركة */
+  .bg-animated { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .bg-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; will-change: transform; }
+  .bg-orb.o1 { width: 350px; height: 350px; background: radial-gradient(circle, var(--accent), transparent); top: -100px; right: -100px; animation: float1 18s ease-in-out infinite; }
+  .bg-orb.o2 { width: 300px; height: 300px; background: radial-gradient(circle, var(--accent-light), transparent); bottom: -100px; left: -100px; animation: float2 22s ease-in-out infinite; }
+  .bg-orb.o3 { width: 250px; height: 250px; background: radial-gradient(circle, var(--accent), transparent); top: 40%; left: 40%; animation: float3 25s ease-in-out infinite; opacity: 0.25; }
+  @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-80px, 100px) scale(1.15); } }
+  @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(100px, -80px) scale(1.1); } }
+  @keyframes float3 { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(60px, -60px) scale(0.9); } 66% { transform: translate(-60px, 60px) scale(1.05); } }
 
   .glow-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     color: var(--accent-light);
     filter: drop-shadow(0 0 5px var(--accent-glow));
-    transition: all 0.2s ease;
-    font-size: 22px;
-    line-height: 1;
+    transition: all 0.2s ease; font-size: 22px; line-height: 1;
   }
+  .glow-icon svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .glow-icon:active { color: white; transform: scale(1.1); }
 
-  .glow-icon svg {
-    width: 1em;
-    height: 1em;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+  .app { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; height: 100dvh; max-height: 100dvh; }
 
-  .glow-icon:active {
-    color: white;
-    transform: scale(1.1);
-  }
-
-  .app {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-    max-height: 100dvh;
-  }
-
+  /* ===== الشريط العلوي ===== */
   .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 10px 15px;
     padding-top: max(10px, env(safe-area-inset-top));
     background: rgba(10, 10, 15, 0.9);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    z-index: 100;
+    flex-shrink: 0; z-index: 100;
   }
-
   .menu-btn {
     width: 42px; height: 42px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    padding: 8px;
-    border-radius: 12px;
+    background: transparent; border: none; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; padding: 8px; border-radius: 12px;
   }
-
   .menu-btn:active { transform: scale(0.92); }
-
   .menu-btn span {
-    display: block;
-    width: 22px; height: 2.5px;
-    background: var(--accent-light);
-    border-radius: 2px;
+    display: block; width: 22px; height: 2.5px;
+    background: var(--accent-light); border-radius: 2px;
     transition: all 0.25s ease;
     box-shadow: 0 0 6px var(--accent-glow);
   }
-
   .menu-btn.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
   .menu-btn.active span:nth-child(2) { opacity: 0; }
   .menu-btn.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-  .top-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    justify-content: center;
-  }
-
+  .top-title { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
   .top-title-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--accent-light);
     filter: drop-shadow(0 0 6px var(--accent-glow));
   }
-
   .top-title h1 { font-size: 15px; font-weight: 700; color: white; }
-
   .top-right { display: flex; gap: 5px; }
-
   .top-icon-btn {
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 42px; height: 42px; border-radius: 12px;
+    background: transparent; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
   }
-
   .top-icon-btn:active { transform: scale(0.92); }
 
+  /* ===== منطقة الدردشة ===== */
   .chat-area {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 20px 16px;
-    padding-bottom: 30px;
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    padding: 20px 16px; padding-bottom: 30px;
     -webkit-overflow-scrolling: touch;
-    position: relative;
-    z-index: 2;
-    min-height: 0;
+    position: relative; z-index: 2; min-height: 0;
   }
-
   .chat-area::-webkit-scrollbar { width: 3px; }
-  .chat-area::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 2px;
-  }
-
+  .chat-area::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
   .messages { max-width: 1000px; margin: 0 auto; }
 
-  .welcome {
-    text-align: center;
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
-  }
-
+  .welcome { text-align: center; max-width: 700px; margin: 20px auto; padding: 20px; }
   .welcome-logo {
-    width: 90px; height: 90px;
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 70px;
-    color: var(--accent-light);
+    width: 90px; height: 90px; margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 70px; color: var(--accent-light);
     filter: drop-shadow(0 0 15px var(--accent-glow-strong));
   }
-
   .welcome h2 { font-size: 26px; margin-bottom: 12px; color: white; }
   .welcome p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; line-height: 1.7; }
 
-  .suggestions {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
+  .suggestions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 600px; margin: 0 auto; }
   .suggestion-card {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
-    padding: 14px;
-    border-radius: 14px;
-    cursor: pointer;
-    text-align: right;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    padding: 14px; border-radius: 14px; cursor: pointer;
+    text-align: right; transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
   }
-
-  .suggestion-card:active {
-    border-color: var(--accent);
-    transform: scale(0.97);
-  }
-
-  .suggestion-card .sug-icon {
-    flex-shrink: 0;
-    font-size: 24px;
-    display: flex;
-  }
-
+  .suggestion-card:active { border-color: var(--accent); transform: scale(0.97); }
+  .suggestion-card .sug-icon { flex-shrink: 0; font-size: 24px; display: flex; }
   .suggestion-card .sug-text { flex: 1; min-width: 0; }
   .suggestion-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .suggestion-card .sub { font-size: 12px; color: var(--text-muted); }
 
-  /* ===== الرسائل ===== */
-  .msg {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
+  .msg { display: flex; gap: 10px; margin-bottom: 20px; }
   .msg-avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 22px;
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 22px;
   }
-
-  .msg.user .msg-avatar {
-    color: white;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  }
-
-  .msg.bot .msg-avatar {
-    color: var(--accent-light);
-    filter: drop-shadow(0 0 5px var(--accent-glow));
-    background: transparent;
-  }
-
+  .msg.user .msg-avatar { color: white; background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+  .msg.bot .msg-avatar { color: var(--accent-light); filter: drop-shadow(0 0 5px var(--accent-glow)); background: transparent; }
   .msg-bubble { flex: 1; max-width: calc(100% - 60px); min-width: 0; }
-
   .msg-content {
     background: var(--bg-bot-bubble);
-    padding: 14px 18px;
-    border-radius: 16px;
-    line-height: 1.9;
-    font-size: 16px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
+    padding: 14px 18px; border-radius: 16px;
+    line-height: 1.9; font-size: 16px;
+    word-wrap: break-word; white-space: pre-wrap;
     border: 1px solid var(--border);
   }
-
   .msg.user .msg-content {
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    border: none;
-    color: white;
+    border: none; color: white;
   }
-
-  /* ✅ المستخدم على اليمين (عادي في RTL) */
   .msg.user .msg-bubble { display: flex; flex-direction: column; align-items: flex-start; }
-
-  /* ✅ البوت على اليسار (عكس الاتجاه) */
   .msg.bot { flex-direction: row-reverse; }
   .msg.bot .msg-bubble { display: flex; flex-direction: column; align-items: flex-end; }
   .msg.bot .msg-content { text-align: right; }
 
-  .msg-time {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 6px;
-    padding: 0 5px;
-  }
-
-  .msg-actions {
-    display: flex;
-    gap: 4px;
-    margin-top: 8px;
-    padding: 0 5px;
-    opacity: 0.7;
-  }
-
+  .msg-time { font-size: 11px; color: var(--text-muted); margin-top: 6px; padding: 0 5px; }
+  .msg-actions { display: flex; gap: 4px; margin-top: 8px; padding: 0 5px; opacity: 0.7; }
   .msg-action-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+    background: transparent; border: none; cursor: pointer;
     width: 32px; height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; border-radius: 8px;
   }
-
   .msg-action-btn:active { transform: scale(0.9); }
+  .msg-action-btn.saved { color: #fbbf24; }
 
   .typing-bubble {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
-    padding: 12px 16px;
-    border-radius: 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+    padding: 12px 16px; border-radius: 16px;
+    display: inline-flex; align-items: center; gap: 5px;
     width: fit-content;
   }
-
   .typing-bubble span {
-    width: 7px; height: 7px;
-    background: var(--accent-light);
-    border-radius: 50%;
+    width: 7px; height: 7px; background: var(--accent-light); border-radius: 50%;
     animation: typingBounce 1.4s ease-in-out infinite;
     box-shadow: 0 0 6px var(--accent-glow);
   }
-
   .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
   .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
-
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
     30% { transform: translateY(-6px) scale(1.15); opacity: 1; }
   }
 
+  /* ===== شريط الإدخال ===== */
   .input-wrapper {
-    flex-shrink: 0;
-    padding: 10px 14px;
+    flex-shrink: 0; padding: 10px 14px;
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
     background: rgba(10, 10, 15, 0.95);
     backdrop-filter: blur(15px);
     border-top: 1px solid var(--border);
     z-index: 60;
   }
-
   .input-box {
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 1000px; margin: 0 auto;
     background: var(--bg-input);
     border: 1px solid var(--accent);
     border-radius: 26px;
     padding: 6px 6px 6px 16px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display: flex; align-items: center; gap: 6px;
     box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
   }
-
-  .input-box:focus-within {
-    box-shadow: 0 0 30px rgba(124, 58, 237, 0.45);
-  }
-
+  .input-box:focus-within { box-shadow: 0 0 30px rgba(124, 58, 237, 0.45); }
   .input-box textarea {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-size: 15.5px;
-    padding: 10px 0;
-    resize: none;
-    max-height: 110px;
-    font-family: inherit;
-    line-height: 1.5;
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text); font-size: 15.5px; padding: 10px 0;
+    resize: none; max-height: 110px; font-family: inherit; line-height: 1.5;
   }
-
   .input-box textarea::placeholder { color: var(--text-muted); }
-
   .input-actions { display: flex; gap: 2px; align-items: center; }
-
   .input-icon-btn {
-    width: 38px; height: 38px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 38px; height: 38px; background: transparent; border: none;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
     border-radius: 50%;
   }
-
   .input-icon-btn:active { transform: scale(0.88); }
-
   .send-btn {
-    width: 44px; height: 44px;
-    border-radius: 50%;
+    width: 44px; height: 44px; border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     box-shadow: 0 0 20px var(--accent-glow);
     flex-shrink: 0;
   }
-
   .send-btn:active { transform: scale(0.9); }
   .send-btn:disabled { opacity: 0.4; }
-
   .send-btn .glow-icon { font-size: 20px; color: white; }
 
+  /* ===== Toast ===== */
   .toast {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
+    position: fixed; bottom: 100px; left: 50%;
     transform: translateX(-50%) translateY(100px);
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    color: white;
-    padding: 11px 22px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 600;
-    z-index: 9999;
-    opacity: 0;
-    transition: all 0.25s;
+    color: white; padding: 11px 22px;
+    border-radius: 30px; font-size: 13px; font-weight: 600;
+    z-index: 9999; opacity: 0; transition: all 0.25s;
     box-shadow: 0 10px 30px var(--accent-glow-strong);
-    pointer-events: none;
+    pointer-events: none; max-width: 90%;
   }
-
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* ===== Sidebar ===== */
   .sidebar {
-    position: fixed;
-    top: 0;
-    right: -320px;
-    width: 290px;
-    height: 100dvh;
+    position: fixed; top: 0; right: -320px;
+    width: 290px; height: 100dvh;
     background: var(--bg-sidebar);
     border-left: 1px solid var(--border);
     z-index: 200;
     transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: right;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     padding: 15px;
     padding-top: max(15px, env(safe-area-inset-top));
     padding-bottom: max(15px, env(safe-area-inset-bottom));
     overflow-y: auto;
   }
-
   .sidebar.open { right: 0; }
-
   .sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
     margin-bottom: 10px;
   }
-
   .sidebar-logo {
     width: 42px; height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    color: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; color: var(--accent-light);
     filter: drop-shadow(0 0 8px var(--accent-glow));
   }
-
   .sidebar-header h2 { font-size: 15px; margin-bottom: 2px; color: white; }
   .sidebar-header p { font-size: 10px; color: var(--text-muted); }
-
   .sidebar-menu { list-style: none; }
-
   .sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 4px 6px;
-    border-radius: 10px;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 0;
-    transition: background 0.15s;
-    line-height: 1.2;
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 6px; border-radius: 10px; cursor: pointer;
+    color: var(--text-muted); font-size: 14px; margin-bottom: 0;
+    transition: background 0.15s; line-height: 1.2;
   }
-
   .sidebar-item .icon-wrap {
     width: 34px; height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-
   .sidebar-item .glow-icon { font-size: 20px; }
-
-  .sidebar-item:active {
-    background: rgba(124, 58, 237, 0.1);
-    color: white;
-  }
-
-  .sidebar-footer {
-    margin-top: auto;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-  }
-
+  .sidebar-item:active { background: rgba(124, 58, 237, 0.1); color: white; }
+  .sidebar-footer { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
   .sidebar-footer .user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px;
-    border-radius: 10px;
-    background: rgba(124, 58, 237, 0.08);
-    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px; border-radius: 10px;
+    background: rgba(124, 58, 237, 0.08); cursor: pointer;
   }
-
   .user-avatar {
     width: 34px; height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    color: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: var(--accent-light);
     filter: drop-shadow(0 0 5px var(--accent-glow));
   }
-
   .user-info h4 { font-size: 12px; color: white; }
   .user-info p { font-size: 10px; color: var(--text-muted); }
 
   .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 150; opacity: 0; visibility: hidden; transition: opacity 0.2s;
   }
-
   .overlay.show { opacity: 1; visibility: visible; }
 
+  /* ===== Modal عام ===== */
   .modal {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(0,0,0,0.85);
     z-index: 300;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.25s;
-    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; visibility: hidden;
+    transition: all 0.25s; backdrop-filter: blur(10px);
   }
-
   .modal.show { opacity: 1; visibility: visible; }
-
   .modal-content {
     background: var(--bg-sidebar);
     border: 1px solid var(--border);
     border-radius: 18px;
-    max-width: 480px;
-    width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
+    max-width: 500px; width: 100%;
+    max-height: 85vh; overflow-y: auto;
     padding: 20px;
-    transform: scale(0.9);
-    transition: transform 0.25s;
+    transform: scale(0.9); transition: transform 0.25s;
   }
-
   .modal.show .modal-content { transform: scale(1); }
-
   .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 15px; padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
-
   .modal-header h3 { font-size: 16px; color: white; }
-
   .modal-close {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+    background: transparent; border: none; cursor: pointer;
     width: 34px; height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 10px;
   }
-
   .modal-close:active { background: rgba(255,255,255,0.1); }
 
   .modal-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 11px 10px;
-    border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 11px 10px; border-radius: 12px;
     background: rgba(124, 58, 237, 0.05);
-    margin-bottom: 7px;
-    cursor: pointer;
-    transition: background 0.15s;
+    margin-bottom: 7px; cursor: pointer; transition: background 0.15s;
   }
-
   .modal-item:active { background: rgba(124, 58, 237, 0.15); }
-
   .modal-item-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    color: var(--text);
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: var(--text);
   }
-
   .modal-item-left .glow-icon { font-size: 20px; }
   .modal-item > span:last-child { color: var(--text-muted); font-size: 13px; }
 
-  .color-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    padding: 10px 0;
-  }
-
+  .color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px 0; }
   .color-option {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid transparent;
-    transition: all 0.2s;
-    position: relative;
+    width: 100%; aspect-ratio: 1; border-radius: 50%;
+    cursor: pointer; border: 3px solid transparent;
+    transition: all 0.2s; position: relative;
   }
-
   .color-option:active { transform: scale(0.9); }
-
-  .color-option.selected {
-    border-color: white;
-    box-shadow: 0 0 20px currentColor;
-  }
-
+  .color-option.selected { border-color: white; box-shadow: 0 0 20px currentColor; }
   .color-option.selected::after {
-    content: '✓';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
+    content: '✓'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 18px; font-weight: bold;
   }
 
   .toggle-switch {
-    position: relative;
-    width: 46px; height: 26px;
-    background: var(--border);
-    border-radius: 13px;
-    cursor: pointer;
-    transition: background 0.2s;
+    position: relative; width: 46px; height: 26px;
+    background: var(--border); border-radius: 13px;
+    cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+  }
+  .toggle-switch.on { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+  .toggle-switch::after {
+    content: ''; position: absolute; top: 3px; right: 3px;
+    width: 20px; height: 20px; background: white;
+    border-radius: 50%; transition: right 0.2s;
+  }
+  .toggle-switch.on::after { right: calc(100% - 23px); }
+
+  /* ===== الصفحات ===== */
+  .page {
+    position: fixed; inset: 0;
+    background: var(--bg-page);
+    z-index: 250;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+  }
+  .page.open { transform: translateX(0); }
+  .page-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 15px;
+    padding-top: max(14px, env(safe-area-inset-top));
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
-
-  .toggle-switch.on {
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  .page-back {
+    background: transparent; border: none; cursor: pointer;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px;
   }
+  .page-back:active { background: rgba(124,58,237,0.1); }
+  .page-header h2 { font-size: 17px; color: white; flex: 1; }
+  .page-body {
+    flex: 1; overflow-y: auto;
+    padding: 16px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+  .page-body::-webkit-scrollbar { width: 3px; }
+  .page-body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
-  .toggle-switch::after {
-    content: '';
-    position: absolute;
-    top: 3px; right: 3px;
-    width: 20px; height: 20px;
-    background: white;
+  /* قائمة محادثات */
+  .chat-item {
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-item:active { border-color: var(--accent); transform: scale(0.98); }
+  .chat-item-icon {
+    width: 40px; height: 40px;
     border-radius: 50%;
-    transition: right 0.2s;
+    background: rgba(124, 58, 237, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--accent-light);
+    flex-shrink: 0;
   }
+  .chat-item-info { flex: 1; min-width: 0; }
+  .chat-item-title {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .chat-item-sub {
+    font-size: 11px; color: var(--text-muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .chat-item-delete {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: transparent;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #ef4444; font-size: 16px;
+    flex-shrink: 0;
+  }
+  .chat-item-delete:active { background: rgba(239, 68, 68, 0.15); }
 
-  .toggle-switch.on::after { right: calc(100% - 23px); }
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .emoji { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
+  .empty-state h3 { font-size: 16px; color: var(--text); margin-bottom: 8px; }
+  .empty-state p { font-size: 13px; line-height: 1.7; }
+
+  /* استكشاف */
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .explore-card {
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .explore-card:active { border-color: var(--accent); transform: scale(0.97); }
+  .explore-card .emoji { font-size: 32px; display: block; margin-bottom: 10px; }
+  .explore-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .explore-card .sub { font-size: 11px; color: var(--text-muted); }
+
+  /* ملفات */
+  .upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 16px;
+  }
+  .upload-area:active { border-color: var(--accent); background: rgba(124, 58, 237, 0.05); }
+  .upload-area .emoji { font-size: 50px; margin-bottom: 12px; display: block; }
+  .upload-area h3 { font-size: 15px; color: var(--text); margin-bottom: 5px; }
+  .upload-area p { font-size: 12px; color: var(--text-muted); }
+
+  .file-item {
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .file-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(124, 58, 237, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--accent-light);
+    flex-shrink: 0;
+  }
+  .file-info { flex: 1; min-width: 0; }
+  .file-name {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .file-size { font-size: 11px; color: var(--text-muted); }
+
+  /* صور */
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .image-thumb {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    position: relative;
+  }
+  .image-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* مفضلة */
+  .fav-item {
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .fav-item-content {
+    font-size: 14px; line-height: 1.7; color: var(--text);
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .fav-item-actions {
+    display: flex; gap: 8px; justify-content: flex-end;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .fav-btn {
+    background: transparent; border: none; cursor: pointer;
+    color: var(--text-muted); font-size: 12px;
+    padding: 6px 12px; border-radius: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .fav-btn:active { background: rgba(124, 58, 237, 0.15); color: var(--accent-light); }
 
   @media (max-width: 768px) {
     .sidebar { width: 260px; right: -280px; }
@@ -769,6 +601,7 @@
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
+<!-- ===== القائمة الجانبية ===== -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-logo"><span class="glow-icon">✦</span></div>
@@ -785,31 +618,31 @@
       </span></div>
       <span data-i18n="newChat">محادثة جديدة</span>
     </li>
-    <li class="sidebar-item" onclick="showToast(t('soon'))">
+    <li class="sidebar-item" onclick="openPage('chatsPage')">
       <div class="icon-wrap"><span class="glow-icon">
         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       </span></div>
       <span data-i18n="chats">المحادثات</span>
     </li>
-    <li class="sidebar-item" onclick="showToast(t('soon'))">
+    <li class="sidebar-item" onclick="openPage('explorePage')">
       <div class="icon-wrap"><span class="glow-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
       </span></div>
       <span data-i18n="explore">استكشاف</span>
     </li>
-    <li class="sidebar-item" onclick="showToast(t('soon'))">
+    <li class="sidebar-item" onclick="openPage('filesPage')">
       <div class="icon-wrap"><span class="glow-icon">
         <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       </span></div>
       <span data-i18n="files">الملفات</span>
     </li>
-    <li class="sidebar-item" onclick="showToast(t('soon'))">
+    <li class="sidebar-item" onclick="openPage('imagesPage')">
       <div class="icon-wrap"><span class="glow-icon">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
       </span></div>
       <span data-i18n="images">الصور</span>
     </li>
-    <li class="sidebar-item" onclick="showToast(t('soon'))">
+    <li class="sidebar-item" onclick="openPage('favoritesPage')">
       <div class="icon-wrap"><span class="glow-icon">
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </span></div>
@@ -836,17 +669,16 @@
   </div>
 </aside>
 
+<!-- ===== التطبيق ===== -->
 <div class="app" id="appEl">
   <div class="top-bar">
     <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
       <span></span><span></span><span></span>
     </button>
-
     <div class="top-title">
       <div class="top-title-logo"><span class="glow-icon">✦</span></div>
       <h1 id="topTitle">AI Chat</h1>
     </div>
-
     <div class="top-right">
       <button class="top-icon-btn" onclick="newChat()">
         <span class="glow-icon" style="font-size:20px;">
@@ -910,7 +742,7 @@
     </div>
   </div>
 
-  <div class="input-wrapper" id="inputWrapper">
+  <div class="input-wrapper">
     <div class="input-box">
       <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
       <div class="input-actions">
@@ -934,8 +766,106 @@
   </div>
 </div>
 
+<!-- ===== صفحة المحادثات ===== -->
+<div class="page" id="chatsPage">
+  <div class="page-header">
+    <button class="page-back" onclick="closePage('chatsPage')">
+      <span class="glow-icon" style="font-size:22px;">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </span>
+    </button>
+    <h2 data-i18n="chatsPageTitle">💬 المحادثات</h2>
+    <button class="page-back" onclick="clearAllChats()" title="حذف الكل">
+      <span class="glow-icon" style="font-size:20px;color:#ef4444;">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      </span>
+    </button>
+  </div>
+  <div class="page-body" id="chatsList"></div>
+</div>
+
+<!-- ===== صفحة الاستكشاف ===== -->
+<div class="page" id="explorePage">
+  <div class="page-header">
+    <button class="page-back" onclick="closePage('explorePage')">
+      <span class="glow-icon" style="font-size:22px;">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </span>
+    </button>
+    <h2 data-i18n="explorePageTitle">🧭 استكشاف</h2>
+  </div>
+  <div class="page-body">
+    <div class="explore-grid" id="exploreGrid"></div>
+  </div>
+</div>
+
+<!-- ===== صفحة الملفات ===== -->
+<div class="page" id="filesPage">
+  <div class="page-header">
+    <button class="page-back" onclick="closePage('filesPage')">
+      <span class="glow-icon" style="font-size:22px;">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </span>
+    </button>
+    <h2 data-i18n="filesPageTitle">📁 الملفات</h2>
+    <button class="page-back" onclick="clearAllFiles()" title="حذف الكل">
+      <span class="glow-icon" style="font-size:20px;color:#ef4444;">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      </span>
+    </button>
+  </div>
+  <div class="page-body">
+    <div class="upload-area" onclick="uploadFiles()">
+      <span class="emoji">📁</span>
+      <h3 data-i18n="uploadFiles">رفع ملفات</h3>
+      <p data-i18n="uploadFilesSub">PDF, DOCX, TXT والمزيد</p>
+    </div>
+    <div id="filesList"></div>
+  </div>
+</div>
+
+<!-- ===== صفحة الصور ===== -->
+<div class="page" id="imagesPage">
+  <div class="page-header">
+    <button class="page-back" onclick="closePage('imagesPage')">
+      <span class="glow-icon" style="font-size:22px;">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </span>
+    </button>
+    <h2 data-i18n="imagesPageTitle">🖼️ الصور</h2>
+    <button class="page-back" onclick="clearAllImages()" title="حذف الكل">
+      <span class="glow-icon" style="font-size:20px;color:#ef4444;">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      </span>
+    </button>
+  </div>
+  <div class="page-body">
+    <div class="upload-area" onclick="uploadImages()">
+      <span class="emoji">🖼️</span>
+      <h3 data-i18n="uploadImages">رفع صور</h3>
+      <p data-i18n="uploadImagesSub">PNG, JPG, GIF</p>
+    </div>
+    <div class="images-grid" id="imagesGrid"></div>
+  </div>
+</div>
+
+<!-- ===== صفحة المفضلة ===== -->
+<div class="page" id="favoritesPage">
+  <div class="page-header">
+    <button class="page-back" onclick="closePage('favoritesPage')">
+      <span class="glow-icon" style="font-size:22px;">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </span>
+    </button>
+    <h2 data-i18n="favoritesPageTitle">⭐ المفضلة</h2>
+  </div>
+  <div class="page-body" id="favoritesList"></div>
+</div>
+
+<!-- ===== Toast ===== -->
 <div class="toast" id="toast"></div>
 
+<!-- ===== نافذة الإعدادات ===== -->
 <div class="modal" id="settingsModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -979,16 +909,17 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v2.6 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v3.0 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v2.6</span>
+      <span>v3.0</span>
     </div>
   </div>
 </div>
 
+<!-- ===== نافذة الألوان ===== -->
 <div class="modal" id="colorModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -1002,7 +933,6 @@
     <div class="color-grid" id="colorGrid"></div>
   </div>
 </div>
-
 <script>
   // ============ البيانات الأساسية ============
   const COLORS = [
@@ -1043,6 +973,19 @@
       q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
       sideSub: 'بواسطة Zaki', installTitle: 'تثبيت التطبيق',
       installSub: 'اضغط للتثبيت', installBtn: 'تثبيت',
+      chatsPageTitle: '💬 المحادثات', explorePageTitle: '🧭 استكشاف',
+      filesPageTitle: '📁 الملفات', imagesPageTitle: '🖼️ الصور',
+      favoritesPageTitle: '⭐ المفضلة',
+      uploadFiles: 'رفع ملفات', uploadFilesSub: 'PDF, DOCX, TXT والمزيد',
+      uploadImages: 'رفع صور', uploadImagesSub: 'PNG, JPG, GIF',
+      emptyChats: 'لا توجد محادثات بعد', emptyChatsSub: 'ابدأ محادثة جديدة وسيتم حفظها هنا',
+      emptyFiles: 'لا توجد ملفات', emptyFilesSub: 'ارفع ملفاتك لعرضها هنا',
+      emptyImages: 'لا توجد صور', emptyImagesSub: 'ارفع صورك لعرضها هنا',
+      emptyFavorites: 'لا توجد رسائل محفوظة', emptyFavoritesSub: 'اضغط ❤️ على أي رسالة لحفظها',
+      savedToast: '⭐ تم الحفظ في المفضلة',
+      removedToast: '🗑️ تم الحذف',
+      deletedChat: '🗑️ تم حذف المحادثة',
+      clearedAll: '🗑️ تم حذف الكل',
       systemMsg: `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki". 
       
 هويتك الثابتة:
@@ -1083,6 +1026,19 @@
       q3: 'Help me with writing', q4: 'Help me with coding',
       sideSub: 'By Zaki', installTitle: 'Install App',
       installSub: 'Tap to install', installBtn: 'Install',
+      chatsPageTitle: '💬 Chats', explorePageTitle: '🧭 Explore',
+      filesPageTitle: '📁 Files', imagesPageTitle: '🖼️ Images',
+      favoritesPageTitle: '⭐ Favorites',
+      uploadFiles: 'Upload Files', uploadFilesSub: 'PDF, DOCX, TXT & more',
+      uploadImages: 'Upload Images', uploadImagesSub: 'PNG, JPG, GIF',
+      emptyChats: 'No chats yet', emptyChatsSub: 'Start a new chat and it will be saved here',
+      emptyFiles: 'No files', emptyFilesSub: 'Upload your files to view them here',
+      emptyImages: 'No images', emptyImagesSub: 'Upload your images to view them here',
+      emptyFavorites: 'No saved messages', emptyFavoritesSub: 'Tap ❤️ on any message to save it',
+      savedToast: '⭐ Saved to favorites',
+      removedToast: '🗑️ Removed',
+      deletedChat: '🗑️ Chat deleted',
+      clearedAll: '🗑️ All cleared',
       systemMsg: `You are "AI Chat", a smart assistant developed by "Zaki".
 
 Your fixed identity:
@@ -1101,10 +1057,16 @@ Your style:
     }
   };
 
+  // ============ المتغيرات ============
   let currentLang = localStorage.getItem('lang') || 'ar';
   let currentColor = localStorage.getItem('color') || 'purple';
   let isDark = localStorage.getItem('dark') !== 'false';
   let history = [];
+  let currentChatId = null;
+  let allChats = JSON.parse(localStorage.getItem('allChats') || '[]');
+  let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  let filesList = JSON.parse(localStorage.getItem('filesList') || '[]');
+  let imagesList = JSON.parse(localStorage.getItem('imagesList') || '[]');
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
@@ -1132,6 +1094,10 @@ Your style:
     if (history.length > 0 && history[0].role === 'system') {
       history[0].content = t('systemMsg');
     }
+
+    renderChatsList();
+    renderFavoritesList();
+    renderExplore();
   }
 
   function hexToRgba(hex, alpha) {
@@ -1169,6 +1135,7 @@ Your style:
       root.style.setProperty('--bg-sidebar', '#0a0a0f');
       root.style.setProperty('--bg-bot-bubble', '#111118');
       root.style.setProperty('--bg-input', '#0f0f18');
+      root.style.setProperty('--bg-page', '#06060b');
       root.style.setProperty('--text', '#f0f5f4');
       root.style.setProperty('--text-muted', '#7a7a87');
       root.style.setProperty('--border', '#1a1a24');
@@ -1177,6 +1144,7 @@ Your style:
       root.style.setProperty('--bg-sidebar', '#ffffff');
       root.style.setProperty('--bg-bot-bubble', '#ffffff');
       root.style.setProperty('--bg-input', '#ffffff');
+      root.style.setProperty('--bg-page', '#f0f0f5');
       root.style.setProperty('--text', '#1a1a24');
       root.style.setProperty('--text-muted', '#6b6b78');
       root.style.setProperty('--border', '#e0e0e8');
@@ -1186,22 +1154,18 @@ Your style:
     if (toggle) toggle.classList.toggle('on', dark);
   }
 
-  // ⚠️ دالة الوضع الليلي — بدون event
   function toggleTheme() {
     applyTheme(!isDark);
     showToast(isDark ? t('darkOn') : t('darkOff'));
   }
 
-  // ⚠️ تغيير اللغة — بدون event
   function toggleLanguage() {
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
     applyLanguage(newLang);
-    // ✅ إعادة بناء شبكة الألوان لتحديث الترجمات
     rebuildColorGrid();
     showToast(t('langChanged'));
   }
 
-  // ⚠️ فتح الألوان — بدون تعقيد
   function openColorPicker() {
     document.getElementById('settingsModal').classList.remove('show');
     setTimeout(() => {
@@ -1241,6 +1205,7 @@ Your style:
 
   history = [{ role: 'system', content: t('systemMsg') }];
 
+  // ============ Sidebar ============
   function toggleSidebar() {
     sidebar.classList.toggle('open');
     overlay.classList.toggle('show');
@@ -1253,6 +1218,24 @@ Your style:
     menuBtn.classList.remove('active');
   }
 
+  // ============ Pages ============
+  function openPage(pageId) {
+    closeSidebar();
+    setTimeout(() => {
+      document.getElementById(pageId).classList.add('open');
+      if (pageId === 'chatsPage') renderChatsList();
+      if (pageId === 'explorePage') renderExplore();
+      if (pageId === 'filesPage') renderFilesList();
+      if (pageId === 'imagesPage') renderImagesGrid();
+      if (pageId === 'favoritesPage') renderFavoritesList();
+    }, 150);
+  }
+
+  function closePage(pageId) {
+    document.getElementById(pageId).classList.remove('open');
+  }
+
+  // ============ Toast ============
   function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -1272,18 +1255,14 @@ Your style:
   }
 
   function attachFile() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*,.pdf,.txt,.doc,.docx';
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      if (file) showToast(t('fileSelected') + file.name);
-    };
-    input.click();
+    openPage('filesPage');
   }
 
+  // ============ محادثة جديدة ============
   function newChat() {
+    saveCurrentChat();
     history = [{ role: 'system', content: t('systemMsg') }];
+    currentChatId = null;
     messagesEl.innerHTML = '';
     messagesEl.appendChild(welcomeEl);
     welcomeEl.style.display = 'block';
@@ -1299,6 +1278,347 @@ Your style:
   function getTime() {
     const d = new Date();
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+  }
+
+  // ============ حفظ المحادثات ============
+  function saveCurrentChat() {
+    const userMessages = history.filter(m => m.role === 'user');
+    if (userMessages.length === 0) return;
+
+    if (!currentChatId) {
+      currentChatId = Date.now().toString();
+    }
+
+    const title = userMessages[0].content.substring(0, 40);
+    const existingIndex = allChats.findIndex(c => c.id === currentChatId);
+
+    const chatData = {
+      id: currentChatId,
+      title: title,
+      messages: history,
+      updatedAt: Date.now()
+    };
+
+    if (existingIndex >= 0) {
+      allChats[existingIndex] = chatData;
+    } else {
+      allChats.unshift(chatData);
+    }
+
+    localStorage.setItem('allChats', JSON.stringify(allChats));
+  }
+
+  function renderChatsList() {
+    const list = document.getElementById('chatsList');
+    if (!list) return;
+
+    if (allChats.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <div class="emoji">💬</div>
+          <h3>${t('emptyChats')}</h3>
+          <p>${t('emptyChatsSub')}</p>
+        </div>
+      `;
+      return;
+    }
+
+    list.innerHTML = allChats.map(chat => {
+      const date = new Date(chat.updatedAt);
+      const dateStr = date.toLocaleDateString(currentLang === 'ar' ? 'ar' : 'en') + ' ' + date.toLocaleTimeString(currentLang === 'ar' ? 'ar' : 'en', { hour: '2-digit', minute: '2-digit' });
+      return `
+        <div class="chat-item" onclick="loadChat('${chat.id}')">
+          <div class="chat-item-icon">💬</div>
+          <div class="chat-item-info">
+            <div class="chat-item-title">${escapeHtml(chat.title)}</div>
+            <div class="chat-item-sub">${dateStr}</div>
+          </div>
+          <button class="chat-item-delete" onclick="event.stopPropagation(); deleteChat('${chat.id}')">🗑️</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function loadChat(chatId) {
+    const chat = allChats.find(c => c.id === chatId);
+    if (!chat) return;
+
+    history = [...chat.messages];
+    currentChatId = chatId;
+    welcomeEl.style.display = 'none';
+    messagesEl.innerHTML = '';
+    messagesEl.appendChild(welcomeEl);
+
+    chat.messages.forEach(msg => {
+      if (msg.role === 'user') {
+        addMessage(msg.content, 'user', false);
+      } else if (msg.role === 'assistant') {
+        addMessage(msg.content, 'bot', true);
+      }
+    });
+
+    closePage('chatsPage');
+    setTimeout(() => scrollToBottom(), 200);
+    showToast('✅ ' + chat.title.substring(0, 30));
+  }
+
+  function deleteChat(chatId) {
+    allChats = allChats.filter(c => c.id !== chatId);
+    localStorage.setItem('allChats', JSON.stringify(allChats));
+    if (currentChatId === chatId) {
+      currentChatId = null;
+    }
+    renderChatsList();
+    showToast(t('deletedChat'));
+  }
+
+  function clearAllChats() {
+    if (!confirm(currentLang === 'ar' ? 'حذف كل المحادثات؟' : 'Delete all chats?')) return;
+    allChats = [];
+    localStorage.setItem('allChats', JSON.stringify(allChats));
+    currentChatId = null;
+    renderChatsList();
+    showToast(t('clearedAll'));
+  }
+
+  // ============ الاستكشاف ============
+  function renderExplore() {
+    const grid = document.getElementById('exploreGrid');
+    if (!grid) return;
+
+    const exploreItems = currentLang === 'ar' ? [
+      { emoji: '💡', title: 'أفكار مشاريع', prompt: 'أعطني 5 أفكار مشاريع رقمية مربحة' },
+      { emoji: '📝', title: 'كتابة مقال', prompt: 'ساعدني في كتابة مقال عن...' },
+      { emoji: '💻', title: 'تعلم برمجة', prompt: 'اشرح لي أساسيات البرمجة بلغة Python' },
+      { emoji: '🌍', title: 'تعلم لغة', prompt: 'علمني 10 كلمات إنجليزية جديدة' },
+      { emoji: '📊', title: 'تحليل بيانات', prompt: 'كيف أحلل بيانات باستخدام Excel؟' },
+      { emoji: '🎨', title: 'تصميم', prompt: 'أعطني أفكار لتصميم شعار احترافي' },
+      { emoji: '📚', title: 'تلخيص كتاب', prompt: 'لخص لي كتاباً مشهوراً' },
+      { emoji: '🧠', title: 'حل مشكلة', prompt: 'ساعدني في حل مشكلة رياضية' },
+      { emoji: '✈️', title: 'خطط سفر', prompt: 'اقترح لي خطة سياحية لمدة 5 أيام' },
+      { emoji: '🍳', title: 'وصفات طبخ', prompt: 'أعطني وصفة سهلة وسريعة' },
+      { emoji: '💪', title: 'لياقة', prompt: 'أعطني جدول تمارين رياضية للمبتدئين' },
+      { emoji: '🎯', title: 'تطوير الذات', prompt: 'كيف أتخلص من التسويف؟' }
+    ] : [
+      { emoji: '💡', title: 'Project Ideas', prompt: 'Give me 5 profitable digital project ideas' },
+      { emoji: '📝', title: 'Write Article', prompt: 'Help me write an article about...' },
+      { emoji: '💻', title: 'Learn Code', prompt: 'Explain Python programming basics' },
+      { emoji: '🌍', title: 'Learn Language', prompt: 'Teach me 10 new English words' },
+      { emoji: '📊', title: 'Data Analysis', prompt: 'How to analyze data with Excel?' },
+      { emoji: '🎨', title: 'Design', prompt: 'Give me ideas for a professional logo' },
+      { emoji: '📚', title: 'Summarize', prompt: 'Summarize a famous book' },
+      { emoji: '🧠', title: 'Solve Problem', prompt: 'Help me solve a math problem' },
+      { emoji: '✈️', title: 'Travel Plan', prompt: 'Suggest a 5-day travel plan' },
+      { emoji: '🍳', title: 'Recipes', prompt: 'Give me a quick easy recipe' },
+      { emoji: '💪', title: 'Fitness', prompt: 'Give me a beginner workout plan' },
+      { emoji: '🎯', title: 'Self Dev', prompt: 'How to stop procrastinating?' }
+    ];
+
+    grid.innerHTML = exploreItems.map(item => `
+      <div class="explore-card" onclick="useExplore('${escapeHtml(item.prompt)}')">
+        <span class="emoji">${item.emoji}</span>
+        <div class="title">${item.title}</div>
+        <div class="sub">${currentLang === 'ar' ? 'اضغط للتجربة' : 'Tap to try'}</div>
+      </div>
+    `).join('');
+  }
+
+  function useExplore(prompt) {
+    closePage('explorePage');
+    setTimeout(() => {
+      userInput.value = prompt;
+      sendMessage();
+    }, 300);
+  }
+
+  // ============ الملفات ============
+  function uploadFiles() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.multiple = true;
+    input.accept = '.pdf,.doc,.docx,.txt,.xls,.xlsx,.ppt,.pptx';
+    input.onchange = (e) => {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        filesList.unshift({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          date: Date.now()
+        });
+      });
+      localStorage.setItem('filesList', JSON.stringify(filesList));
+      renderFilesList();
+      showToast('📁 ' + files.length + (currentLang === 'ar' ? ' ملف' : ' file(s)'));
+    };
+    input.click();
+  }
+
+  function renderFilesList() {
+    const list = document.getElementById('filesList');
+    if (!list) return;
+
+    if (filesList.length === 0) return;
+
+    list.innerHTML = filesList.map((file, i) => {
+      const size = formatSize(file.size);
+      const icon = getFileIcon(file.name);
+      return `
+        <div class="file-item">
+          <div class="file-icon">${icon}</div>
+          <div class="file-info">
+            <div class="file-name">${escapeHtml(file.name)}</div>
+            <div class="file-size">${size}</div>
+          </div>
+          <button class="chat-item-delete" onclick="deleteFile(${i})">🗑️</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function deleteFile(index) {
+    filesList.splice(index, 1);
+    localStorage.setItem('filesList', JSON.stringify(filesList));
+    renderFilesList();
+    showToast(t('removedToast'));
+  }
+
+  function clearAllFiles() {
+    if (!confirm(currentLang === 'ar' ? 'حذف كل الملفات؟' : 'Delete all files?')) return;
+    filesList = [];
+    localStorage.setItem('filesList', JSON.stringify(filesList));
+    renderFilesList();
+    document.getElementById('filesList').innerHTML = '';
+    showToast(t('clearedAll'));
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function getFileIcon(name) {
+    const ext = name.split('.').pop().toLowerCase();
+    if (ext === 'pdf') return '📄';
+    if (['doc', 'docx'].includes(ext)) return '📝';
+    if (['xls', 'xlsx'].includes(ext)) return '📊';
+    if (['ppt', 'pptx'].includes(ext)) return '📽️';
+    if (ext === 'txt') return '📃';
+    return '📁';
+  }
+
+  // ============ الصور ============
+  function uploadImages() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.multiple = true;
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const files = Array.from(e.target.files);
+      let loaded = 0;
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          imagesList.unshift({
+            data: ev.target.result,
+            name: file.name,
+            date: Date.now()
+          });
+          loaded++;
+          if (loaded === files.length) {
+            localStorage.setItem('imagesList', JSON.stringify(imagesList));
+            renderImagesGrid();
+            showToast('🖼️ ' + files.length + (currentLang === 'ar' ? ' صورة' : ' image(s)'));
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    };
+    input.click();
+  }
+
+  function renderImagesGrid() {
+    const grid = document.getElementById('imagesGrid');
+    if (!grid) return;
+
+    if (imagesList.length === 0) return;
+
+    grid.innerHTML = imagesList.map((img, i) => `
+      <div class="image-thumb" onclick="viewImage(${i})">
+        <img src="${img.data}" alt="${escapeHtml(img.name)}">
+      </div>
+    `).join('');
+  }
+
+  function viewImage(index) {
+    const img = imagesList[index];
+    if (!img) return;
+    const w = window.open('');
+    w.document.write(`<html><head><title>${img.name}</title><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh;}img{max-width:100%;max-height:100%;}</style></head><body><img src="${img.data}"></body></html>`);
+  }
+
+  function clearAllImages() {
+    if (!confirm(currentLang === 'ar' ? 'حذف كل الصور؟' : 'Delete all images?')) return;
+    imagesList = [];
+    localStorage.setItem('imagesList', JSON.stringify(imagesList));
+    renderImagesGrid();
+    document.getElementById('imagesGrid').innerHTML = '';
+    showToast(t('clearedAll'));
+  }
+
+  // ============ المفضلة ============
+  function renderFavoritesList() {
+    const list = document.getElementById('favoritesList');
+    if (!list) return;
+
+    if (favorites.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <div class="emoji">⭐</div>
+          <h3>${t('emptyFavorites')}</h3>
+          <p>${t('emptyFavoritesSub')}</p>
+        </div>
+      `;
+      return;
+    }
+
+    list.innerHTML = favorites.map((fav, i) => `
+      <div class="fav-item">
+        <div class="fav-item-content">${escapeHtml(fav.content)}</div>
+        <div class="fav-item-actions">
+          <button class="fav-btn" onclick="copyFav(${i})">📋 ${currentLang === 'ar' ? 'نسخ' : 'Copy'}</button>
+          <button class="fav-btn" onclick="removeFav(${i})">🗑️ ${currentLang === 'ar' ? 'حذف' : 'Delete'}</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function copyFav(index) {
+    const fav = favorites[index];
+    if (!fav) return;
+    navigator.clipboard.writeText(fav.content).then(() => showToast(t('copied')));
+  }
+
+  function removeFav(index) {
+    favorites.splice(index, 1);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    renderFavoritesList();
+    showToast(t('removedToast'));
+  }
+
+  function toggleFavorite(btn, content) {
+    const existingIndex = favorites.findIndex(f => f.content === content);
+    if (existingIndex >= 0) {
+      favorites.splice(existingIndex, 1);
+      btn.classList.remove('saved');
+      showToast(t('removedToast'));
+    } else {
+      favorites.unshift({ content, date: Date.now() });
+      btn.classList.add('saved');
+      showToast(t('savedToast'));
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 
   // ============ Scroll ============
@@ -1390,8 +1710,8 @@ Your style:
           <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
             <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </button>
-          <button class="msg-action-btn glow-icon" onclick="shareMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <button class="msg-action-btn glow-icon" onclick="saveFav(this)">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           </button>
         `;
         actions.style.display = 'flex';
@@ -1399,6 +1719,7 @@ Your style:
 
       history.push({ role: 'assistant', content: reply });
       setTimeout(() => focusElement(loading), 100);
+      saveCurrentChat();
 
     } catch (err) {
       loading.querySelector('.msg-content').textContent = '❌ ' + err.message;
@@ -1407,7 +1728,7 @@ Your style:
     }
   }
 
-  function addMessage(text, sender) {
+  function addMessage(text, sender, noSave) {
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
     const avatar = sender === 'user'
@@ -1415,10 +1736,29 @@ Your style:
       : '✦';
     const time = getTime();
 
+    let actionsHtml = '';
+    if (sender === 'bot') {
+      const isSaved = favorites.some(f => f.content === text);
+      actionsHtml = `
+        <div class="msg-actions">
+          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button class="msg-action-btn glow-icon ${isSaved ? 'saved' : ''}" onclick="saveFav(this)">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+      `;
+    }
+
     div.innerHTML = `
       <div class="msg-avatar">${avatar}</div>
       <div class="msg-bubble">
         <div class="msg-content">${escapeHtml(text)}</div>
+        ${actionsHtml}
         <div class="msg-time">${time}</div>
       </div>
     `;
@@ -1452,10 +1792,9 @@ Your style:
 
   function likeMsg(btn) { showToast(t('liked')); }
 
-  function shareMsg(btn) {
+  function saveFav(btn) {
     const content = btn.closest('.msg-bubble').querySelector('.msg-content').textContent;
-    if (navigator.share) navigator.share({ text: content });
-    else copyText(btn);
+    toggleFavorite(btn, content);
   }
 
   function escapeHtml(text) {
@@ -1502,9 +1841,15 @@ Your style:
       closeSettings();
       closeColorPicker();
       closeSidebar();
+      closePage('chatsPage');
+      closePage('explorePage');
+      closePage('filesPage');
+      closePage('imagesPage');
+      closePage('favoritesPage');
     }
   });
 
+  // ============ التثبيت ============
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -1534,15 +1879,13 @@ Your style:
     banner.innerHTML = `
       <img src="file_000000000cc482118a017dbfa6f8ed8b.png" style="width:40px;height:40px;border-radius:10px;">
       <div style="flex:1;">
-        <div style="font-weight:bold;font-size:14px;" data-install-title>تثبيت التطبيق</div>
-        <div style="font-size:11px;opacity:0.9;" data-install-sub>اضغط للتثبيت</div>
+        <div style="font-weight:bold;font-size:14px;">${t('installTitle')}</div>
+        <div style="font-size:11px;opacity:0.9;">${t('installSub')}</div>
       </div>
-      <button id="installBtn" style="background:white;color:var(--accent);border:none;padding:8px 14px;border-radius:10px;font-weight:bold;font-size:13px;cursor:pointer;" data-install-btn>تثبيت</button>
+      <button id="installBtn" style="background:white;color:var(--accent);border:none;padding:8px 14px;border-radius:10px;font-weight:bold;font-size:13px;cursor:pointer;">${t('installBtn')}</button>
       <button id="closeInstallBtn" style="background:transparent;border:none;color:white;font-size:20px;cursor:pointer;padding:0 5px;">✕</button>
     `;
     document.body.appendChild(banner);
-
-    applyLanguage(currentLang);
 
     document.getElementById('installBtn').onclick = async () => {
       if (deferredPrompt) {
@@ -1566,6 +1909,7 @@ Your style:
   applyColor(currentColor);
   applyTheme(isDark);
   rebuildColorGrid();
+  renderExplore();
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
