@@ -28,10 +28,7 @@
     --border: #1a1a24;
   }
 
-  html {
-    height: 100%;
-    overflow: hidden;
-  }
+  html { height: 100%; overflow: hidden; }
 
   body {
     background: var(--bg-main);
@@ -44,7 +41,7 @@
     inset: 0;
   }
 
-  /* ===== خلفية خفيفة ===== */
+  /* ===== خلفية متحركة خفيفة ===== */
   .bg-animated {
     position: fixed;
     inset: 0;
@@ -58,18 +55,45 @@
     border-radius: 50%;
     filter: blur(90px);
     opacity: 0.35;
+    will-change: transform;
   }
 
   .bg-orb.o1 {
     width: 350px; height: 350px;
     background: radial-gradient(circle, var(--accent), transparent);
     top: -100px; right: -100px;
+    animation: float1 18s ease-in-out infinite;
   }
 
   .bg-orb.o2 {
     width: 300px; height: 300px;
     background: radial-gradient(circle, var(--accent-light), transparent);
     bottom: -100px; left: -100px;
+    animation: float2 22s ease-in-out infinite;
+  }
+
+  .bg-orb.o3 {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, var(--accent), transparent);
+    top: 40%; left: 40%;
+    animation: float3 25s ease-in-out infinite;
+    opacity: 0.25;
+  }
+
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-80px, 100px) scale(1.15); }
+  }
+
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(100px, -80px) scale(1.1); }
+  }
+
+  @keyframes float3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -60px) scale(0.9); }
+    66% { transform: translate(-60px, 60px) scale(1.05); }
   }
 
   /* ===== أيقونات متوهجة ===== */
@@ -145,7 +169,7 @@
     width: 22px; height: 2.5px;
     background: var(--accent-light);
     border-radius: 2px;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
     box-shadow: 0 0 6px var(--accent-glow);
   }
 
@@ -195,7 +219,6 @@
     padding: 20px 16px;
     padding-bottom: 30px;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: auto;
     position: relative;
     z-index: 2;
     min-height: 0;
@@ -272,8 +295,6 @@
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
-    scroll-margin-top: 20px;
-    scroll-margin-bottom: 20px;
   }
 
   .msg-avatar {
@@ -348,22 +369,35 @@
 
   .msg-action-btn:active { transform: scale(0.9); }
 
-  .typing-indicator { display: flex; gap: 5px; padding: 4px 0; }
-  .typing-indicator span {
-    width: 9px; height: 9px;
+  /* ===== مؤشر الكتابة الصغير ===== */
+  .typing-bubble {
+    background: var(--bg-bot-bubble);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+  }
+
+  .typing-bubble span {
+    width: 7px; height: 7px;
     background: var(--accent-light);
     border-radius: 50%;
-    animation: typing 1.4s infinite;
-  }
-  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes typing {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-    30% { transform: translateY(-8px); opacity: 1; }
+    animation: typingBounce 1.4s ease-in-out infinite;
+    box-shadow: 0 0 6px var(--accent-glow);
   }
 
-  /* ===== شريط الإدخال (ثابت) ===== */
+  .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+    30% { transform: translateY(-6px) scale(1.15); opacity: 1; }
+  }
+
+  /* ===== شريط الإدخال ===== */
   .input-wrapper {
     flex-shrink: 0;
     padding: 10px 14px;
@@ -438,10 +472,7 @@
   .send-btn:active { transform: scale(0.9); }
   .send-btn:disabled { opacity: 0.4; }
 
-  .send-btn .glow-icon {
-    font-size: 20px;
-    color: white;
-  }
+  .send-btn .glow-icon { font-size: 20px; color: white; }
 
   /* ===== Toast ===== */
   .toast {
@@ -457,14 +488,14 @@
     font-weight: 600;
     z-index: 9999;
     opacity: 0;
-    transition: all 0.3s;
+    transition: all 0.25s;
     box-shadow: 0 10px 30px var(--accent-glow-strong);
     pointer-events: none;
   }
 
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ===== القائمة الجانبية ===== */
+  /* ===== القائمة الجانبية (سريعة) ===== */
   .sidebar {
     position: fixed;
     top: 0;
@@ -474,7 +505,8 @@
     background: var(--bg-sidebar);
     border-left: 1px solid var(--border);
     z-index: 200;
-    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: right;
     display: flex;
     flex-direction: column;
     padding: 15px;
@@ -519,7 +551,7 @@
     color: var(--text-muted);
     font-size: 14px;
     margin-bottom: 0;
-    transition: all 0.2s;
+    transition: background 0.15s;
     line-height: 1.2;
   }
 
@@ -574,8 +606,7 @@
     z-index: 150;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s;
-    backdrop-filter: blur(4px);
+    transition: opacity 0.2s;
   }
 
   .overlay.show { opacity: 1; visibility: visible; }
@@ -592,7 +623,7 @@
     padding: 20px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s;
+    transition: all 0.25s;
     backdrop-filter: blur(10px);
   }
 
@@ -608,7 +639,7 @@
     overflow-y: auto;
     padding: 20px;
     transform: scale(0.9);
-    transition: transform 0.3s;
+    transition: transform 0.25s;
   }
 
   .modal.show .modal-content { transform: scale(1); }
@@ -646,7 +677,7 @@
     background: rgba(124, 58, 237, 0.05);
     margin-bottom: 7px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background 0.15s;
   }
 
   .modal-item:active { background: rgba(124, 58, 237, 0.15); }
@@ -704,7 +735,7 @@
     background: var(--border);
     border-radius: 13px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background 0.2s;
     flex-shrink: 0;
   }
 
@@ -719,7 +750,7 @@
     width: 20px; height: 20px;
     background: white;
     border-radius: 50%;
-    transition: all 0.3s;
+    transition: right 0.2s;
   }
 
   .toggle-switch.on::after { right: calc(100% - 23px); }
@@ -741,6 +772,7 @@
 <div class="bg-animated">
   <div class="bg-orb o1"></div>
   <div class="bg-orb o2"></div>
+  <div class="bg-orb o3"></div>
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
@@ -923,7 +955,7 @@
       </button>
     </div>
 
-    <div class="modal-item" onclick="toggleTheme()">
+    <div class="modal-item" onclick="toggleTheme(event)">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
         <span data-i18n="darkMode">الوضع الليلي</span>
@@ -955,12 +987,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v2.4 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v2.5 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v2.4</span>
+      <span>v2.5</span>
     </div>
   </div>
 </div>
@@ -980,6 +1012,7 @@
 </div>
 
 <script>
+  // ====== يجب أن تكون هذه أولاً ======
   const COLORS = [
     { name: 'purple', main: '#7c3aed', light: '#a855f7' },
     { name: 'blue', main: '#2563eb', light: '#60a5fa' },
@@ -1079,6 +1112,7 @@ Your style:
   let currentLang = localStorage.getItem('lang') || 'ar';
   let currentColor = localStorage.getItem('color') || 'purple';
   let isDark = localStorage.getItem('dark') !== 'false';
+  let history = [];
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
@@ -1097,9 +1131,14 @@ Your style:
     document.querySelectorAll('[data-install-sub]').forEach(el => el.textContent = t('installSub'));
     document.querySelectorAll('[data-install-btn]').forEach(el => el.textContent = t('installBtn'));
 
-    document.getElementById('langLabel').textContent = lang === 'ar' ? 'العربية' : 'English';
-    document.getElementById('userInput').placeholder = t('placeholder');
-    document.getElementById('sideSub').textContent = t('sideSub');
+    const langLabel = document.getElementById('langLabel');
+    if (langLabel) langLabel.textContent = lang === 'ar' ? 'العربية' : 'English';
+    
+    const input = document.getElementById('userInput');
+    if (input) input.placeholder = t('placeholder');
+    
+    const sideSub = document.getElementById('sideSub');
+    if (sideSub) sideSub.textContent = t('sideSub');
 
     if (history.length > 0 && history[0].role === 'system') {
       history[0].content = t('systemMsg');
@@ -1109,6 +1148,13 @@ Your style:
   function toggleLanguage() {
     applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
     showToast(t('langChanged'));
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
   function applyColor(colorName) {
@@ -1121,18 +1167,12 @@ Your style:
     document.documentElement.style.setProperty('--accent-glow', hexToRgba(color.main, 0.6));
     document.documentElement.style.setProperty('--accent-glow-strong', hexToRgba(color.main, 0.9));
 
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', color.main);
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute('content', color.main);
 
     document.querySelectorAll('.color-option').forEach(el => {
       el.classList.toggle('selected', el.dataset.color === colorName);
     });
-  }
-
-  function hexToRgba(hex, alpha) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
   function applyTheme(dark) {
@@ -1158,14 +1198,17 @@ Your style:
       root.style.setProperty('--border', '#e0e0e8');
     }
 
-    document.getElementById('themeToggle').classList.toggle('on', dark);
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) toggle.classList.toggle('on', dark);
   }
 
-  function toggleTheme() {
+  function toggleTheme(event) {
+    if (event) event.stopPropagation();
     applyTheme(!isDark);
     showToast(isDark ? t('darkOn') : t('darkOff'));
   }
 
+  // ===== عناصر DOM =====
   const chatArea = document.getElementById('chatArea');
   const messagesEl = document.getElementById('messages');
   const welcomeEl = document.getElementById('welcome');
@@ -1180,7 +1223,7 @@ Your style:
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-  let history = [{ role: 'system', content: t('systemMsg') }];
+  history = [{ role: 'system', content: t('systemMsg') }];
 
   function toggleSidebar() {
     sidebar.classList.toggle('open');
@@ -1199,7 +1242,7 @@ Your style:
     toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
   }
 
   function openGoogle() {
@@ -1224,8 +1267,10 @@ Your style:
   }
 
   function openSettings() {
-    document.getElementById('settingsModal').classList.add('show');
     closeSidebar();
+    setTimeout(() => {
+      document.getElementById('settingsModal').classList.add('show');
+    }, 150);
   }
 
   function closeSettings() {
@@ -1233,7 +1278,10 @@ Your style:
   }
 
   function openColorPicker() {
-    document.getElementById('colorModal').classList.add('show');
+    closeSettings();
+    setTimeout(() => {
+      document.getElementById('colorModal').classList.add('show');
+    }, 150);
   }
 
   function closeColorPicker() {
@@ -1259,7 +1307,7 @@ Your style:
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
-  // ===== Scroll سلس =====
+  // ===== Scroll =====
   let userScrolledUp = false;
 
   chatArea.addEventListener('scroll', () => {
@@ -1267,30 +1315,21 @@ Your style:
     userScrolledUp = distanceFromBottom > 150;
   });
 
-  // التركيز على عنصر معين (بدون animation)
   function focusElement(el) {
-    if (!el) return;
-    if (userScrolledUp) return;
-    
+    if (!el || userScrolledUp) return;
     requestAnimationFrame(() => {
       const elTop = el.offsetTop;
       const elHeight = el.offsetHeight;
       const chatHeight = chatArea.clientHeight;
-      const chatScrollTop = chatArea.scrollTop;
       
-      // إذا الرسالة كبيرة، ننزل لأسفلها
-      // إذا الرسالة صغيرة، نضعها في منتصف الشاشة تقريباً
       if (elHeight > chatHeight * 0.7) {
-        // رسالة كبيرة: اذهب لبدايتها
         chatArea.scrollTop = elTop - 20;
       } else {
-        // رسالة صغيرة: اذهب لأسفلها
         chatArea.scrollTop = elTop + elHeight - chatHeight + 40;
       }
     });
   }
 
-  // نزول فوري للأسفل
   function scrollToBottom() {
     if (userScrolledUp) return;
     requestAnimationFrame(() => {
@@ -1298,18 +1337,15 @@ Your style:
     });
   }
 
-  // عند فتح الكيبورد، نثبت الرسالة الأخيرة
   userInput.addEventListener('focus', () => {
     setTimeout(() => {
       const lastMsg = messagesEl.lastElementChild;
-      if (lastMsg) {
-        focusElement(lastMsg);
-      } else {
-        scrollToBottom();
-      }
+      if (lastMsg) focusElement(lastMsg);
+      else scrollToBottom();
     }, 300);
   });
 
+  // ===== إرسال =====
   async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
@@ -1322,13 +1358,11 @@ Your style:
     userInput.style.height = 'auto';
     history.push({ role: 'user', content: text });
 
-    // التركيز على رسالة المستخدم
     setTimeout(() => focusElement(userMsgEl), 50);
 
     const loading = addMessageTyping();
     sendBtn.disabled = true;
 
-    // التركيز على مؤشر الكتابة
     setTimeout(() => focusElement(loading), 100);
 
     try {
@@ -1350,7 +1384,7 @@ Your style:
       if (data.error) throw new Error(data.error.message);
 
       const reply = data.choices[0].message.content;
-      loading.querySelector('.msg-content').textContent = reply;
+      loading.querySelector('.msg-content').innerHTML = escapeHtml(reply);
       const actions = loading.querySelector('.msg-actions');
       if (actions) {
         actions.innerHTML = `
@@ -1368,8 +1402,6 @@ Your style:
       }
 
       history.push({ role: 'assistant', content: reply });
-
-      // التركيز على رد البوت
       setTimeout(() => focusElement(loading), 100);
 
     } catch (err) {
@@ -1387,28 +1419,10 @@ Your style:
       : '✦';
     const time = getTime();
 
-    let actionsHtml = '';
-    if (sender === 'bot') {
-      actionsHtml = `
-        <div class="msg-actions">
-          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </button>
-          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="msg-action-btn glow-icon" onclick="shareMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-        </div>
-      `;
-    }
-
     div.innerHTML = `
       <div class="msg-avatar">${avatar}</div>
       <div class="msg-bubble">
         <div class="msg-content">${escapeHtml(text)}</div>
-        ${actionsHtml}
         <div class="msg-time">${time}</div>
       </div>
     `;
@@ -1423,8 +1437,10 @@ Your style:
     div.innerHTML = `
       <div class="msg-avatar">✦</div>
       <div class="msg-bubble">
-        <div class="msg-content">
-          <div class="typing-indicator"><span></span><span></span><span></span></div>
+        <div class="msg-content" style="background:transparent;border:none;padding:0;">
+          <div class="typing-bubble">
+            <span></span><span></span><span></span>
+          </div>
         </div>
         <div class="msg-actions" style="display:none;"></div>
       </div>
@@ -1545,6 +1561,7 @@ Your style:
     };
   }
 
+  // ===== التهيئة =====
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
