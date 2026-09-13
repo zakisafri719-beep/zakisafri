@@ -41,7 +41,7 @@
     inset: 0;
   }
 
-  /* ===== خلفية متحركة خفيفة ===== */
+  /* ===== خلفية متحركة ===== */
   .bg-animated {
     position: fixed;
     inset: 0;
@@ -84,19 +84,16 @@
     0%, 100% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(-80px, 100px) scale(1.15); }
   }
-
   @keyframes float2 {
     0%, 100% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(100px, -80px) scale(1.1); }
   }
-
   @keyframes float3 {
     0%, 100% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(60px, -60px) scale(0.9); }
     66% { transform: translate(-60px, 60px) scale(1.05); }
   }
 
-  /* ===== أيقونات متوهجة ===== */
   .glow-icon {
     display: flex;
     align-items: center;
@@ -123,7 +120,6 @@
     transform: scale(1.1);
   }
 
-  /* ===== الحاوية الرئيسية ===== */
   .app {
     position: fixed;
     inset: 0;
@@ -134,7 +130,6 @@
     max-height: 100dvh;
   }
 
-  /* ===== الشريط العلوي ===== */
   .top-bar {
     display: flex;
     align-items: center;
@@ -211,7 +206,6 @@
 
   .top-icon-btn:active { transform: scale(0.92); }
 
-  /* ===== منطقة الدردشة ===== */
   .chat-area {
     flex: 1;
     overflow-y: auto;
@@ -232,7 +226,6 @@
 
   .messages { max-width: 1000px; margin: 0 auto; }
 
-  /* ===== شاشة الترحيب ===== */
   .welcome {
     text-align: center;
     max-width: 700px;
@@ -337,8 +330,13 @@
     color: white;
   }
 
-  .msg.user { flex-direction: row-reverse; }
+  /* ✅ المستخدم على اليمين (عادي في RTL) */
   .msg.user .msg-bubble { display: flex; flex-direction: column; align-items: flex-start; }
+
+  /* ✅ البوت على اليسار (عكس الاتجاه) */
+  .msg.bot { flex-direction: row-reverse; }
+  .msg.bot .msg-bubble { display: flex; flex-direction: column; align-items: flex-end; }
+  .msg.bot .msg-content { text-align: right; }
 
   .msg-time {
     font-size: 11px;
@@ -369,7 +367,6 @@
 
   .msg-action-btn:active { transform: scale(0.9); }
 
-  /* ===== مؤشر الكتابة الصغير ===== */
   .typing-bubble {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
@@ -397,7 +394,6 @@
     30% { transform: translateY(-6px) scale(1.15); opacity: 1; }
   }
 
-  /* ===== شريط الإدخال ===== */
   .input-wrapper {
     flex-shrink: 0;
     padding: 10px 14px;
@@ -474,7 +470,6 @@
 
   .send-btn .glow-icon { font-size: 20px; color: white; }
 
-  /* ===== Toast ===== */
   .toast {
     position: fixed;
     bottom: 100px;
@@ -495,7 +490,6 @@
 
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ===== القائمة الجانبية (سريعة) ===== */
   .sidebar {
     position: fixed;
     top: 0;
@@ -611,7 +605,6 @@
 
   .overlay.show { opacity: 1; visibility: visible; }
 
-  /* ===== Modal ===== */
   .modal {
     position: fixed;
     inset: 0;
@@ -755,7 +748,6 @@
 
   .toggle-switch.on::after { right: calc(100% - 23px); }
 
-  /* ===== جوال ===== */
   @media (max-width: 768px) {
     .sidebar { width: 260px; right: -280px; }
     .suggestions { grid-template-columns: 1fr; }
@@ -955,7 +947,7 @@
       </button>
     </div>
 
-    <div class="modal-item" onclick="toggleTheme(event)">
+    <div class="modal-item" onclick="toggleTheme()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
         <span data-i18n="darkMode">الوضع الليلي</span>
@@ -987,12 +979,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v2.5 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v2.6 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v2.5</span>
+      <span>v2.6</span>
     </div>
   </div>
 </div>
@@ -1012,7 +1004,7 @@
 </div>
 
 <script>
-  // ====== يجب أن تكون هذه أولاً ======
+  // ============ البيانات الأساسية ============
   const COLORS = [
     { name: 'purple', main: '#7c3aed', light: '#a855f7' },
     { name: 'blue', main: '#2563eb', light: '#60a5fa' },
@@ -1116,6 +1108,7 @@ Your style:
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
+  // ============ دوال الإعدادات ============
   function applyLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
@@ -1127,27 +1120,18 @@ Your style:
       if (TRANSLATIONS[lang][key]) el.textContent = TRANSLATIONS[lang][key];
     });
 
-    document.querySelectorAll('[data-install-title]').forEach(el => el.textContent = t('installTitle'));
-    document.querySelectorAll('[data-install-sub]').forEach(el => el.textContent = t('installSub'));
-    document.querySelectorAll('[data-install-btn]').forEach(el => el.textContent = t('installBtn'));
-
     const langLabel = document.getElementById('langLabel');
     if (langLabel) langLabel.textContent = lang === 'ar' ? 'العربية' : 'English';
-    
+
     const input = document.getElementById('userInput');
     if (input) input.placeholder = t('placeholder');
-    
+
     const sideSub = document.getElementById('sideSub');
     if (sideSub) sideSub.textContent = t('sideSub');
 
     if (history.length > 0 && history[0].role === 'system') {
       history[0].content = t('systemMsg');
     }
-  }
-
-  function toggleLanguage() {
-    applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
-    showToast(t('langChanged'));
   }
 
   function hexToRgba(hex, alpha) {
@@ -1202,13 +1186,45 @@ Your style:
     if (toggle) toggle.classList.toggle('on', dark);
   }
 
-  function toggleTheme(event) {
-    if (event) event.stopPropagation();
+  // ⚠️ دالة الوضع الليلي — بدون event
+  function toggleTheme() {
     applyTheme(!isDark);
     showToast(isDark ? t('darkOn') : t('darkOff'));
   }
 
-  // ===== عناصر DOM =====
+  // ⚠️ تغيير اللغة — بدون event
+  function toggleLanguage() {
+    const newLang = currentLang === 'ar' ? 'en' : 'ar';
+    applyLanguage(newLang);
+    // ✅ إعادة بناء شبكة الألوان لتحديث الترجمات
+    rebuildColorGrid();
+    showToast(t('langChanged'));
+  }
+
+  // ⚠️ فتح الألوان — بدون تعقيد
+  function openColorPicker() {
+    document.getElementById('settingsModal').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('colorModal').classList.add('show');
+    }, 200);
+  }
+
+  function closeColorPicker() {
+    document.getElementById('colorModal').classList.remove('show');
+  }
+
+  function openSettings() {
+    closeSidebar();
+    setTimeout(() => {
+      document.getElementById('settingsModal').classList.add('show');
+    }, 200);
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsModal').classList.remove('show');
+  }
+
+  // ============ عناصر DOM ============
   const chatArea = document.getElementById('chatArea');
   const messagesEl = document.getElementById('messages');
   const welcomeEl = document.getElementById('welcome');
@@ -1266,28 +1282,6 @@ Your style:
     input.click();
   }
 
-  function openSettings() {
-    closeSidebar();
-    setTimeout(() => {
-      document.getElementById('settingsModal').classList.add('show');
-    }, 150);
-  }
-
-  function closeSettings() {
-    document.getElementById('settingsModal').classList.remove('show');
-  }
-
-  function openColorPicker() {
-    closeSettings();
-    setTimeout(() => {
-      document.getElementById('colorModal').classList.add('show');
-    }, 150);
-  }
-
-  function closeColorPicker() {
-    document.getElementById('colorModal').classList.remove('show');
-  }
-
   function newChat() {
     history = [{ role: 'system', content: t('systemMsg') }];
     messagesEl.innerHTML = '';
@@ -1307,7 +1301,7 @@ Your style:
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
-  // ===== Scroll =====
+  // ============ Scroll ============
   let userScrolledUp = false;
 
   chatArea.addEventListener('scroll', () => {
@@ -1321,7 +1315,7 @@ Your style:
       const elTop = el.offsetTop;
       const elHeight = el.offsetHeight;
       const chatHeight = chatArea.clientHeight;
-      
+
       if (elHeight > chatHeight * 0.7) {
         chatArea.scrollTop = elTop - 20;
       } else {
@@ -1345,14 +1339,14 @@ Your style:
     }, 300);
   });
 
-  // ===== إرسال =====
+  // ============ إرسال ============
   async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
 
     welcomeEl.style.display = 'none';
     userScrolledUp = false;
-    
+
     const userMsgEl = addMessage(text, 'user');
     userInput.value = '';
     userInput.style.height = 'auto';
@@ -1384,7 +1378,9 @@ Your style:
       if (data.error) throw new Error(data.error.message);
 
       const reply = data.choices[0].message.content;
-      loading.querySelector('.msg-content').innerHTML = escapeHtml(reply);
+      const loadingContent = loading.querySelector('.msg-content');
+      loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
+
       const actions = loading.querySelector('.msg-actions');
       if (actions) {
         actions.innerHTML = `
@@ -1468,11 +1464,14 @@ Your style:
     return div.innerHTML;
   }
 
-  (function buildColorGrid() {
+  // ============ شبكة الألوان ============
+  function rebuildColorGrid() {
     const grid = document.getElementById('colorGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
     COLORS.forEach(color => {
       const el = document.createElement('div');
-      el.className = 'color-option';
+      el.className = 'color-option' + (color.name === currentColor ? ' selected' : '');
       el.dataset.color = color.name;
       el.style.background = `linear-gradient(135deg, ${color.main}, ${color.light})`;
       el.style.color = color.main;
@@ -1483,8 +1482,9 @@ Your style:
       };
       grid.appendChild(el);
     });
-  })();
+  }
 
+  // ============ الإدخال ============
   userInput.addEventListener('keypress', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -1561,10 +1561,11 @@ Your style:
     };
   }
 
-  // ===== التهيئة =====
+  // ============ التهيئة ============
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
+  rebuildColorGrid();
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
