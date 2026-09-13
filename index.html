@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 <title>AI Chat</title>
 
 <link rel="manifest" href="manifest.json">
@@ -28,7 +28,12 @@
     --border: #1a1a24;
   }
 
-  html, body {
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
     background: var(--bg-main);
     color: var(--text);
     height: 100%;
@@ -36,6 +41,7 @@
     overflow: hidden;
     overscroll-behavior: none;
     position: fixed;
+    inset: 0;
   }
 
   /* ===== خلفية خفيفة ===== */
@@ -93,14 +99,15 @@
     transform: scale(1.1);
   }
 
-  /* ===== الحاوية ===== */
+  /* ===== الحاوية الرئيسية ===== */
   .app {
     position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
   }
 
   /* ===== الشريط العلوي ===== */
@@ -180,7 +187,7 @@
 
   .top-icon-btn:active { transform: scale(0.92); }
 
-  /* ===== منطقة الدردشة (كبيرة) ===== */
+  /* ===== منطقة الدردشة ===== */
   .chat-area {
     flex: 1;
     overflow-y: auto;
@@ -188,9 +195,10 @@
     padding: 20px 16px;
     padding-bottom: 30px;
     -webkit-overflow-scrolling: touch;
-    scroll-padding-bottom: 20px;
+    scroll-behavior: auto;
     position: relative;
     z-index: 2;
+    min-height: 0;
   }
 
   .chat-area::-webkit-scrollbar { width: 3px; }
@@ -259,11 +267,13 @@
   .suggestion-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .suggestion-card .sub { font-size: 12px; color: var(--text-muted); }
 
-  /* ===== الرسائل (خط أكبر) ===== */
+  /* ===== الرسائل ===== */
   .msg {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    scroll-margin-top: 20px;
+    scroll-margin-bottom: 20px;
   }
 
   .msg-avatar {
@@ -460,7 +470,7 @@
     top: 0;
     right: -320px;
     width: 290px;
-    height: 100vh;
+    height: 100dvh;
     background: var(--bg-sidebar);
     border-left: 1px solid var(--border);
     z-index: 200;
@@ -945,12 +955,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v2.3 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v2.4 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v2.3</span>
+      <span>v2.4</span>
     </div>
   </div>
 </div>
@@ -1164,7 +1174,6 @@ Your style:
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
   const menuBtn = document.getElementById('menuBtn');
-  const appEl = document.getElementById('appEl');
 
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
@@ -1250,7 +1259,7 @@ Your style:
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
-  // ===== Scroll ذكي =====
+  // ===== Scroll سلس =====
   let userScrolledUp = false;
 
   chatArea.addEventListener('scroll', () => {
@@ -1258,66 +1267,48 @@ Your style:
     userScrolledUp = distanceFromBottom > 150;
   });
 
-  function scrollToBottom(smooth = true) {
+  // التركيز على عنصر معين (بدون animation)
+  function focusElement(el) {
+    if (!el) return;
+    if (userScrolledUp) return;
+    
+    requestAnimationFrame(() => {
+      const elTop = el.offsetTop;
+      const elHeight = el.offsetHeight;
+      const chatHeight = chatArea.clientHeight;
+      const chatScrollTop = chatArea.scrollTop;
+      
+      // إذا الرسالة كبيرة، ننزل لأسفلها
+      // إذا الرسالة صغيرة، نضعها في منتصف الشاشة تقريباً
+      if (elHeight > chatHeight * 0.7) {
+        // رسالة كبيرة: اذهب لبدايتها
+        chatArea.scrollTop = elTop - 20;
+      } else {
+        // رسالة صغيرة: اذهب لأسفلها
+        chatArea.scrollTop = elTop + elHeight - chatHeight + 40;
+      }
+    });
+  }
+
+  // نزول فوري للأسفل
+  function scrollToBottom() {
     if (userScrolledUp) return;
     requestAnimationFrame(() => {
-      chatArea.scrollTo({
-        top: chatArea.scrollHeight,
-        behavior: smooth ? 'smooth' : 'auto'
-      });
+      chatArea.scrollTop = chatArea.scrollHeight;
     });
   }
 
-  // ===== إصلاح الكيبورد (بدون اهتزاز) =====
-  let keyboardOpen = false;
-
-  if (window.visualViewport) {
-    const vv = window.visualViewport;
-    let rafId = null;
-    
-    const updateViewport = () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const height = vv.height;
-        const offset = vv.offsetTop;
-        const isKeyboard = vv.height < window.innerHeight - 150;
-        
-        if (isKeyboard !== keyboardOpen) {
-          keyboardOpen = isKeyboard;
-        }
-        
-        appEl.style.height = height + 'px';
-        appEl.style.top = offset + 'px';
-        
-        if (keyboardOpen) {
-          scrollToBottom(false);
-        }
-      });
-    };
-    
-    vv.addEventListener('resize', updateViewport);
-    vv.addEventListener('scroll', updateViewport);
-  } else {
-    window.addEventListener('resize', () => {
-      appEl.style.height = window.innerHeight + 'px';
-      setTimeout(() => scrollToBottom(false), 100);
-    });
-  }
-
-  // إغلاق الكيبورد عند اللمس خارج حقل الإدخال
-  document.addEventListener('touchstart', (e) => {
-    if (keyboardOpen && !e.target.closest('.input-wrapper') && !e.target.closest('.modal')) {
-      userInput.blur();
-    }
-  }, { passive: true });
-
-  document.addEventListener('click', (e) => {
-    if (keyboardOpen && !e.target.closest('.input-wrapper') && !e.target.closest('.modal') && !e.target.closest('.sidebar')) {
-      userInput.blur();
-    }
+  // عند فتح الكيبورد، نثبت الرسالة الأخيرة
+  userInput.addEventListener('focus', () => {
+    setTimeout(() => {
+      const lastMsg = messagesEl.lastElementChild;
+      if (lastMsg) {
+        focusElement(lastMsg);
+      } else {
+        scrollToBottom();
+      }
+    }, 300);
   });
-
-  userInput.addEventListener('focus', () => scrollToBottom(false));
 
   async function sendMessage() {
     const text = userInput.value.trim();
@@ -1325,14 +1316,20 @@ Your style:
 
     welcomeEl.style.display = 'none';
     userScrolledUp = false;
-    addMessage(text, 'user');
+    
+    const userMsgEl = addMessage(text, 'user');
     userInput.value = '';
     userInput.style.height = 'auto';
     history.push({ role: 'user', content: text });
 
+    // التركيز على رسالة المستخدم
+    setTimeout(() => focusElement(userMsgEl), 50);
+
     const loading = addMessageTyping();
     sendBtn.disabled = true;
-    scrollToBottom();
+
+    // التركيز على مؤشر الكتابة
+    setTimeout(() => focusElement(loading), 100);
 
     try {
       const res = await fetch(API_URL, {
@@ -1371,13 +1368,14 @@ Your style:
       }
 
       history.push({ role: 'assistant', content: reply });
-      scrollToBottom(false);
+
+      // التركيز على رد البوت
+      setTimeout(() => focusElement(loading), 100);
 
     } catch (err) {
       loading.querySelector('.msg-content').textContent = '❌ ' + err.message;
     } finally {
       sendBtn.disabled = false;
-      scrollToBottom(false);
     }
   }
 
@@ -1416,7 +1414,6 @@ Your style:
     `;
 
     messagesEl.appendChild(div);
-    scrollToBottom();
     return div;
   }
 
@@ -1433,7 +1430,6 @@ Your style:
       </div>
     `;
     messagesEl.appendChild(div);
-    scrollToBottom();
     return div;
   }
 
@@ -1552,7 +1548,6 @@ Your style:
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
-  userInput.focus();
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
