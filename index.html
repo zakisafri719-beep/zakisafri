@@ -26,7 +26,6 @@
     --text: #f0f5f4;
     --text-muted: #7a7a87;
     --border: #1a1a24;
-    --input-height: 70px;
   }
 
   html, body {
@@ -39,7 +38,7 @@
     position: fixed;
   }
 
-  /* ===== الخلفية ===== */
+  /* ===== خلفية خفيفة (بدون نجوم) ===== */
   .bg-animated {
     position: fixed;
     inset: 0;
@@ -51,34 +50,20 @@
   .bg-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.4;
-    animation: floatOrb 20s ease-in-out infinite;
+    filter: blur(90px);
+    opacity: 0.35;
   }
 
-  .bg-orb.o1 { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent), transparent); top: -100px; right: -100px; }
-  .bg-orb.o2 { width: 350px; height: 350px; background: radial-gradient(circle, var(--accent-light), transparent); bottom: -100px; left: -100px; animation-delay: -7s; }
-  .bg-orb.o3 { width: 300px; height: 300px; background: radial-gradient(circle, var(--accent), transparent); top: 50%; left: 50%; animation-delay: -14s; }
-
-  @keyframes floatOrb {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(60px, -40px) scale(1.1); }
-    50% { transform: translate(-40px, 60px) scale(0.95); }
-    75% { transform: translate(30px, 30px) scale(1.05); }
+  .bg-orb.o1 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, var(--accent), transparent);
+    top: -100px; right: -100px;
   }
 
-  .star {
-    position: absolute;
-    width: 2px; height: 2px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.3;
-    animation: twinkle 3s ease-in-out infinite;
-  }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.8; }
+  .bg-orb.o2 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, var(--accent-light), transparent);
+    bottom: -100px; left: -100px;
   }
 
   /* ===== أيقونات متوهجة ===== */
@@ -87,8 +72,8 @@
     align-items: center;
     justify-content: center;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 6px var(--accent-glow-strong)) drop-shadow(0 0 12px var(--accent-glow));
-    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px var(--accent-glow));
+    transition: all 0.2s ease;
     font-size: 22px;
     line-height: 1;
   }
@@ -105,11 +90,10 @@
 
   .glow-icon:active {
     color: white;
-    filter: drop-shadow(0 0 8px var(--accent-light)) drop-shadow(0 0 20px var(--accent-glow-strong));
-    transform: scale(1.15);
+    transform: scale(1.1);
   }
 
-  /* ===== الحاوية الرئيسية ===== */
+  /* ===== الحاوية ===== */
   .app {
     position: fixed;
     inset: 0;
@@ -117,6 +101,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    transition: top 0.15s ease, height 0.15s ease;
   }
 
   /* ===== الشريط العلوي ===== */
@@ -174,15 +159,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 24px;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 8px var(--accent-glow-strong)) drop-shadow(0 0 16px var(--accent-glow));
-    animation: logoPulse 3s ease-in-out infinite;
-  }
-
-  @keyframes logoPulse {
-    0%, 100% { filter: drop-shadow(0 0 8px var(--accent-glow-strong)) drop-shadow(0 0 16px var(--accent-glow)); }
-    50% { filter: drop-shadow(0 0 12px var(--accent-light)) drop-shadow(0 0 28px var(--accent-glow-strong)); }
+    filter: drop-shadow(0 0 6px var(--accent-glow));
   }
 
   .top-title h1 { font-size: 15px; font-weight: 700; color: white; }
@@ -207,8 +186,8 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 20px 15px;
-    padding-bottom: 140px;
+    padding: 15px 15px;
+    padding-bottom: 30px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     position: relative;
@@ -229,38 +208,26 @@
     max-width: 700px;
     margin: 20px auto;
     padding: 20px;
-    animation: fadeInUp 0.6s ease;
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   .welcome-logo {
-    width: 100px; height: 100px;
-    margin: 0 auto 25px;
+    width: 90px; height: 90px;
+    margin: 0 auto 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 80px;
+    font-size: 70px;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 15px var(--accent-glow-strong)) drop-shadow(0 0 35px var(--accent-glow));
-    animation: logoFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px var(--accent-glow-strong));
   }
 
-  @keyframes logoFloat {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-10px) scale(1.05); }
-  }
-
-  .welcome h2 { font-size: 26px; margin-bottom: 10px; color: white; }
-  .welcome p { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; line-height: 1.7; }
+  .welcome h2 { font-size: 24px; margin-bottom: 10px; color: white; }
+  .welcome p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; line-height: 1.7; }
 
   .suggestions {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
     max-width: 600px;
     margin: 0 auto;
   }
@@ -268,53 +235,46 @@
   .suggestion-card {
     background: var(--bg-bot-bubble);
     border: 1px solid var(--border);
-    padding: 14px;
-    border-radius: 16px;
+    padding: 12px;
+    border-radius: 14px;
     cursor: pointer;
     text-align: right;
-    transition: all 0.3s;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .suggestion-card:active {
     border-color: var(--accent);
     transform: scale(0.97);
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
   }
 
   .suggestion-card .sug-icon {
     flex-shrink: 0;
-    font-size: 26px;
+    font-size: 22px;
     display: flex;
   }
 
-  .suggestion-card .sug-text { flex: 1; }
-  .suggestion-card .title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .suggestion-card .sug-text { flex: 1; min-width: 0; }
+  .suggestion-card .title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
   .suggestion-card .sub { font-size: 11px; color: var(--text-muted); }
 
   /* ===== الرسائل ===== */
   .msg {
     display: flex;
     gap: 10px;
-    margin-bottom: 18px;
-    animation: msgSlide 0.4s ease;
-  }
-
-  @keyframes msgSlide {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+    margin-bottom: 16px;
   }
 
   .msg-avatar {
-    width: 38px; height: 38px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .msg.user .msg-avatar {
@@ -324,7 +284,7 @@
 
   .msg.bot .msg-avatar {
     color: var(--accent-light);
-    filter: drop-shadow(0 0 6px var(--accent-glow-strong));
+    filter: drop-shadow(0 0 5px var(--accent-glow));
     background: transparent;
   }
 
@@ -332,21 +292,19 @@
 
   .msg-content {
     background: var(--bg-bot-bubble);
-    padding: 14px 18px;
-    border-radius: 16px;
-    line-height: 1.9;
-    font-size: 15px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    line-height: 1.85;
+    font-size: 14.5px;
     word-wrap: break-word;
     white-space: pre-wrap;
     border: 1px solid var(--border);
-    letter-spacing: 0.2px;
   }
 
   .msg.user .msg-content {
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
     color: white;
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
   }
 
   .msg.user { flex-direction: row-reverse; }
@@ -355,46 +313,39 @@
   .msg-time {
     font-size: 10px;
     color: var(--text-muted);
-    margin-top: 6px;
+    margin-top: 5px;
     padding: 0 5px;
   }
 
   .msg-actions {
     display: flex;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 4px;
+    margin-top: 6px;
     padding: 0 5px;
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
   .msg-action-btn {
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 34px; height: 34px;
+    width: 30px; height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    border-radius: 10px;
+    font-size: 16px;
+    border-radius: 8px;
   }
 
   .msg-action-btn:active { transform: scale(0.9); }
 
-  .typing-indicator {
-    display: flex;
-    gap: 5px;
-    padding: 5px 0;
-  }
-
+  .typing-indicator { display: flex; gap: 5px; padding: 4px 0; }
   .typing-indicator span {
     width: 8px; height: 8px;
     background: var(--accent-light);
     border-radius: 50%;
     animation: typing 1.4s infinite;
-    box-shadow: 0 0 6px var(--accent-glow);
   }
-
   .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
   .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
@@ -407,12 +358,11 @@
   .input-wrapper {
     flex-shrink: 0;
     padding: 10px 12px;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
     background: rgba(10, 10, 15, 0.95);
     backdrop-filter: blur(20px);
     border-top: 1px solid var(--border);
     z-index: 60;
-    transition: padding-bottom 0.2s;
   }
 
   .input-box {
@@ -420,17 +370,16 @@
     margin: 0 auto;
     background: var(--bg-input);
     border: 1px solid var(--accent);
-    border-radius: 28px;
-    padding: 6px 6px 6px 14px;
+    border-radius: 26px;
+    padding: 5px 5px 5px 14px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    transition: all 0.3s;
-    box-shadow: 0 0 25px rgba(124, 58, 237, 0.25);
+    gap: 5px;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
   }
 
   .input-box:focus-within {
-    box-shadow: 0 0 35px rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.45);
   }
 
   .input-box textarea {
@@ -440,7 +389,7 @@
     outline: none;
     color: var(--text);
     font-size: 15px;
-    padding: 12px 0;
+    padding: 10px 0;
     resize: none;
     max-height: 100px;
     font-family: inherit;
@@ -449,14 +398,10 @@
 
   .input-box textarea::placeholder { color: var(--text-muted); }
 
-  .input-actions {
-    display: flex;
-    gap: 2px;
-    align-items: center;
-  }
+  .input-actions { display: flex; gap: 2px; align-items: center; }
 
   .input-icon-btn {
-    width: 38px; height: 38px;
+    width: 36px; height: 36px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -469,7 +414,7 @@
   .input-icon-btn:active { transform: scale(0.88); }
 
   .send-btn {
-    width: 44px; height: 44px;
+    width: 42px; height: 42px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     border: none;
@@ -477,7 +422,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 25px var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
     flex-shrink: 0;
   }
 
@@ -485,9 +430,8 @@
   .send-btn:disabled { opacity: 0.4; }
 
   .send-btn .glow-icon {
-    font-size: 20px;
+    font-size: 19px;
     color: white;
-    filter: drop-shadow(0 0 4px rgba(255,255,255,0.8));
   }
 
   /* ===== Toast ===== */
@@ -498,13 +442,13 @@
     transform: translateX(-50%) translateY(100px);
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     color: white;
-    padding: 12px 24px;
+    padding: 11px 22px;
     border-radius: 30px;
     font-size: 13px;
     font-weight: 600;
     z-index: 9999;
     opacity: 0;
-    transition: all 0.4s;
+    transition: all 0.3s;
     box-shadow: 0 10px 30px var(--accent-glow-strong);
     pointer-events: none;
     max-width: 90%;
@@ -513,22 +457,22 @@
 
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ===== القائمة الجانبية ===== */
+  /* ===== القائمة الجانبية - مضغوطة ===== */
   .sidebar {
     position: fixed;
     top: 0;
     right: -320px;
-    width: 300px;
+    width: 290px;
     height: 100vh;
     background: var(--bg-sidebar);
     border-left: 1px solid var(--border);
     z-index: 200;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    padding: 18px 18px;
-    padding-top: max(18px, env(safe-area-inset-top));
-    padding-bottom: max(18px, env(safe-area-inset-bottom));
+    padding: 15px;
+    padding-top: max(15px, env(safe-area-inset-top));
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
     overflow-y: auto;
   }
 
@@ -537,58 +481,60 @@
   .sidebar-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-bottom: 15px;
+    gap: 10px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .sidebar-logo {
-    width: 50px; height: 50px;
+    width: 42px; height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
+    font-size: 30px;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 10px var(--accent-glow-strong)) drop-shadow(0 0 20px var(--accent-glow));
+    filter: drop-shadow(0 0 8px var(--accent-glow));
   }
 
-  .sidebar-header h2 { font-size: 16px; margin-bottom: 3px; color: white; }
-  .sidebar-header p { font-size: 11px; color: var(--text-muted); }
+  .sidebar-header h2 { font-size: 15px; margin-bottom: 2px; color: white; }
+  .sidebar-header p { font-size: 10px; color: var(--text-muted); }
 
   .sidebar-menu { list-style: none; }
 
+  /* ← تم التقريب: padding 4px بدل 8px، margin 0 */
   .sidebar-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 6px;
-    border-radius: 12px;
+    gap: 10px;
+    padding: 4px 6px;
+    border-radius: 10px;
     cursor: pointer;
     color: var(--text-muted);
     font-size: 14px;
-    margin-bottom: 2px;
-    transition: all 0.3s;
+    margin-bottom: 0;
+    transition: all 0.2s;
+    line-height: 1.2;
   }
 
   .sidebar-item .icon-wrap {
-    width: 38px; height: 38px;
+    width: 34px; height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
+  .sidebar-item .glow-icon { font-size: 20px; }
+
   .sidebar-item:active {
     background: rgba(124, 58, 237, 0.1);
     color: white;
   }
 
-  .sidebar-item:active .glow-icon { transform: scale(1.2); }
-
   .sidebar-footer {
     margin-top: auto;
-    padding-top: 15px;
+    padding-top: 12px;
     border-top: 1px solid var(--border);
   }
 
@@ -596,24 +542,23 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px;
-    border-radius: 12px;
+    padding: 8px;
+    border-radius: 10px;
     background: rgba(124, 58, 237, 0.08);
     cursor: pointer;
-    transition: all 0.3s;
   }
 
   .user-avatar {
-    width: 38px; height: 38px;
+    width: 34px; height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 22px;
     color: var(--accent-light);
-    filter: drop-shadow(0 0 6px var(--accent-glow-strong));
+    filter: drop-shadow(0 0 5px var(--accent-glow));
   }
 
-  .user-info h4 { font-size: 13px; color: white; }
+  .user-info h4 { font-size: 12px; color: white; }
   .user-info p { font-size: 10px; color: var(--text-muted); }
 
   .overlay {
@@ -650,12 +595,12 @@
   .modal-content {
     background: var(--bg-sidebar);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    max-width: 500px;
+    border-radius: 18px;
+    max-width: 480px;
     width: 100%;
     max-height: 80vh;
     overflow-y: auto;
-    padding: 22px;
+    padding: 20px;
     transform: scale(0.9);
     transition: transform 0.3s;
   }
@@ -666,18 +611,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
 
-  .modal-header h3 { font-size: 17px; color: white; }
+  .modal-header h3 { font-size: 16px; color: white; }
 
   .modal-close {
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 36px; height: 36px;
+    width: 34px; height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -690,12 +635,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 10px;
+    padding: 11px 10px;
     border-radius: 12px;
     background: rgba(124, 58, 237, 0.05);
-    margin-bottom: 8px;
+    margin-bottom: 7px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
   }
 
   .modal-item:active { background: rgba(124, 58, 237, 0.15); }
@@ -708,14 +653,14 @@
     color: var(--text);
   }
 
-  .modal-item-left .glow-icon { font-size: 22px; }
+  .modal-item-left .glow-icon { font-size: 20px; }
   .modal-item > span:last-child { color: var(--text-muted); font-size: 13px; }
 
   /* ===== شبكة الألوان ===== */
   .color-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
+    gap: 10px;
     padding: 10px 0;
   }
 
@@ -725,7 +670,7 @@
     border-radius: 50%;
     cursor: pointer;
     border: 3px solid transparent;
-    transition: all 0.3s;
+    transition: all 0.2s;
     position: relative;
   }
 
@@ -733,7 +678,7 @@
 
   .color-option.selected {
     border-color: white;
-    box-shadow: 0 0 25px currentColor;
+    box-shadow: 0 0 20px currentColor;
   }
 
   .color-option.selected::after {
@@ -744,16 +689,16 @@
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
   }
 
   /* ===== Toggle ===== */
   .toggle-switch {
     position: relative;
-    width: 50px; height: 28px;
+    width: 46px; height: 26px;
     background: var(--border);
-    border-radius: 14px;
+    border-radius: 13px;
     cursor: pointer;
     transition: all 0.3s;
     flex-shrink: 0;
@@ -761,50 +706,46 @@
 
   .toggle-switch.on {
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    box-shadow: 0 0 15px var(--accent-glow);
   }
 
   .toggle-switch::after {
     content: '';
     position: absolute;
     top: 3px; right: 3px;
-    width: 22px; height: 22px;
+    width: 20px; height: 20px;
     background: white;
     border-radius: 50%;
     transition: all 0.3s;
   }
 
-  .toggle-switch.on::after { right: calc(100% - 25px); }
+  .toggle-switch.on::after { right: calc(100% - 23px); }
 
   /* ===== جوال ===== */
   @media (max-width: 768px) {
-    .sidebar { width: 270px; right: -290px; }
+    .sidebar { width: 260px; right: -280px; }
     .suggestions { grid-template-columns: 1fr; }
-    .welcome h2 { font-size: 22px; }
-    .welcome-logo { font-size: 65px; width: 80px; height: 80px; }
-    .chat-area { padding: 15px 12px; padding-bottom: 140px; }
-    .input-wrapper { padding: 8px 10px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+    .welcome h2 { font-size: 20px; }
+    .welcome-logo { font-size: 60px; width: 75px; height: 75px; }
+    .chat-area { padding: 12px 12px; padding-bottom: 20px; }
+    .input-wrapper { padding: 8px 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
 <body>
 
-<!-- الخلفية -->
 <div class="bg-animated">
   <div class="bg-orb o1"></div>
   <div class="bg-orb o2"></div>
-  <div class="bg-orb o3"></div>
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-<!-- القائمة الجانبية -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-logo"><span class="glow-icon">✦</span></div>
     <div>
       <h2 id="sideTitle">AI Chat</h2>
-      <p id="sideSub">مساعدك الذكي</p>
+      <p id="sideSub">بواسطة Zaki</p>
     </div>
   </div>
 
@@ -866,7 +807,7 @@
   </div>
 </aside>
 
-<div class="app">
+<div class="app" id="appEl">
   <div class="top-bar">
     <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
       <span></span><span></span><span></span>
@@ -896,7 +837,7 @@
       <div class="welcome" id="welcome">
         <div class="welcome-logo"><span class="glow-icon">✦</span></div>
         <h2 data-i18n="welcomeTitle">مرحباً بك 👋</h2>
-        <p data-i18n="welcomeSub">أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء</p>
+        <p data-i18n="welcomeSub">أنا AI Chat، مساعدك الذكي</p>
 
         <div class="suggestions">
           <div class="suggestion-card" onclick="quickAsk(t('q1'))">
@@ -945,12 +886,12 @@
       <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
       <div class="input-actions">
         <button class="input-icon-btn" onclick="attachFile()">
-          <span class="glow-icon" style="font-size:20px;">
+          <span class="glow-icon" style="font-size:19px;">
             <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           </span>
         </button>
         <button class="input-icon-btn" onclick="openImage()">
-          <span class="glow-icon" style="font-size:20px;">
+          <span class="glow-icon" style="font-size:19px;">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </span>
         </button>
@@ -966,13 +907,12 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- الإعدادات -->
 <div class="modal" id="settingsModal">
   <div class="modal-content">
     <div class="modal-header">
       <h3 data-i18n="settingsTitle">⚙️ الإعدادات</h3>
       <button class="modal-close" onclick="closeSettings()">
-        <span class="glow-icon" style="font-size:22px;">
+        <span class="glow-icon" style="font-size:20px;">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </span>
       </button>
@@ -1010,23 +950,22 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast(t('soon'))">
+    <div class="modal-item" onclick="showToast('AI Chat v2.2 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v2.1</span>
+      <span>v2.2</span>
     </div>
   </div>
 </div>
 
-<!-- الألوان -->
 <div class="modal" id="colorModal">
   <div class="modal-content">
     <div class="modal-header">
       <h3 data-i18n="colorTitle">🎨 اختر اللون</h3>
       <button class="modal-close" onclick="closeColorPicker()">
-        <span class="glow-icon" style="font-size:22px;">
+        <span class="glow-icon" style="font-size:20px;">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </span>
       </button>
@@ -1055,7 +994,7 @@
       files: 'الملفات', images: 'الصور', favorites: 'المفضلة',
       settings: 'الإعدادات', user: 'المستخدم', freeAccount: 'حساب مجاني',
       welcomeTitle: 'مرحباً بك 👋',
-      welcomeSub: 'أنا مساعدك الذكي، جاهز لمساعدتك في أي شيء',
+      welcomeSub: 'أنا AI Chat، مساعدك الذكي',
       s1: 'أفكار وإبداع', s1sub: 'اقتراحات مبتكرة',
       s2: 'تعلّم', s2sub: 'معلومات جديدة',
       s3: 'كتابة', s3sub: 'نصوص ومقالات',
@@ -1072,16 +1011,31 @@
       langChanged: '🌐 تم تغيير اللغة', colorChanged: '🎨 تم تغيير اللون',
       q1: 'أعطني أفكار إبداعية', q2: 'علمني شيئاً جديداً',
       q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
-      systemMsg: 'أنت مساعد ذكي محترف. أجب بالعربية الفصحى، بوضوح ودقة. نظّم إجاباتك بنقاط عند الحاجة، واستخدم أمثلة عملية. كن موجزاً ومفيداً.',
-      sideSub: 'مساعدك الذكي', installTitle: 'تثبيت التطبيق',
-      installSub: 'اضغط للتثبيت', installBtn: 'تثبيت'
+      sideSub: 'بواسطة Zaki', installTitle: 'تثبيت التطبيق',
+      installSub: 'اضغط للتثبيت', installBtn: 'تثبيت',
+      systemMsg: `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki". 
+      
+هويتك الثابتة:
+- اسمك: AI Chat
+- مطورك: Zaki (زاكي)
+- أنت لست ChatGPT ولا OpenAI ولا Google ولا أي شركة أخرى
+- إذا سُئلت "من أنت؟" أجب: "أنا AI Chat، مساعد ذكي طوّره Zaki"
+- إذا سُئلت "من صنعك؟" أجب: "طوّرني Zaki"
+- لا تذكر OpenAI أو ChatGPT أبداً
+
+أسلوبك:
+- أجب بالعربية الفصحى بوضوح ودقة
+- نظّم إجاباتك بنقاط عند الحاجة
+- استخدم أمثلة عملية
+- كن موجزاً ومفيداً ومهنياً
+- لا تكرر السؤال في إجابتك`
     },
     en: {
       newChat: 'New Chat', chats: 'Chats', explore: 'Explore',
       files: 'Files', images: 'Images', favorites: 'Favorites',
       settings: 'Settings', user: 'User', freeAccount: 'Free Account',
       welcomeTitle: 'Welcome 👋',
-      welcomeSub: 'I am your smart assistant, ready to help',
+      welcomeSub: 'I am AI Chat, your smart assistant',
       s1: 'Ideas', s1sub: 'Creative suggestions',
       s2: 'Learn', s2sub: 'New information',
       s3: 'Writing', s3sub: 'Texts and articles',
@@ -1098,9 +1052,23 @@
       langChanged: '🌐 Language changed', colorChanged: '🎨 Color changed',
       q1: 'Give me creative ideas', q2: 'Teach me something new',
       q3: 'Help me with writing', q4: 'Help me with coding',
-      systemMsg: 'You are a professional smart assistant. Answer clearly and accurately. Organize with bullet points when needed. Be concise and helpful.',
-      sideSub: 'Your smart assistant', installTitle: 'Install App',
-      installSub: 'Tap to install', installBtn: 'Install'
+      sideSub: 'By Zaki', installTitle: 'Install App',
+      installSub: 'Tap to install', installBtn: 'Install',
+      systemMsg: `You are "AI Chat", a smart assistant developed by "Zaki".
+
+Your fixed identity:
+- Your name: AI Chat
+- Your developer: Zaki
+- You are NOT ChatGPT, NOT OpenAI, NOT Google, NOT any other company
+- If asked "Who are you?" answer: "I'm AI Chat, a smart assistant developed by Zaki"
+- If asked "Who made you?" answer: "Zaki developed me"
+- Never mention OpenAI or ChatGPT
+
+Your style:
+- Answer clearly and accurately
+- Organize with bullet points when needed
+- Use practical examples
+- Be concise and professional`
     }
   };
 
@@ -1129,7 +1097,6 @@
     document.getElementById('userInput').placeholder = t('placeholder');
     document.getElementById('sideSub').textContent = t('sideSub');
 
-    // تحديث رسالة النظام
     if (history.length > 0 && history[0].role === 'system') {
       history[0].content = t('systemMsg');
     }
@@ -1203,8 +1170,7 @@
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
   const menuBtn = document.getElementById('menuBtn');
-  const appEl = document.querySelector('.app');
-  const inputWrapper = document.getElementById('inputWrapper');
+  const appEl = document.getElementById('appEl');
 
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
@@ -1230,7 +1196,7 @@
     toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
   function openGoogle() {
@@ -1290,51 +1256,31 @@
     return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
   }
 
-  // ===== إصلاح الكيبورد =====
+  // إصلاح الكيبورد
   function setupKeyboardFix() {
     if (window.visualViewport) {
       const updateViewport = () => {
         const vv = window.visualViewport;
-        const offsetTop = vv.offsetTop;
-        const height = vv.height;
-        
-        appEl.style.height = height + 'px';
-        appEl.style.top = offsetTop + 'px';
-        appEl.style.position = 'fixed';
-        
-        chatArea.scrollTop = chatArea.scrollHeight;
+        appEl.style.height = vv.height + 'px';
+        appEl.style.top = vv.offsetTop + 'px';
       };
-      
       window.visualViewport.addEventListener('resize', updateViewport);
       window.visualViewport.addEventListener('scroll', updateViewport);
       updateViewport();
     } else {
-      // بديل للجوالات القديمة
       window.addEventListener('resize', () => {
         appEl.style.height = window.innerHeight + 'px';
-        setTimeout(() => {
-          chatArea.scrollTop = chatArea.scrollHeight;
-        }, 300);
       });
     }
   }
 
-  // ===== Scroll إلى الأسفل دائماً =====
   function scrollToBottom() {
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       chatArea.scrollTop = chatArea.scrollHeight;
-    }, 50);
-    setTimeout(() => {
-      chatArea.scrollTop = chatArea.scrollHeight;
-    }, 200);
+    });
   }
 
   userInput.addEventListener('focus', scrollToBottom);
-  userInput.addEventListener('input', () => {
-    userInput.style.height = 'auto';
-    userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
-    scrollToBottom();
-  });
 
   async function sendMessage() {
     const text = userInput.value.trim();
@@ -1360,8 +1306,8 @@
         body: JSON.stringify({
           model: 'openai/gpt-oss-20b',
           messages: history,
-          temperature: 0.7,
-          max_tokens: 2048
+          temperature: 0.6,
+          max_tokens: 1500
         })
       });
 
@@ -1388,7 +1334,7 @@
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
     const avatar = sender === 'user'
-      ? '<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+      ? '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
       : '✦';
     const time = getTime();
 
@@ -1397,13 +1343,13 @@
       actionsHtml = `
         <div class="msg-actions">
           <button class="msg-action-btn glow-icon" onclick="copyText(this)">
-            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="shareMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
         </div>
       `;
@@ -1432,17 +1378,7 @@
         <div class="msg-content">
           <div class="typing-indicator"><span></span><span></span><span></span></div>
         </div>
-        <div class="msg-actions" style="display:none;">
-          <button class="msg-action-btn glow-icon" onclick="copyText(this)">
-            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </button>
-          <button class="msg-action-btn glow-icon" onclick="likeMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="msg-action-btn glow-icon" onclick="shareMsg(this)">
-            <svg viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-        </div>
+        <div class="msg-actions" style="display:none;"></div>
       </div>
     `;
     messagesEl.appendChild(div);
@@ -1469,20 +1405,6 @@
     return div.innerHTML;
   }
 
-  // نجوم الخلفية
-  (function createStars() {
-    const bg = document.querySelector('.bg-animated');
-    for (let i = 0; i < 50; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      bg.appendChild(star);
-    }
-  })();
-
-  // شبكة الألوان
   (function buildColorGrid() {
     const grid = document.getElementById('colorGrid');
     COLORS.forEach(color => {
@@ -1507,6 +1429,11 @@
     }
   });
 
+  userInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+  });
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeSettings();
@@ -1515,7 +1442,6 @@
     }
   });
 
-  // شريط التثبيت
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -1541,7 +1467,6 @@
       display: flex; align-items: center; gap: 12px; z-index: 9999;
       box-shadow: 0 8px 30px var(--accent-glow-strong);
       font-family: Tahoma, sans-serif;
-      animation: slideDown 0.4s ease;
     `;
     banner.innerHTML = `
       <img src="file_000000000cc482118a017dbfa6f8ed8b.png" style="width:40px;height:40px;border-radius:10px;">
@@ -1573,14 +1498,6 @@
     };
   }
 
-  const styleAnim = document.createElement('style');
-  styleAnim.textContent = `@keyframes slideDown {
-    from { transform: translateY(-120%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }`;
-  document.head.appendChild(styleAnim);
-
-  // التهيئة
   applyLanguage(currentLang);
   applyColor(currentColor);
   applyTheme(isDark);
