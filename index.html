@@ -642,6 +642,14 @@
       <div class="toggle-switch on" id="emojiToggle"></div>
     </div>
 
+    <div class="modal-item" onclick="toggleCreativity()">
+      <div class="modal-item-left">
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></span>
+        <span data-i18n="creativityMode">الإبداع العالي</span>
+      </div>
+      <div class="toggle-switch on" id="creativityToggle"></div>
+    </div>
+
     <div class="modal-item" onclick="toggleTheme()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
@@ -674,12 +682,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v5.3 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v5.4 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v5.3</span>
+      <span>v5.4</span>
     </div>
   </div>
 </div>
@@ -793,7 +801,10 @@
       typewriterOff: '⚡ عرض الرسائل فوراً',
       emojiMode: 'استعمال الإيموجي',
       emojiOn: '😊 الإيموجي مفعّل',
-      emojiOff: '🚫 الإيموجي مغلق'
+      emojiOff: '🚫 الإيموجي مغلق',
+      creativityMode: 'الإبداع العالي',
+      creativityOn: '🎨 الإبداع العالي مفعّل (إجابات متنوعة)',
+      creativityOff: '🎯 الوضع الدقيق مفعّل (إجابات ثابتة)'
     },
     en: {
       newChat: 'New Chat', chats: 'Chats', explore: 'Explore',
@@ -844,7 +855,10 @@
       typewriterOff: '⚡ Messages appear instantly',
       emojiMode: 'Use Emojis',
       emojiOn: '😊 Emojis enabled',
-      emojiOff: '🚫 Emojis disabled'
+      emojiOff: '🚫 Emojis disabled',
+      creativityMode: 'High Creativity',
+      creativityOn: '🎨 High creativity ON (diverse answers)',
+      creativityOff: '🎯 Precise mode ON (consistent answers)'
     }
   };
 
@@ -857,6 +871,12 @@
       : (lang === 'ar'
           ? '- لا تستعمل الإيموجي إطلاقاً في ردودك'
           : '- Do NOT use any emojis in your replies');
+
+    const creativityRule = useCreativity
+      ? (lang === 'ar'
+          ? '- كن مبدعاً: قدّم زوايا جديدة وأمثلة غير متوقعة في كل إجابة'
+          : '- Be creative: offer fresh angles and unexpected examples in each answer')
+      : '';
 
     const baseAr = `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki".
 
@@ -882,7 +902,8 @@
 - إذا احتجت مصطلحاً إنجليزياً اكتبه بين قوسين منفصلاً
 - مثال صحيح: "علم الجيولوجيا (Geology)"
 
-${emojiRule}`;
+${emojiRule}
+${creativityRule}`;
 
     const personalitiesAr = {
       normal: `\n\nشخصيتك: عادي 😊\n- أسلوب متوازن ومهني\n- ودود لكن ليس مبالغاً\n- مباشر ومفيد`,
@@ -915,7 +936,8 @@ Writing rules:
 - Don't write "geoية" - write "جيولوجية"
 - If you need an English term, write it in parentheses separately
 
-${emojiRule}`;
+${emojiRule}
+${creativityRule}`;
 
     const personalitiesEn = {
       normal: `\n\nYour personality: Normal 😊\n- Balanced and professional\n- Friendly but not excessive\n- Direct and helpful`,
@@ -940,6 +962,7 @@ ${emojiRule}`;
   let useThinking = localStorage.getItem('useThinking') !== 'false';
   let useTypewriter = localStorage.getItem('useTypewriter') !== 'false';
   let useEmoji = localStorage.getItem('useEmoji') !== 'false';
+  let useCreativity = localStorage.getItem('useCreativity') !== 'false';
 
   let history = [];
   let currentChatId = null;
@@ -1170,6 +1193,22 @@ ${emojiRule}`;
     showToast(useEmoji ? t('emojiOn') : t('emojiOff'));
   }
 
+  // ============ الإبداع العالي ============
+  function applyCreativityMode(enabled) {
+    useCreativity = enabled;
+    localStorage.setItem('useCreativity', enabled);
+    const toggle = document.getElementById('creativityToggle');
+    if (toggle) toggle.classList.toggle('on', enabled);
+    if (history.length > 0 && history[0].role === 'system') {
+      history[0].content = getSystemMsg(currentPersonality, currentLang);
+    }
+  }
+
+  function toggleCreativity() {
+    applyCreativityMode(!useCreativity);
+    showToast(useCreativity ? t('creativityOn') : t('creativityOff'));
+  }
+
   // ============ الشخصية ============
   function applyPersonality(personalityId) {
     currentPersonality = personalityId;
@@ -1311,6 +1350,7 @@ ${emojiRule}`;
     showToast(t('googleOpening'));
   }
 </script>
+<script>
   // ============ New Chat ============
   function newChat() {
     saveCurrentChat();
@@ -1705,7 +1745,7 @@ ${emojiRule}`;
         </div>
       </div>
       <div class="stat-card" style="margin-top:12px;">
-        <div class="number" style="font-size:16px;">AI Chat v5.3</div>
+        <div class="number" style="font-size:16px;">AI Chat v5.4</div>
         <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
       </div>
     `;
@@ -1875,12 +1915,12 @@ ${emojiRule}`;
     showToast(webSearchEnabled ? t('searchOn') : t('searchOff'));
   }
 
-  // ============ Image Upload ============
+  // ============ Image Upload (fixed: opens gallery) ============
   function pickImage() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.capture = 'environment';
+    // ⚠️ تم حذف capture = 'environment' لفتح المعرض بدلاً من الكاميرا
     input.onchange = (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -2068,6 +2108,7 @@ ${emojiRule}`;
     }
 
     const maxTokens = useThinking ? 4096 : 800;
+    const temperature = useCreativity ? 0.95 : 0.5;
 
     try {
       const res = await fetch(API_URL, {
@@ -2079,9 +2120,12 @@ ${emojiRule}`;
         body: JSON.stringify({
           model: MODEL,
           messages: history,
-          temperature: 0.7,
+          temperature: temperature,
           max_tokens: maxTokens,
-          top_p: 0.95
+          top_p: 0.95,
+          frequency_penalty: useCreativity ? 0.4 : 0.0,
+          presence_penalty: useCreativity ? 0.3 : 0.0,
+          seed: useCreativity ? Math.floor(Math.random() * 1000000) : 42
         })
       });
 
@@ -2280,6 +2324,7 @@ h1{color:#7c3aed;text-align:center;}
   applyThinkingMode(useThinking);
   applyTypewriterMode(useTypewriter);
   applyEmojiMode(useEmoji);
+  applyCreativityMode(useCreativity);
   rebuildColorGrid();
   rebuildPersonalityGrid();
   updatePersonalityLabel();
