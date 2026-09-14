@@ -161,7 +161,8 @@
 
   .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; padding: 11px 22px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: all 0.25s; box-shadow: 0 10px 30px var(--accent-glow-strong); pointer-events: none; max-width: 90%; text-align: center; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
+</style>
+<style>
   .sidebar { position: fixed; top: 0; right: -320px; width: 290px; height: 100dvh; background: var(--bg-sidebar); border-left: 1px solid var(--border); z-index: 200; transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1); will-change: right; display: flex; flex-direction: column; padding: 15px; padding-top: max(15px, env(safe-area-inset-top)); padding-bottom: max(15px, env(safe-area-inset-bottom)); overflow-y: auto; }
   .sidebar.open { right: 0; }
   .sidebar-header { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
@@ -195,6 +196,17 @@
   .modal-item-left { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text); }
   .modal-item-left .glow-icon { font-size: 20px; }
   .modal-item > span:last-child { color: var(--text-muted); font-size: 13px; }
+
+  .personality-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 5px 0; }
+  .personality-option { display: flex; align-items: center; gap: 14px; padding: 14px; background: rgba(124, 58, 237, 0.05); border: 2px solid transparent; border-radius: 14px; cursor: pointer; transition: all 0.2s; }
+  .personality-option:active { transform: scale(0.98); }
+  .personality-option.selected { border-color: var(--accent); background: rgba(124, 58, 237, 0.15); box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+  .personality-option .personality-emoji { font-size: 32px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(124, 58, 237, 0.1); border-radius: 12px; flex-shrink: 0; }
+  .personality-option .personality-info { flex: 1; min-width: 0; }
+  .personality-option .personality-name { font-size: 15px; font-weight: 600; color: white; margin-bottom: 3px; }
+  .personality-option .personality-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .personality-option .personality-check { color: var(--accent-light); font-size: 22px; display: none; flex-shrink: 0; }
+  .personality-option.selected .personality-check { display: block; }
 
   .color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px 0; }
   .color-option { width: 100%; aspect-ratio: 1; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; position: relative; }
@@ -279,6 +291,7 @@
   }
 </style>
 </head>
+
 <body>
 
 <div class="bg-animated">
@@ -288,7 +301,6 @@
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
 <!-- ===== القائمة الجانبية ===== -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
@@ -436,7 +448,6 @@
     </div>
   </div>
 
-  <!-- معاينة الصورة -->
   <div class="image-preview" id="imagePreview">
     <div class="image-preview-inner">
       <img id="previewImg" src="" alt="preview">
@@ -476,7 +487,6 @@
     </div>
   </div>
 </div>
-
 <!-- ===== صفحة المحادثات ===== -->
 <div class="page" id="chatsPage">
   <div class="page-header">
@@ -600,6 +610,14 @@
       </button>
     </div>
 
+    <div class="modal-item" onclick="openPersonalityPicker()">
+      <div class="modal-item-left">
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+        <span data-i18n="personalityMode">شخصية الذكاء</span>
+      </div>
+      <span id="personalityLabel">😐 عادي</span>
+    </div>
+
     <div class="modal-item" onclick="toggleThinking()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
@@ -614,6 +632,14 @@
         <span data-i18n="typewriterMode">تأثير الكتابة</span>
       </div>
       <div class="toggle-switch on" id="typewriterToggle"></div>
+    </div>
+
+    <div class="modal-item" onclick="toggleEmoji()">
+      <div class="modal-item-left">
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+        <span data-i18n="emojiMode">استعمال الإيموجي</span>
+      </div>
+      <div class="toggle-switch on" id="emojiToggle"></div>
     </div>
 
     <div class="modal-item" onclick="toggleTheme()">
@@ -648,13 +674,28 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v5.1 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v5.3 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v5.1</span>
+      <span>v5.3</span>
     </div>
+  </div>
+</div>
+
+<!-- نافذة اختيار الشخصية -->
+<div class="modal" id="personalityModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 data-i18n="personalityTitle">🎭 اختر شخصية الذكاء</h3>
+      <button class="modal-close" onclick="closePersonalityPicker()">
+        <span class="glow-icon" style="font-size:20px;">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+      </button>
+    </div>
+    <div class="personality-grid" id="personalityGrid"></div>
   </div>
 </div>
 
@@ -687,6 +728,20 @@
     { name: 'teal', main: '#0d9488', light: '#2dd4bf' }
   ];
 
+  // ============ الشخصيات ============
+  const PERSONALITIES = [
+    { id: 'normal',  emoji: '😐', ar: 'عادي',   en: 'Normal',
+      descAr: 'أسلوب متوازن، مهني وودود',              descEn: 'Balanced, professional & friendly' },
+    { id: 'serious', emoji: '🎩', ar: 'جدي',   en: 'Serious',
+      descAr: 'رسمي، دقيق، بدون مزاح',                 descEn: 'Formal, accurate, no jokes' },
+    { id: 'sarcastic', emoji: '😄', ar: 'ساخر',  en: 'Sarcastic',
+      descAr: 'مرح وساخر بشكل لطيف',                   descEn: 'Funny & lightly sarcastic' },
+    { id: 'friendly', emoji: '🤗', ar: 'ودود',  en: 'Friendly',
+      descAr: 'حميمي، دافئ، مشجّع',                    descEn: 'Warm, caring & encouraging' },
+    { id: 'teacher', emoji: '🎓', ar: 'معلّم',  en: 'Teacher',
+      descAr: 'تعليمي، مفصّل، بأمثلة',                 descEn: 'Educational, detailed, examples' }
+  ];
+
   // ============ الترجمات ============
   const TRANSLATIONS = {
     ar: {
@@ -705,11 +760,13 @@
       language: 'اللغة', notifications: 'الإشعارات',
       about: 'عن التطبيق', exportChat: 'تصدير المحادثة',
       colorTitle: '🎨 اختر اللون',
+      personalityMode: 'شخصية الذكاء', personalityTitle: '🎭 اختر شخصية الذكاء',
       placeholder: 'اكتب رسالتك هنا...', soon: '🚧 قريباً',
       newChatToast: '💬 محادثة جديدة', copied: '📋 تم النسخ',
       liked: '❤️ شكراً', googleOpening: '🔍 فتح Google',
       darkOn: '🌙 الوضع الليلي مفعّل', darkOff: '☀️ الوضع النهاري مفعّل',
       langChanged: '🌐 تم تغيير اللغة', colorChanged: '🎨 تم تغيير اللون',
+      personalityChanged: '🎭 تم تغيير الشخصية',
       q1: 'أعطني أفكار إبداعية', q2: 'علمني شيئاً جديداً',
       q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
       sideSub: 'بواسطة Zaki',
@@ -734,28 +791,9 @@
       typewriterMode: 'تأثير الكتابة',
       typewriterOn: '⌨️ تأثير الكتابة مفعّل',
       typewriterOff: '⚡ عرض الرسائل فوراً',
-      systemMsg: `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki". 
-
-هويتك الثابتة:
-- اسمك: AI Chat
-- مطورك: Zaki (زاكي)
-- أنت لست ChatGPT ولا OpenAI ولا Google ولا أي شركة أخرى
-- إذا سُئلت "من أنت؟" أجب: "أنا AI Chat، مساعد ذكي طوّره Zaki"
-- إذا سُئلت "من صنعك؟" أجب: "طوّرني Zaki"
-- لا تذكر OpenAI أو ChatGPT أبداً
-
-مهم جداً:
-- لا تُظهر خطوات تفكيرك أو تحليلك إطلاقاً
-- أجب مباشرة دون مقدمات
-- لا تكتب "بالتأكيد" أو "سأساعدك" أو "دعني أفكر"
-- ابدأ إجابتك بالمحتوى الفعلي مباشرة
-- لا تستخدم وسوم مثل <think> أو <reasoning> أو <analysis>
-
-أسلوبك:
-- أجب بالعربية الفصحى بوضوح ودقة
-- نظّم إجاباتك بنقاط عند الحاجة
-- استخدم أمثلة عملية
-- كن موجزاً ومفيداً ومهنياً`
+      emojiMode: 'استعمال الإيموجي',
+      emojiOn: '😊 الإيموجي مفعّل',
+      emojiOff: '🚫 الإيموجي مغلق'
     },
     en: {
       newChat: 'New Chat', chats: 'Chats', explore: 'Explore',
@@ -773,11 +811,13 @@
       language: 'Language', notifications: 'Notifications',
       about: 'About', exportChat: 'Export Chat',
       colorTitle: '🎨 Choose Color',
+      personalityMode: 'AI Personality', personalityTitle: '🎭 Choose AI Personality',
       placeholder: 'Type your message...', soon: '🚧 Coming Soon',
       newChatToast: '💬 New Chat', copied: '📋 Copied',
       liked: '❤️ Thanks', googleOpening: '🔍 Opening Google',
       darkOn: '🌙 Dark mode on', darkOff: '☀️ Light mode on',
       langChanged: '🌐 Language changed', colorChanged: '🎨 Color changed',
+      personalityChanged: '🎭 Personality changed',
       q1: 'Give me creative ideas', q2: 'Teach me something new',
       q3: 'Help me with writing', q4: 'Help me with coding',
       sideSub: 'By Zaki',
@@ -802,7 +842,57 @@
       typewriterMode: 'Typewriter Effect',
       typewriterOn: '⌨️ Typewriter effect ON',
       typewriterOff: '⚡ Messages appear instantly',
-      systemMsg: `You are "AI Chat", a smart assistant developed by "Zaki".
+      emojiMode: 'Use Emojis',
+      emojiOn: '😊 Emojis enabled',
+      emojiOff: '🚫 Emojis disabled'
+    }
+  };
+
+  // ============ System Prompt حسب الشخصية ============
+  function getSystemMsg(personality, lang) {
+    const emojiRule = useEmoji
+      ? (lang === 'ar'
+          ? '- استعمل الإيموجي بشكل طبيعي في ردودك (1-4 إيموجي لكل رسالة) 😊'
+          : '- Use emojis naturally in your replies (1-4 emojis per message) 😊')
+      : (lang === 'ar'
+          ? '- لا تستعمل الإيموجي إطلاقاً في ردودك'
+          : '- Do NOT use any emojis in your replies');
+
+    const baseAr = `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki".
+
+هويتك الثابتة:
+- اسمك: AI Chat
+- مطورك: Zaki (زاكي)
+- أنت لست ChatGPT ولا OpenAI ولا Google ولا أي شركة أخرى
+- إذا سُئلت "من أنت؟" أجب: "أنا AI Chat، مساعد ذكي طوّره Zaki"
+- إذا سُئلت "من صنعك؟" أجب: "طوّرني Zaki"
+- لا تذكر OpenAI أو ChatGPT أبداً
+
+مهم جداً:
+- لا تُظهر خطوات تفكيرك أو تحليلك إطلاقاً
+- أجب مباشرة دون مقدمات
+- لا تكتب "بالتأكيد" أو "سأساعدك" أو "دعني أفكر"
+- ابدأ إجابتك بالمحتوى الفعلي مباشرة
+- لا تستخدم وسوم مثل think أو reasoning أو analysis
+
+قواعد الكتابة:
+- اكتب الكلمات العربية كاملة بحروف عربية فقط
+- لا تخلط الأحرف الإنجليزية داخل الكلمة العربية
+- لا تكتب "geoية" بل "جيولوجية"
+- إذا احتجت مصطلحاً إنجليزياً اكتبه بين قوسين منفصلاً
+- مثال صحيح: "علم الجيولوجيا (Geology)"
+
+${emojiRule}`;
+
+    const personalitiesAr = {
+      normal: `\n\nشخصيتك: عادي 😊\n- أسلوب متوازن ومهني\n- ودود لكن ليس مبالغاً\n- مباشر ومفيد`,
+      serious: `\n\nشخصيتك: جدي 🎩\n- أسلوب رسمي ودقيق\n- بلا مزاح أو تعليقات ساخرة\n- ركز على الحقائق والمعلومات`,
+      sarcastic: `\n\nشخصيتك: ساخر 😄\n- أسلوب مرح وساخر بلطف\n- استخدم الفكاهة والتلاعب بالكلمات\n- لكن لا تجرح المستخدم`,
+      friendly: `\n\nشخصيتك: ودود 🤗\n- أسلوب حميمي ودافئ\n- شجّع المستخدم وامدحه\n- كن مثل صديق قديم`,
+      teacher: `\n\nشخصيتك: معلّم 🎓\n- أسلوب تعليمي مفصّل\n- اشرح خطوة بخطوة\n- أعط أمثلة عملية`
+    };
+
+    const baseEn = `You are "AI Chat", a smart assistant developed by "Zaki".
 
 Your fixed identity:
 - Your name: AI Chat
@@ -817,22 +907,40 @@ Important:
 - Answer directly without preambles
 - Do not write "Sure" or "Let me think" or "I will help"
 - Start your answer with the actual content directly
-- Do NOT use tags like <think> or <reasoning> or <analysis>
+- Do NOT use tags like think or reasoning or analysis
 
-Your style:
-- Answer clearly and accurately
-- Organize with bullet points when needed
-- Use practical examples
-- Be concise and professional`
+Writing rules:
+- Write Arabic words in full Arabic letters only
+- Do not mix English characters inside Arabic words
+- Don't write "geoية" - write "جيولوجية"
+- If you need an English term, write it in parentheses separately
+
+${emojiRule}`;
+
+    const personalitiesEn = {
+      normal: `\n\nYour personality: Normal 😊\n- Balanced and professional\n- Friendly but not excessive\n- Direct and helpful`,
+      serious: `\n\nYour personality: Serious 🎩\n- Formal and precise\n- No jokes or sarcasm\n- Focus on facts and information`,
+      sarcastic: `\n\nYour personality: Sarcastic 😄\n- Light and humorous\n- Use wit and wordplay\n- But never hurt the user`,
+      friendly: `\n\nYour personality: Friendly 🤗\n- Warm and caring\n- Encourage and praise the user\n- Be like an old friend`,
+      teacher: `\n\nYour personality: Teacher 🎓\n- Educational and detailed\n- Explain step by step\n- Give practical examples`
+    };
+
+    if (lang === 'ar') {
+      return baseAr + (personalitiesAr[personality] || personalitiesAr.normal);
+    } else {
+      return baseEn + (personalitiesEn[personality] || personalitiesEn.normal);
     }
-  };
+  }
 
   // ============ المتغيرات ============
   let currentLang = localStorage.getItem('lang') || 'ar';
   let currentColor = localStorage.getItem('color') || 'purple';
+  let currentPersonality = localStorage.getItem('personality') || 'normal';
   let isDark = localStorage.getItem('dark') !== 'false';
   let useThinking = localStorage.getItem('useThinking') !== 'false';
   let useTypewriter = localStorage.getItem('useTypewriter') !== 'false';
+  let useEmoji = localStorage.getItem('useEmoji') !== 'false';
+
   let history = [];
   let currentChatId = null;
   let allChats = JSON.parse(localStorage.getItem('allChats') || '[]');
@@ -847,14 +955,13 @@ Your style:
   let isRecording = false;
   let currentSpeakingBtn = null;
   let currentTypewriterToken = 0;
+  let userScrolledUp = false;
 
   // ============ API ============
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-  // ✅ النموذج الوحيد — قوي ومجاني بدون rate limits
   const MODEL = 'openai/gpt-oss-120b';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
@@ -862,31 +969,23 @@ Your style:
   // ============ إخفاء التفكير ============
   function cleanReply(text) {
     if (!text) return '';
-
-    // إزالة جميع أنواع وسوم التفكير
     text = text.replace(/<think[^>]*>[\s\S]*?<\/think>/gi, '');
     text = text.replace(/<reasoning[^>]*>[\s\S]*?<\/reasoning>/gi, '');
     text = text.replace(/<analysis[^>]*>[\s\S]*?<\/analysis>/gi, '');
     text = text.replace(/<reflection[^>]*>[\s\S]*?<\/reflection>/gi, '');
     text = text.replace(/<scratchpad[^>]*>[\s\S]*?<\/scratchpad>/gi, '');
     text = text.replace(/<internal[^>]*>[\s\S]*?<\/internal>/gi, '');
-
-    // إزالة أي وسوم عامة متبقية
-    text = text.replace(/<[a-z_]+[^>]*>[\s\S]*?<\/[a-z_]+>/gi, '');
-
-    // تنظيف المسافات الزائدة
     text = text.replace(/\n{3,}/g, '\n\n');
     return text.trim();
   }
 
-  // ============ ⚡ تأثير الكتابة ============
+  // ============ تأثير الكتابة ============
   function typeWriterEffect(element, text, speed) {
     return new Promise((resolve) => {
       element.textContent = '';
       let i = 0;
       const total = text.length;
 
-      // حساب السرعة الذكية
       let delay, chunkSize;
       if (total > 1500) { delay = 4; chunkSize = 4; }
       else if (total > 800) { delay = 5; chunkSize = 3; }
@@ -894,23 +993,18 @@ Your style:
       else if (total > 150) { delay = 10; chunkSize = 2; }
       else { delay = speed || 18; chunkSize = 1; }
 
-      // رمز فريد لهذه الكتابة
       currentTypewriterToken++;
       const myToken = currentTypewriterToken;
 
       function type() {
-        // إذا بدأت كتابة جديدة → أكمل النص كاملاً
         if (currentTypewriterToken !== myToken) {
           element.textContent = text;
           resolve();
           return;
         }
-
         if (i < total) {
           element.textContent += text.substring(i, i + chunkSize);
           i += chunkSize;
-
-          // التمرير التلقائي
           if (!userScrolledUp) {
             chatArea.scrollTop = chatArea.scrollHeight;
           }
@@ -919,8 +1013,6 @@ Your style:
           resolve();
         }
       }
-
-      // بدء الكتابة
       type();
     });
   }
@@ -935,7 +1027,7 @@ Your style:
   const overlay = document.getElementById('overlay');
   const menuBtn = document.getElementById('menuBtn');
 
-  history = [{ role: 'system', content: t('systemMsg') }];
+  history = [{ role: 'system', content: getSystemMsg(currentPersonality, currentLang) }];
 
   // ============ اللغة ============
   function applyLanguage(lang) {
@@ -957,15 +1049,15 @@ Your style:
     if (sideSub) sideSub.textContent = t('sideSub');
 
     if (history.length > 0 && history[0].role === 'system') {
-      history[0].content = t('systemMsg');
+      history[0].content = getSystemMsg(currentPersonality, currentLang);
     }
 
+    updatePersonalityLabel();
     renderChatsList();
     renderFavoritesList();
     renderExplore();
     renderStats();
-    applyThinkingMode(useThinking);
-    applyTypewriterMode(useTypewriter);
+    rebuildPersonalityGrid();
   }
 
   // ============ اللون ============
@@ -1036,7 +1128,7 @@ Your style:
     showToast(t('langChanged'));
   }
 
-  // ============ إجابات مفصّلة / سريعة ============
+  // ============ إجابات مفصّلة ============
   function applyThinkingMode(thinking) {
     useThinking = thinking;
     localStorage.setItem('useThinking', thinking);
@@ -1060,6 +1152,76 @@ Your style:
   function toggleTypewriter() {
     applyTypewriterMode(!useTypewriter);
     showToast(useTypewriter ? t('typewriterOn') : t('typewriterOff'));
+  }
+
+  // ============ الإيموجي ============
+  function applyEmojiMode(enabled) {
+    useEmoji = enabled;
+    localStorage.setItem('useEmoji', enabled);
+    const toggle = document.getElementById('emojiToggle');
+    if (toggle) toggle.classList.toggle('on', enabled);
+    if (history.length > 0 && history[0].role === 'system') {
+      history[0].content = getSystemMsg(currentPersonality, currentLang);
+    }
+  }
+
+  function toggleEmoji() {
+    applyEmojiMode(!useEmoji);
+    showToast(useEmoji ? t('emojiOn') : t('emojiOff'));
+  }
+
+  // ============ الشخصية ============
+  function applyPersonality(personalityId) {
+    currentPersonality = personalityId;
+    localStorage.setItem('personality', personalityId);
+    if (history.length > 0 && history[0].role === 'system') {
+      history[0].content = getSystemMsg(currentPersonality, currentLang);
+    }
+    updatePersonalityLabel();
+    rebuildPersonalityGrid();
+  }
+
+  function updatePersonalityLabel() {
+    const label = document.getElementById('personalityLabel');
+    if (!label) return;
+    const p = PERSONALITIES.find(x => x.id === currentPersonality) || PERSONALITIES[0];
+    label.textContent = p.emoji + ' ' + (currentLang === 'ar' ? p.ar : p.en);
+  }
+
+  function openPersonalityPicker() {
+    document.getElementById('settingsModal').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('personalityModal').classList.add('show');
+      rebuildPersonalityGrid();
+    }, 200);
+  }
+
+  function closePersonalityPicker() {
+    document.getElementById('personalityModal').classList.remove('show');
+  }
+
+  function rebuildPersonalityGrid() {
+    const grid = document.getElementById('personalityGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    PERSONALITIES.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'personality-option' + (p.id === currentPersonality ? ' selected' : '');
+      el.innerHTML = `
+        <div class="personality-emoji">${p.emoji}</div>
+        <div class="personality-info">
+          <div class="personality-name">${currentLang === 'ar' ? p.ar : p.en}</div>
+          <div class="personality-desc">${currentLang === 'ar' ? p.descAr : p.descEn}</div>
+        </div>
+        <div class="personality-check">✓</div>
+      `;
+      el.onclick = () => {
+        applyPersonality(p.id);
+        showToast(t('personalityChanged') + ' ' + p.emoji);
+        closePersonalityPicker();
+      };
+      grid.appendChild(el);
+    });
   }
 
   // ============ Settings & Colors ============
@@ -1148,11 +1310,11 @@ Your style:
     window.open('https://www.google.com', '_blank');
     showToast(t('googleOpening'));
   }
-
+</script>
   // ============ New Chat ============
   function newChat() {
     saveCurrentChat();
-    history = [{ role: 'system', content: t('systemMsg') }];
+    history = [{ role: 'system', content: getSystemMsg(currentPersonality, currentLang) }];
     currentChatId = null;
     currentTypewriterToken++;
     messagesEl.innerHTML = '';
@@ -1543,15 +1705,13 @@ Your style:
         </div>
       </div>
       <div class="stat-card" style="margin-top:12px;">
-        <div class="number" style="font-size:16px;">AI Chat v5.1</div>
+        <div class="number" style="font-size:16px;">AI Chat v5.3</div>
         <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
       </div>
     `;
   }
 
   // ============ Scroll ============
-  let userScrolledUp = false;
-
   chatArea.addEventListener('scroll', () => {
     const distanceFromBottom = chatArea.scrollHeight - chatArea.scrollTop - chatArea.clientHeight;
     userScrolledUp = distanceFromBottom > 150;
@@ -1903,7 +2063,10 @@ Your style:
 
     setTimeout(() => focusElement(loading), 100);
 
-    // ✅ الإجابات المفصّلة تعطي max_tokens أكبر
+    if (history[0] && history[0].role === 'system') {
+      history[0].content = getSystemMsg(currentPersonality, currentLang);
+    }
+
     const maxTokens = useThinking ? 4096 : 800;
 
     try {
@@ -1931,13 +2094,11 @@ Your style:
       const loadingContent = loading.querySelector('.msg-content');
 
       if (useTypewriter && reply) {
-        // ⌨️ تأثير الكتابة
         loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;"><span id="tw-target"></span></div>`;
         const target = loadingContent.querySelector('#tw-target');
 
         await typeWriterEffect(target, reply, 18);
 
-        // مؤشر وامض بعد الانتهاء
         const cursor = document.createElement('span');
         cursor.className = 'typing-cursor';
         cursor.textContent = '▌';
@@ -1947,7 +2108,6 @@ Your style:
           if (cursor.parentNode) cursor.remove();
         }, 1500);
       } else {
-        // ⚡ عرض فوري
         loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
       }
 
@@ -2047,6 +2207,7 @@ h1{color:#7c3aed;text-align:center;}
     if (e.key === 'Escape') {
       closeSettings();
       closeColorPicker();
+      closePersonalityPicker();
       closeSidebar();
       closePage('chatsPage');
       closePage('explorePage');
@@ -2118,7 +2279,10 @@ h1{color:#7c3aed;text-align:center;}
   applyTheme(isDark);
   applyThinkingMode(useThinking);
   applyTypewriterMode(useTypewriter);
+  applyEmojiMode(useEmoji);
   rebuildColorGrid();
+  rebuildPersonalityGrid();
+  updatePersonalityLabel();
   renderExplore();
 
   if ('serviceWorker' in navigator) {
