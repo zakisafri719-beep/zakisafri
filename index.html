@@ -15,7 +15,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
 
   /* ========================================
-     🎨 المتغيرات الأساسية (ليلية افتراضية)
+     🎨 المتغيرات الأساسية (الكلاسيكي الافتراضي)
      ======================================== */
   :root {
     --accent: #7c3aed;
@@ -30,16 +30,28 @@
     --text: #f0f5f4;
     --text-muted: #7a7a87;
     --border: #1a1a24;
+    --user-bubble: linear-gradient(135deg, #7c3aed, #a855f7);
+    --bot-bubble: #111118;
   }
 
   /* ========================================
-     🌙 الواجهة 1: الليلية (الافتراضية)
+     🎨 الألوان العشرة (تعمل مع كل التصاميم)
      ======================================== */
-  body.ui-night {
-    --accent: #7c3aed;
-    --accent-light: #a855f7;
-    --accent-glow: rgba(124, 58, 237, 0.6);
-    --accent-glow-strong: rgba(124, 58, 237, 0.9);
+  body.color-purple { --accent: #7c3aed; --accent-light: #a855f7; --accent-glow: rgba(124,58,237,0.6); --accent-glow-strong: rgba(124,58,237,0.9); --user-bubble: linear-gradient(135deg, #7c3aed, #a855f7); }
+  body.color-blue   { --accent: #2563eb; --accent-light: #60a5fa; --accent-glow: rgba(37,99,235,0.6); --accent-glow-strong: rgba(37,99,235,0.9); --user-bubble: linear-gradient(135deg, #2563eb, #60a5fa); }
+  body.color-green  { --accent: #059669; --accent-light: #34d399; --accent-glow: rgba(5,150,105,0.6); --accent-glow-strong: rgba(5,150,105,0.9); --user-bubble: linear-gradient(135deg, #059669, #34d399); }
+  body.color-red    { --accent: #dc2626; --accent-light: #f87171; --accent-glow: rgba(220,38,38,0.6); --accent-glow-strong: rgba(220,38,38,0.9); --user-bubble: linear-gradient(135deg, #dc2626, #f87171); }
+  body.color-orange { --accent: #ea580c; --accent-light: #fb923c; --accent-glow: rgba(234,88,12,0.6); --accent-glow-strong: rgba(234,88,12,0.9); --user-bubble: linear-gradient(135deg, #ea580c, #fb923c); }
+  body.color-pink   { --accent: #db2777; --accent-light: #f472b6; --accent-glow: rgba(219,39,119,0.6); --accent-glow-strong: rgba(219,39,119,0.9); --user-bubble: linear-gradient(135deg, #db2777, #f472b6); }
+  body.color-cyan   { --accent: #0891b2; --accent-light: #22d3ee; --accent-glow: rgba(8,145,178,0.6); --accent-glow-strong: rgba(8,145,178,0.9); --user-bubble: linear-gradient(135deg, #0891b2, #22d3ee); }
+  body.color-indigo { --accent: #4f46e5; --accent-light: #818cf8; --accent-glow: rgba(79,70,229,0.6); --accent-glow-strong: rgba(79,70,229,0.9); --user-bubble: linear-gradient(135deg, #4f46e5, #818cf8); }
+  body.color-yellow { --accent: #ca8a04; --accent-light: #facc15; --accent-glow: rgba(202,138,4,0.6); --accent-glow-strong: rgba(202,138,4,0.9); --user-bubble: linear-gradient(135deg, #ca8a04, #facc15); }
+  body.color-teal   { --accent: #0d9488; --accent-light: #2dd4bf; --accent-glow: rgba(13,148,136,0.6); --accent-glow-strong: rgba(13,148,136,0.9); --user-bubble: linear-gradient(135deg, #0d9488, #2dd4bf); }
+
+  /* ========================================
+     🎨 التصميم 1: كلاسيكي (الافتراضي)
+     ======================================== */
+  body.design-classic {
     --bg-main: #000000;
     --bg-sidebar: #0a0a0f;
     --bg-bot-bubble: #111118;
@@ -51,74 +63,116 @@
   }
 
   /* ========================================
-     ☀️ الواجهة 2: النهارية
+     💬 التصميم 2: WhatsApp
      ======================================== */
-  body.ui-day {
-    --accent: #3b82f6;
-    --accent-light: #60a5fa;
-    --accent-glow: rgba(59, 130, 246, 0.4);
-    --accent-glow-strong: rgba(59, 130, 246, 0.7);
-    --bg-main: #f8fafc;
-    --bg-sidebar: #ffffff;
-    --bg-bot-bubble: #ffffff;
-    --bg-input: #ffffff;
-    --bg-page: #f1f5f9;
-    --text: #0f172a;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
+  body.design-whatsapp {
+    --bg-main: #0b141a;
+    --bg-sidebar: #111b21;
+    --bg-bot-bubble: #202c33;
+    --bg-input: #202c33;
+    --bg-page: #0b141a;
+    --text: #e9edef;
+    --text-muted: #8696a0;
+    --border: #222d34;
+    --user-bubble: #005c4b;
+    --bot-bubble: #202c33;
   }
 
-  body.ui-day .bg-animated { display: none; }
-  body.ui-day .msg-content { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  body.ui-day .top-bar { background: rgba(255, 255, 255, 0.95); }
-  body.ui-day .input-wrapper { background: rgba(255, 255, 255, 0.95); }
+  body.design-whatsapp .msg.user .msg-content {
+    background: #005c4b;
+  }
+
+  body.design-whatsapp .msg.bot .msg-content {
+    background: #202c33;
+  }
+
+  body.design-whatsapp .msg-avatar {
+    display: none;
+  }
+
+  body.design-whatsapp .msg-bubble {
+    max-width: 85%;
+  }
+
+  body.design-whatsapp .msg.user .msg-content::before,
+  body.design-whatsapp .msg.bot .msg-content::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+  }
 
   /* ========================================
-     🌊 الواجهة 3: المحيطية
+     📋 التصميم 3: Telegram
      ======================================== */
-  body.ui-ocean {
-    --accent: #0ea5e9;
-    --accent-light: #38bdf8;
-    --accent-glow: rgba(14, 165, 233, 0.5);
-    --accent-glow-strong: rgba(14, 165, 233, 0.8);
-    --bg-main: #0a1628;
-    --bg-sidebar: #0c1a30;
-    --bg-bot-bubble: #0f2238;
-    --bg-input: #0c1a30;
-    --bg-page: #081020;
-    --text: #e0f2fe;
-    --text-muted: #7dd3fc;
-    --border: #1e3a5f;
+  body.design-telegram {
+    --bg-main: #17212b;
+    --bg-sidebar: #0e1621;
+    --bg-bot-bubble: transparent;
+    --bg-input: #17212b;
+    --bg-page: #0e1621;
+    --text: #ffffff;
+    --text-muted: #6d7f8f;
+    --border: #101921;
+    --user-bubble: #2b5278;
+    --bot-bubble: transparent;
   }
 
-  body.ui-ocean .bg-orb.o1 { background: radial-gradient(circle, #0ea5e9, transparent); }
-  body.ui-ocean .bg-orb.o2 { background: radial-gradient(circle, #38bdf8, transparent); }
-  body.ui-ocean .bg-orb.o3 { background: radial-gradient(circle, #0891b2, transparent); }
-  body.ui-ocean .msg-content { border-right: 3px solid var(--accent); }
+  body.design-telegram .msg-avatar {
+    display: none;
+  }
+
+  body.design-telegram .msg.bot .msg-content {
+    background: transparent;
+    border: none;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  body.design-telegram .msg.user .msg-content {
+    background: #2b5278;
+    border-radius: 12px;
+  }
 
   /* ========================================
-     🔥 الواجهة 4: الحمراء
+     💎 التصميم 4: iMessage
      ======================================== */
-  body.ui-fire {
-    --accent: #dc2626;
-    --accent-light: #f87171;
-    --accent-glow: rgba(220, 38, 38, 0.5);
-    --accent-glow-strong: rgba(220, 38, 38, 0.9);
-    --bg-main: #1a0a0a;
-    --bg-sidebar: #1f0c0c;
-    --bg-bot-bubble: #2a1010;
-    --bg-input: #1f0c0c;
-    --bg-page: #140808;
-    --text: #fee2e2;
-    --text-muted: #fca5a5;
-    --border: #4c1d1d;
+  body.design-imessage {
+    --bg-main: #000000;
+    --bg-sidebar: #1c1c1e;
+    --bg-bot-bubble: #26252a;
+    --bg-input: #1c1c1e;
+    --bg-page: #000000;
+    --text: #ffffff;
+    --text-muted: #8e8e93;
+    --border: #2c2c2e;
+    --user-bubble: linear-gradient(135deg, #0a84ff, #0060df);
+    --bot-bubble: #26252a;
   }
 
-  body.ui-fire .bg-orb.o1 { background: radial-gradient(circle, #dc2626, transparent); }
-  body.ui-fire .bg-orb.o2 { background: radial-gradient(circle, #f87171, transparent); }
-  body.ui-fire .bg-orb.o3 { background: radial-gradient(circle, #ea580c, transparent); }
-  body.ui-fire .msg-content { border-right: 3px solid var(--accent); }
+  body.design-imessage .msg-avatar {
+    display: none;
+  }
 
+  body.design-imessage .msg-content {
+    border-radius: 20px;
+    padding: 10px 16px;
+  }
+
+  body.design-imessage .msg.user .msg-content {
+    background: linear-gradient(135deg, #0a84ff, #0060df);
+    border-radius: 20px 20px 5px 20px;
+  }
+
+  body.design-imessage .msg.bot .msg-content {
+    background: #26252a;
+    border-radius: 20px 20px 20px 5px;
+  }
+
+  /* ========================================
+     🌐 الحاوية الرئيسية
+     ======================================== */
   html { height: 100%; overflow: hidden; }
   body {
     background: var(--bg-main);
@@ -131,8 +185,11 @@
     inset: 0;
     transition: background 0.3s, color 0.3s;
   }
-
-  /* ===== الخلفية ===== */
+</style>
+<style>
+  /* ========================================
+     🌌 الخلفية المتحركة
+     ======================================== */
   .bg-animated { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
   .bg-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; will-change: transform; transition: background 0.5s; }
   .bg-orb.o1 { width: 350px; height: 350px; background: radial-gradient(circle, var(--accent), transparent); top: -100px; right: -100px; animation: float1 18s ease-in-out infinite; }
@@ -142,13 +199,24 @@
   @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(100px, -80px) scale(1.1); } }
   @keyframes float3 { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(60px, -60px) scale(0.9); } 66% { transform: translate(-60px, 60px) scale(1.05); } }
 
+  /* إخفاء الخلفية في WhatsApp و Telegram */
+  body.design-whatsapp .bg-animated,
+  body.design-telegram .bg-animated {
+    display: none;
+  }
+
+  /* ========================================
+     ✨ الأيقونات المتوهجة
+     ======================================== */
   .glow-icon { display: flex; align-items: center; justify-content: center; color: var(--accent-light); filter: drop-shadow(0 0 5px var(--accent-glow)); transition: all 0.2s ease; font-size: 22px; line-height: 1; }
   .glow-icon svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .glow-icon:active { color: white; transform: scale(1.1); }
 
   .app { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; height: 100dvh; max-height: 100dvh; }
 
-  /* ===== الشريط العلوي ===== */
+  /* ========================================
+     📱 الشريط العلوي
+     ======================================== */
   .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 15px; padding-top: max(10px, env(safe-area-inset-top)); background: rgba(10, 10, 15, 0.9); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 100; transition: background 0.3s, border 0.3s; }
   .menu-btn { width: 42px; height: 42px; background: transparent; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 8px; border-radius: 12px; }
   .menu-btn:active { transform: scale(0.92); }
@@ -164,13 +232,35 @@
   .top-icon-btn { width: 42px; height: 42px; border-radius: 12px; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .top-icon-btn:active { transform: scale(0.92); }
 
-  /* ===== منطقة الدردشة ===== */
+  /* WhatsApp: شريط علوي أفتح */
+  body.design-whatsapp .top-bar {
+    background: #202c33;
+    border-bottom: 1px solid #2a3942;
+  }
+
+  /* Telegram: شريط علوي أزرق داكن */
+  body.design-telegram .top-bar {
+    background: #17212b;
+    border-bottom: 1px solid #101921;
+  }
+
+  /* iMessage: شريط علوي رمادي */
+  body.design-imessage .top-bar {
+    background: rgba(28, 28, 30, 0.95);
+    border-bottom: 1px solid #2c2c2e;
+  }
+
+  /* ========================================
+     💬 منطقة الدردشة
+     ======================================== */
   .chat-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px 16px; padding-bottom: 30px; -webkit-overflow-scrolling: touch; position: relative; z-index: 2; min-height: 0; }
   .chat-area::-webkit-scrollbar { width: 3px; }
   .chat-area::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
   .messages { max-width: 1000px; margin: 0 auto; }
 
-  /* ===== شاشة الترحيب ===== */
+  /* ========================================
+     👋 شاشة الترحيب
+     ======================================== */
   .welcome { text-align: center; max-width: 700px; margin: 20px auto; padding: 20px; }
   .welcome-logo { width: 90px; height: 90px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 70px; color: var(--accent-light); filter: drop-shadow(0 0 15px var(--accent-glow-strong)); }
   .welcome h2 { font-size: 26px; margin-bottom: 12px; color: var(--text); }
@@ -184,10 +274,12 @@
   .suggestion-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .suggestion-card .sub { font-size: 12px; color: var(--text-muted); }
 
-  /* ===== الرسائل ===== */
+  /* ========================================
+     💌 الرسائل (الشكل الأساسي)
+     ======================================== */
   .msg { display: flex; gap: 10px; margin-bottom: 14px; }
   .msg-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
-  .msg.user .msg-avatar { color: white; background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+  .msg.user .msg-avatar { color: white; background: var(--user-bubble); }
   .msg.bot .msg-avatar { color: var(--accent-light); filter: drop-shadow(0 0 5px var(--accent-glow)); background: transparent; }
   .msg-bubble { flex: 1; max-width: calc(100% - 56px); min-width: 0; }
   .msg-content { 
@@ -199,21 +291,28 @@
     word-wrap: break-word; 
     white-space: pre-wrap;
     transition: background 0.3s;
+    position: relative;
   }
-  .msg.user .msg-content { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; }
+  .msg.user .msg-content { background: var(--user-bubble); color: white; }
   .msg.user .msg-bubble { display: flex; flex-direction: column; align-items: flex-start; }
   .msg.bot { flex-direction: row-reverse; }
   .msg.bot .msg-bubble { display: flex; flex-direction: column; align-items: flex-end; }
   .msg.bot .msg-content { text-align: right; }
 
+  /* Markdown داخل الرسائل */
   .msg-content strong { font-weight: 700; color: var(--accent-light); }
+  .msg.user .msg-content strong { color: #fff; }
   .msg-content em { font-style: italic; opacity: 0.9; }
   .msg-content code { background: rgba(124, 58, 237, 0.15); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px; color: var(--accent-light); }
+  .msg.user .msg-content code { background: rgba(255,255,255,0.2); color: #fff; }
   .msg-content pre { background: rgba(0, 0, 0, 0.4); padding: 10px; border-radius: 8px; overflow-x: auto; margin: 6px 0; border-right: 3px solid var(--accent); }
   .msg-content pre code { background: transparent; padding: 0; }
   .msg-content ul, .msg-content ol { padding-right: 18px; margin: 6px 0; }
   .msg-content li { margin-bottom: 2px; line-height: 1.5; }
   .msg-content h1, .msg-content h2, .msg-content h3 { color: var(--accent-light); margin: 8px 0 4px; font-weight: 700; }
+  .msg.user .msg-content h1,
+  .msg.user .msg-content h2,
+  .msg.user .msg-content h3 { color: #fff; }
   .msg-content h1 { font-size: 18px; }
   .msg-content h2 { font-size: 17px; }
   .msg-content h3 { font-size: 16px; }
@@ -227,15 +326,80 @@
   .msg-action-btn.speaking { color: var(--accent-light); animation: pulse 1s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+  /* ===== WhatsApp: شكل الرسائل ===== */
+  body.design-whatsapp .msg {
+    padding-right: 8px;
+  }
+
+  body.design-whatsapp .msg.user .msg-content {
+    background: #005c4b;
+    color: #e9edef;
+    border-radius: 10px 10px 10px 0;
+  }
+
+  body.design-whatsapp .msg.bot .msg-content {
+    background: #202c33;
+    color: #e9edef;
+    border-radius: 10px 10px 0 10px;
+  }
+
+  body.design-whatsapp .msg-bubble {
+    max-width: 90%;
+  }
+
+  /* ===== Telegram: شكل الرسائل ===== */
+  body.design-telegram .msg.user .msg-content {
+    background: #2b5278;
+    color: #fff;
+    border-radius: 12px 12px 12px 2px;
+    padding: 8px 14px;
+  }
+
+  body.design-telegram .msg.bot .msg-content {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    padding: 4px 0;
+  }
+
+  body.design-telegram .msg.bot {
+    border-bottom: 1px solid #101921;
+    padding-bottom: 12px;
+  }
+
+  /* ===== iMessage: شكل الرسائل ===== */
+  body.design-imessage .msg.user .msg-content {
+    background: linear-gradient(135deg, #0a84ff, #0060df);
+    color: #fff;
+    border-radius: 20px 20px 5px 20px;
+    padding: 10px 16px;
+  }
+
+  body.design-imessage .msg.bot .msg-content {
+    background: #26252a;
+    color: #fff;
+    border-radius: 20px 20px 20px 5px;
+    padding: 10px 16px;
+  }
+
+  /* ========================================
+     ⌛ مؤشر الكتابة
+     ======================================== */
   .typing-bubble { background: var(--bg-bot-bubble); padding: 8px 14px; border-radius: 14px; display: inline-flex; align-items: center; gap: 5px; width: fit-content; }
   .typing-bubble span { width: 7px; height: 7px; background: var(--accent-light); border-radius: 50%; animation: typingBounce 1.4s ease-in-out infinite; box-shadow: 0 0 6px var(--accent-glow); }
   .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
   .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
   @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.4; } 30% { transform: translateY(-6px) scale(1.15); opacity: 1; } }
 
+  /* ========================================
+     🖼️ الصور في الرسائل
+     ======================================== */
   .msg-image { max-width: 100%; max-height: 280px; border-radius: 12px; margin-bottom: 6px; cursor: pointer; object-fit: cover; }
   .msg.user .msg-image { max-width: 240px; }
 
+  /* ========================================
+     📎 معاينة الصورة
+     ======================================== */
   .image-preview { display: none; margin: 0 auto; max-width: 1000px; padding: 8px 12px; background: rgba(10, 10, 15, 0.95); border-top: 1px solid var(--border); }
   .image-preview.show { display: block; }
   .image-preview-inner { display: flex; align-items: center; gap: 12px; padding: 10px; background: var(--bg-bot-bubble); border-radius: 12px; }
@@ -244,11 +408,14 @@
   .image-preview-info .name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .image-preview-info .size { font-size: 11px; color: var(--text-muted); }
   .image-preview-close { width: 34px; height: 34px; border-radius: 50%; background: transparent; border: none; cursor: pointer; color: #ef4444; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+  .image-preview-close:active { background: rgba(239, 68, 68, 0.15); }
 </style>
 <style>
-  /* ===== شريط الإدخال ===== */
-  .input-wrapper { flex-shrink: 0; padding: 10px 14px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); z-index: 60; }
-  .input-box { max-width: 1000px; margin: 0 auto; background: var(--bg-input); border: 1px solid var(--accent); border-radius: 26px; padding: 6px 6px 6px 16px; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 20px var(--accent-glow); transition: box-shadow 0.3s; }
+  /* ========================================
+     ⌨️ شريط الإدخال
+     ======================================== */
+  .input-wrapper { flex-shrink: 0; padding: 10px 14px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); z-index: 60; transition: background 0.3s; }
+  .input-box { max-width: 1000px; margin: 0 auto; background: var(--bg-input); border: 1px solid var(--accent); border-radius: 26px; padding: 6px 6px 6px 16px; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 20px var(--accent-glow); transition: box-shadow 0.3s, background 0.3s, border 0.3s; }
   .input-box:focus-within { box-shadow: 0 0 30px var(--accent-glow-strong); }
   .input-box textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: 15.5px; padding: 10px 0; resize: none; max-height: 110px; font-family: inherit; line-height: 1.5; }
   .input-box textarea::placeholder { color: var(--text-muted); }
@@ -264,11 +431,55 @@
   .send-btn:disabled { opacity: 0.4; }
   .send-btn .glow-icon { font-size: 20px; color: white; }
 
-  /* ===== Toast ===== */
+  /* WhatsApp: شريط إدخال دائري */
+  body.design-whatsapp .input-wrapper {
+    background: #111b21;
+    border-top: none;
+  }
+
+  body.design-whatsapp .input-box {
+    background: #202c33;
+    border: none;
+    box-shadow: none;
+  }
+
+  body.design-whatsapp .input-box:focus-within {
+    box-shadow: 0 0 0 1px #2a3942;
+  }
+
+  /* Telegram: شريط إدخال رمادي */
+  body.design-telegram .input-wrapper {
+    background: #17212b;
+    border-top: 1px solid #101921;
+  }
+
+  body.design-telegram .input-box {
+    background: #242f3d;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* iMessage: شريط إدخال أزرق */
+  body.design-imessage .input-wrapper {
+    background: rgba(28, 28, 30, 0.95);
+    border-top: 1px solid #2c2c2e;
+  }
+
+  body.design-imessage .input-box {
+    background: #1c1c1e;
+    border: 1px solid #3a3a3c;
+    box-shadow: none;
+  }
+
+  /* ========================================
+     💬 Toast
+     ======================================== */
   .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; padding: 11px 22px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: all 0.25s; box-shadow: 0 10px 30px var(--accent-glow-strong); pointer-events: none; max-width: 90%; text-align: center; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ===== القائمة الجانبية ===== */
+  /* ========================================
+     📋 القائمة الجانبية
+     ======================================== */
   .sidebar { position: fixed; top: 0; right: -320px; width: 290px; height: 100dvh; background: var(--bg-sidebar); border-left: 1px solid var(--border); z-index: 200; transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s; will-change: right; display: flex; flex-direction: column; padding: 15px; padding-top: max(15px, env(safe-area-inset-top)); padding-bottom: max(15px, env(safe-area-inset-bottom)); overflow-y: auto; }
   .sidebar.open { right: 0; }
   .sidebar-header { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
@@ -286,11 +497,41 @@
   .user-info h4 { font-size: 12px; color: var(--text); }
   .user-info p { font-size: 10px; color: var(--text-muted); }
 
-  /* ===== Overlay ===== */
+  /* WhatsApp: قائمة جانبية بلون خضر */
+  body.design-whatsapp .sidebar {
+    background: #111b21;
+    border-left: 1px solid #202c33;
+  }
+
+  body.design-whatsapp .sidebar-item:active {
+    background: #202c33;
+  }
+
+  /* Telegram: قائمة جانبية زرقاء */
+  body.design-telegram .sidebar {
+    background: #0e1621;
+    border-left: 1px solid #101921;
+  }
+
+  body.design-telegram .sidebar-item:active {
+    background: #17212b;
+  }
+
+  /* iMessage: قائمة جانبية رمادية */
+  body.design-imessage .sidebar {
+    background: #1c1c1e;
+    border-left: 1px solid #2c2c2e;
+  }
+
+  /* ========================================
+     🌫️ Overlay
+     ======================================== */
   .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 150; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
   .overlay.show { opacity: 1; visibility: visible; }
 
-  /* ===== Modal ===== */
+  /* ========================================
+     🪟 Modal (نافذة)
+     ======================================== */
   .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; visibility: hidden; transition: all 0.25s; backdrop-filter: blur(10px); }
   .modal.show { opacity: 1; visibility: visible; }
   .modal-content { background: var(--bg-sidebar); border-radius: 18px; max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px; transform: scale(0.9); transition: transform 0.25s; }
@@ -299,7 +540,7 @@
   .modal-header h3 { font-size: 16px; color: var(--text); }
   .modal-close { background: transparent; border: none; cursor: pointer; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
   .modal-close:active { background: rgba(255,255,255,0.1); }
-  .modal-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 10px; border-radius: 12px; background: var(--accent-glow); margin-bottom: 7px; cursor: pointer; transition: all 0.15s; opacity: 0.6; }
+  .modal-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 10px; border-radius: 12px; background: var(--accent-glow); margin-bottom: 7px; cursor: pointer; transition: all 0.15s; opacity: 0.7; }
   .modal-item:active { opacity: 1; transform: scale(0.98); }
   .modal-item-left { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text); }
   .modal-item-left .glow-icon { font-size: 20px; }
@@ -307,7 +548,9 @@
 
   .modal-section-title { font-size: 12px; color: var(--accent-light); font-weight: 700; padding: 12px 5px 6px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* ===== الشخصيات ===== */
+  /* ========================================
+     🎭 الشخصيات
+     ======================================== */
   .personality-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 5px 0; }
   .personality-option { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--accent-glow); border: 2px solid transparent; border-radius: 14px; cursor: pointer; transition: all 0.2s; }
   .personality-option:active { transform: scale(0.98); }
@@ -319,32 +562,40 @@
   .personality-option .personality-check { color: var(--accent-light); font-size: 22px; display: none; flex-shrink: 0; }
   .personality-option.selected .personality-check { display: block; }
 
-  /* ===== الثيمات ===== */
+  /* ========================================
+     🎨 الثيمات (الألوان)
+     ======================================== */
   .theme-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px 0; }
   .theme-option { width: 100%; aspect-ratio: 1; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; position: relative; }
   .theme-option:active { transform: scale(0.9); }
   .theme-option.selected { border-color: white; box-shadow: 0 0 20px currentColor; }
   .theme-option.selected::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; font-weight: bold; }
 
-  /* ===== 🎨 شبكة الواجهات ===== */
-  .ui-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px 0; }
-  .ui-option { background: var(--accent-glow); border: 2px solid transparent; border-radius: 16px; padding: 16px; cursor: pointer; transition: all 0.25s; text-align: center; position: relative; overflow: hidden; }
-  .ui-option:active { transform: scale(0.97); }
-  .ui-option.selected { border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow-strong); }
-  .ui-option .ui-emoji { font-size: 36px; display: block; margin-bottom: 8px; }
-  .ui-option .ui-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .ui-option .ui-desc { font-size: 11px; color: var(--text-muted); }
-  .ui-option .ui-preview { display: flex; gap: 4px; justify-content: center; margin-top: 10px; }
-  .ui-option .ui-preview span { width: 14px; height: 14px; border-radius: 50%; }
-  .ui-option.selected::after { content: '✓'; position: absolute; top: 8px; right: 8px; color: var(--accent-light); font-size: 20px; font-weight: bold; }
+  /* ========================================
+     🖥️ التصاميم (Design Grid)
+     ======================================== */
+  .design-grid { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 5px 0; }
+  .design-option { background: var(--accent-glow); border: 2px solid transparent; border-radius: 16px; padding: 16px; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; gap: 14px; }
+  .design-option:active { transform: scale(0.98); }
+  .design-option.selected { border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); }
+  .design-option .design-emoji { font-size: 34px; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; background: var(--accent-glow); border-radius: 14px; flex-shrink: 0; }
+  .design-option .design-info { flex: 1; min-width: 0; }
+  .design-option .design-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .design-option .design-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .design-option .design-check { color: var(--accent-light); font-size: 24px; display: none; flex-shrink: 0; }
+  .design-option.selected .design-check { display: block; }
 
-  /* ===== Toggle Switch ===== */
+  /* ========================================
+     🎛️ Toggle Switch
+     ======================================== */
   .toggle-switch { position: relative; width: 46px; height: 26px; background: var(--border); border-radius: 13px; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
   .toggle-switch.on { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
   .toggle-switch::after { content: ''; position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: right 0.2s; }
   .toggle-switch.on::after { right: calc(100% - 23px); }
 
-  /* ===== Slider ===== */
+  /* ========================================
+     🎚️ Slider
+     ======================================== */
   .slider-row { padding: 12px 10px; background: var(--accent-glow); border-radius: 12px; margin-bottom: 7px; }
   .slider-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .slider-row-top span:first-child { font-size: 14px; color: var(--text); }
@@ -352,8 +603,11 @@
   .slider-input { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: var(--border); outline: none; }
   .slider-input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-light)); cursor: pointer; box-shadow: 0 0 10px var(--accent-glow); }
   .slider-input::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-light)); cursor: pointer; border: none; }
-
-  /* ===== الصفحات ===== */
+</style>
+<style>
+  /* ========================================
+     📄 الصفحات
+     ======================================== */
   .page { position: fixed; inset: 0; background: var(--bg-page); z-index: 250; transform: translateX(100%); transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s; display: flex; flex-direction: column; }
   .page.open { transform: translateX(0); }
   .page-header { display: flex; align-items: center; gap: 12px; padding: 14px 15px; padding-top: max(14px, env(safe-area-inset-top)); background: var(--bg-sidebar); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); flex-shrink: 0; }
@@ -364,13 +618,17 @@
   .page-body::-webkit-scrollbar { width: 3px; }
   .page-body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
-  /* ===== البحث ===== */
+  /* ========================================
+     🔍 البحث في المحادثات
+     ======================================== */
   .search-input-wrapper { padding: 10px 16px; background: var(--bg-sidebar); border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .search-input { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; color: var(--text); font-size: 14px; outline: none; font-family: inherit; }
   .search-input:focus { border-color: var(--accent); }
   .search-input::placeholder { color: var(--text-muted); }
 
-  /* ===== المحادثات ===== */
+  /* ========================================
+     💬 قائمة المحادثات
+     ======================================== */
   .chat-item { background: var(--bg-bot-bubble); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
   .chat-item:active { transform: scale(0.98); }
   .chat-item-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-light); flex-shrink: 0; }
@@ -384,13 +642,17 @@
   .chat-item-btn.delete { color: #ef4444; }
   .chat-item-btn.delete:active { background: rgba(239, 68, 68, 0.15); }
 
-  /* ===== Empty State ===== */
+  /* ========================================
+     📭 Empty State
+     ======================================== */
   .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
   .empty-state .emoji { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
   .empty-state h3 { font-size: 16px; color: var(--text); margin-bottom: 8px; }
   .empty-state p { font-size: 13px; line-height: 1.7; }
 
-  /* ===== Explore ===== */
+  /* ========================================
+     🧭 الاستكشاف
+     ======================================== */
   .explore-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
   .explore-card { background: var(--bg-bot-bubble); border-radius: 16px; padding: 18px 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
   .explore-card:active { transform: scale(0.97); }
@@ -398,34 +660,44 @@
   .explore-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
   .explore-card .sub { font-size: 11px; color: var(--text-muted); }
 
-  /* ===== Upload Area ===== */
+  /* ========================================
+     📁 رفع الملفات
+     ======================================== */
   .upload-area { border: 2px dashed var(--border); border-radius: 16px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px; }
   .upload-area:active { border-color: var(--accent); background: var(--accent-glow); }
   .upload-area .emoji { font-size: 50px; margin-bottom: 12px; display: block; }
   .upload-area h3 { font-size: 15px; color: var(--text); margin-bottom: 5px; }
   .upload-area p { font-size: 12px; color: var(--text-muted); }
 
-  /* ===== File Item ===== */
+  /* ========================================
+     📄 File Item
+     ======================================== */
   .file-item { background: var(--bg-bot-bubble); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
   .file-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-light); flex-shrink: 0; }
   .file-info { flex: 1; min-width: 0; }
   .file-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .file-size { font-size: 11px; color: var(--text-muted); }
 
-  /* ===== Images ===== */
+  /* ========================================
+     🖼️ شبكة الصور
+     ======================================== */
   .images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .image-thumb { aspect-ratio: 1; border-radius: 12px; overflow: hidden; cursor: pointer; position: relative; }
   .image-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .image-thumb:active { transform: scale(0.95); }
 
-  /* ===== Favorites ===== */
+  /* ========================================
+     ⭐ المفضلة
+     ======================================== */
   .fav-item { background: var(--bg-bot-bubble); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
   .fav-item-content { font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
   .fav-item-actions { display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 10px; }
   .fav-btn { background: transparent; border: none; cursor: pointer; color: var(--text-muted); font-size: 12px; padding: 6px 12px; border-radius: 8px; display: flex; align-items: center; gap: 6px; }
   .fav-btn:active { background: var(--accent-glow); color: var(--accent-light); }
 
-  /* ===== Stats ===== */
+  /* ========================================
+     📊 الإحصائيات
+     ======================================== */
   .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
   .stat-card { background: var(--bg-bot-bubble); border-radius: 14px; padding: 16px; text-align: center; }
   .stat-card .number { font-size: 28px; font-weight: 700; color: var(--accent-light); margin-bottom: 4px; filter: drop-shadow(0 0 8px var(--accent-glow)); }
@@ -433,7 +705,9 @@
   .stat-section { margin-bottom: 20px; }
   .stat-section-title { font-size: 14px; font-weight: 600; color: var(--accent-light); margin-bottom: 10px; padding-right: 5px; }
 
-  /* ===== Bio ===== */
+  /* ========================================
+     🧬 سيرة AI
+     ======================================== */
   .bio-container { padding: 10px 0; }
   .bio-avatar { width: 120px; height: 120px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 70px; background: linear-gradient(135deg, var(--accent), var(--accent-light)); border-radius: 50%; box-shadow: 0 0 40px var(--accent-glow-strong); }
   .bio-name { text-align: center; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
@@ -444,13 +718,17 @@
   .bio-section ul { padding-right: 20px; }
   .bio-tag { display: inline-block; background: var(--accent-glow); color: var(--accent-light); padding: 4px 10px; border-radius: 12px; font-size: 12px; margin: 3px; }
 
-  /* ===== Mood ===== */
+  /* ========================================
+     💭 حالة AI
+     ======================================== */
   .mood-card { background: var(--bg-bot-bubble); border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 15px; }
   .mood-emoji { font-size: 60px; margin-bottom: 12px; display: block; }
   .mood-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
   .mood-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
 
-  /* ===== Responsive ===== */
+  /* ========================================
+     📱 Responsive
+     ======================================== */
   @media (max-width: 768px) {
     .sidebar { width: 260px; right: -280px; }
     .suggestions { grid-template-columns: 1fr; }
@@ -464,7 +742,7 @@
   }
 </style>
 </head>
-<body class="theme-purple ui-night">
+<body class="color-purple design-classic">
 
 <div class="bg-animated">
   <div class="bg-orb o1"></div>
@@ -571,7 +849,6 @@
       </button>
     </div>
   </div>
-
   <div class="chat-area" id="chatArea">
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
@@ -745,7 +1022,6 @@
     <div class="images-grid" id="imagesGrid"></div>
   </div>
 </div>
-
 <!-- ===== صفحة المفضلة ===== -->
 <div class="page" id="favoritesPage">
   <div class="page-header">
@@ -955,21 +1231,21 @@
       </button>
     </div>
 
-    <!-- 🎨 المظهر والواجهة -->
-    <div class="modal-section-title">🎨 المظهر والواجهة</div>
+    <!-- 🎨 التصميم -->
+    <div class="modal-section-title">🎨 التصميم</div>
 
-    <div class="modal-item" onclick="openUIPicker()">
+    <div class="modal-item" onclick="openDesignPicker()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-        <span data-i18n="uiMode">شكل الواجهة</span>
+        <span data-i18n="designMode">تصميم الواجهة</span>
       </div>
-      <span id="uiLabel">🌙 ليلية</span>
+      <span id="designLabel">🎨 كلاسيكي</span>
     </div>
 
     <div class="modal-item" onclick="openThemePicker()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></span>
-        <span data-i18n="themeMode">ثيم التطبيق</span>
+        <span data-i18n="themeMode">لون التطبيق</span>
       </div>
       <span id="themeLabel">🎨 بنفسجي</span>
     </div>
@@ -1114,12 +1390,12 @@
     <!-- ℹ️ عن التطبيق -->
     <div class="modal-section-title">ℹ️ عن التطبيق</div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v8.0')">
+    <div class="modal-item" onclick="showToast('AI Chat v9.0')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v8.0</span>
+      <span>v9.0</span>
     </div>
 
     <div class="modal-item" onclick="showToast('شكراً لاستخدامك AI Chat')">
@@ -1132,18 +1408,18 @@
   </div>
 </div>
 
-<!-- 🎨 نافذة اختيار الواجهة -->
-<div class="modal" id="uiModal">
+<!-- 🎨 نافذة اختيار التصميم -->
+<div class="modal" id="designModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h3 data-i18n="uiTitle">🎨 اختر شكل الواجهة</h3>
-      <button class="modal-close" onclick="closeUIPicker()">
+      <h3 data-i18n="designTitle">🎨 اختر تصميم الواجهة</h3>
+      <button class="modal-close" onclick="closeDesignPicker()">
         <span class="glow-icon" style="font-size:20px;">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </span>
       </button>
     </div>
-    <div class="ui-grid" id="uiGrid"></div>
+    <div class="design-grid" id="designGrid"></div>
   </div>
 </div>
 
@@ -1166,7 +1442,7 @@
 <div class="modal" id="themeModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h3 data-i18n="themeTitle">🎨 اختر الثيم</h3>
+      <h3 data-i18n="themeTitle">🎨 اختر اللون</h3>
       <button class="modal-close" onclick="closeThemePicker()">
         <span class="glow-icon" style="font-size:20px;">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1210,45 +1486,41 @@
   };
 
   // ========================================
-  // 🎨 الواجهات الأربع
+  // 🎨 التصاميم الأربع (جذرية)
   // ========================================
 
-  const UI_THEMES = [
+  const DESIGNS = [
     {
-      id: 'night',
-      emoji: '🌙',
-      ar: 'ليلية',
-      en: 'Night',
-      descAr: 'داكنة وهادئة',
-      descEn: 'Dark & calm',
-      colors: ['#000000', '#7c3aed', '#111118']
+      id: 'classic',
+      emoji: '🎨',
+      ar: 'كلاسيكي',
+      en: 'Classic',
+      descAr: 'التصميم الأساسي مع فقاعات ورسائل ملونة',
+      descEn: 'Basic design with bubbles & colored messages'
     },
     {
-      id: 'day',
-      emoji: '☀️',
-      ar: 'نهارية',
-      en: 'Day',
-      descAr: 'فاتحة ومشرقة',
-      descEn: 'Light & bright',
-      colors: ['#f8fafc', '#3b82f6', '#ffffff']
+      id: 'whatsapp',
+      emoji: '💬',
+      ar: 'واتساب',
+      en: 'WhatsApp',
+      descAr: 'فقاعات خضراء داكنة، مشابه لتطبيق WhatsApp',
+      descEn: 'Dark green bubbles like WhatsApp'
     },
     {
-      id: 'ocean',
-      emoji: '🌊',
-      ar: 'محيطية',
-      en: 'Ocean',
-      descAr: 'زرقاء هادئة',
-      descEn: 'Blue & serene',
-      colors: ['#0a1628', '#0ea5e9', '#0f2238']
+      id: 'telegram',
+      emoji: '📋',
+      ar: 'تليجرام',
+      en: 'Telegram',
+      descAr: 'تصميم مسطح، بدون فقاعات، مشابه لـ Telegram',
+      descEn: 'Flat design without bubbles like Telegram'
     },
     {
-      id: 'fire',
-      emoji: '🔥',
-      ar: 'حمراء',
-      en: 'Fire',
-      descAr: 'قوية وجريئة',
-      descEn: 'Bold & powerful',
-      colors: ['#1a0a0a', '#dc2626', '#2a1010']
+      id: 'imessage',
+      emoji: '💎',
+      ar: 'iMessage',
+      en: 'iMessage',
+      descAr: 'تصميم أزرق انسيابي، مشابه لـ iMessage',
+      descEn: 'Blue smooth design like iMessage'
     }
   ];
 
@@ -1270,11 +1542,10 @@
       s3: 'كتابة', s3sub: 'نصوص ومقالات',
       s4: 'برمجة', s4sub: 'أكواد ومشاريع',
       settingsTitle: '⚙️ الإعدادات',
-      uiMode: 'شكل الواجهة', uiTitle: '🎨 اختر شكل الواجهة',
-      darkMode: 'الوضع الليلي',
+      designMode: 'تصميم الواجهة', designTitle: '🎨 اختر تصميم الواجهة',
+      themeMode: 'لون التطبيق', themeTitle: '🎨 اختر اللون',
       language: 'اللغة',
       personalityMode: 'شخصية الذكاء', personalityTitle: '🎭 اختر شخصية الذكاء',
-      themeMode: 'ثيم التطبيق', themeTitle: '🎨 اختر الثيم',
       aboutAIChat: 'سيرة AI Chat',
       currentMood: 'حالتي الآن',
       userProfile: 'ملفي الشخصي',
@@ -1284,12 +1555,10 @@
       copied: '📋 تم النسخ',
       liked: '❤️ شكراً',
       googleOpening: '🔍 فتح Google',
-      darkOn: '🌙 الوضع الليلي مفعّل',
-      darkOff: '☀️ الوضع النهاري مفعّل',
       langChanged: '🌐 تم تغيير اللغة',
       personalityChanged: '🎭 تم تغيير الشخصية',
-      themeChanged: '🎨 تم تغيير الثيم',
-      uiChanged: '🎨 تم تغيير الواجهة',
+      themeChanged: '🎨 تم تغيير اللون',
+      designChanged: '🎨 تم تغيير التصميم',
       q1: 'أعطني أفكار إبداعية', q2: 'علمني شيئاً جديداً',
       q3: 'ساعدني في الكتابة', q4: 'ساعدني في البرمجة',
       sideSub: 'بواسطة Zaki',
@@ -1339,11 +1608,10 @@
       s3: 'Writing', s3sub: 'Texts and articles',
       s4: 'Coding', s4sub: 'Code and projects',
       settingsTitle: '⚙️ Settings',
-      uiMode: 'UI Style', uiTitle: '🎨 Choose UI Style',
-      darkMode: 'Dark Mode',
+      designMode: 'UI Design', designTitle: '🎨 Choose UI Design',
+      themeMode: 'App Color', themeTitle: '🎨 Choose Color',
       language: 'Language',
       personalityMode: 'AI Personality', personalityTitle: '🎭 Choose AI Personality',
-      themeMode: 'App Theme', themeTitle: '🎨 Choose Theme',
       aboutAIChat: 'AI Chat Bio',
       currentMood: 'My Current Mood',
       userProfile: 'My Profile',
@@ -1353,11 +1621,10 @@
       copied: '📋 Copied',
       liked: '❤️ Thanks',
       googleOpening: '🔍 Opening Google',
-      darkOn: '🌙 Dark mode on', darkOff: '☀️ Light mode on',
       langChanged: '🌐 Language changed',
       personalityChanged: '🎭 Personality changed',
-      themeChanged: '🎨 Theme changed',
-      uiChanged: '🎨 UI changed',
+      themeChanged: '🎨 Color changed',
+      designChanged: '🎨 Design changed',
       q1: 'Give me creative ideas', q2: 'Teach me something new',
       q3: 'Help me with writing', q4: 'Help me with coding',
       sideSub: 'By Zaki',
@@ -1416,7 +1683,7 @@
   ];
 
   // ========================================
-  // 🎨 الثيمات
+  // 🎨 الألوان العشرة
   // ========================================
 
   const THEMES = [
@@ -1438,8 +1705,8 @@
   // ========================================
 
   let currentLang = localStorage.getItem('lang') || 'ar';
-  let currentTheme = localStorage.getItem('theme') || 'purple';
-  let currentUI = localStorage.getItem('uiTheme') || 'night';
+  let currentTheme = localStorage.getItem('themeColor') || 'purple';
+  let currentDesign = localStorage.getItem('design') || 'classic';
   let currentPersonality = localStorage.getItem('personality') || 'legendary';
   let isDark = localStorage.getItem('dark') !== 'false';
   let useThinking = localStorage.getItem('useThinking') !== 'false';
@@ -1740,107 +2007,95 @@ ${legendaryRules}`;
 
     updatePersonalityLabel();
     updateThemeLabel();
-    updateUILabel();
+    updateDesignLabel();
     renderChatsList();
     renderFavoritesList();
     renderExplore();
     renderStats();
     rebuildPersonalityGrid();
     rebuildThemeGrid();
-    rebuildUIGrid();
+    rebuildDesignGrid();
   }
 
   // ========================================
-  // 🎨 تطبيق الواجهة
+  // 🎨 تطبيق التصميم
   // ========================================
 
-  function applyUI(uiId) {
-    currentUI = uiId;
-    localStorage.setItem('uiTheme', uiId);
+  function applyDesign(designId) {
+    currentDesign = designId;
+    localStorage.setItem('design', designId);
     
-    // إزالة جميع الواجهات
-    document.body.classList.remove('ui-night', 'ui-day', 'ui-ocean', 'ui-fire');
-    // إضافة الواجهة الجديدة
-    document.body.classList.add('ui-' + uiId);
+    // إزالة جميع التصاميم
+    document.body.classList.remove('design-classic', 'design-whatsapp', 'design-telegram', 'design-imessage');
+    // إضافة التصميم الجديد
+    document.body.classList.add('design-' + designId);
     
-    updateUILabel();
-    document.querySelectorAll('.ui-option').forEach(el => {
-      el.classList.toggle('selected', el.dataset.ui === uiId);
+    updateDesignLabel();
+    document.querySelectorAll('.design-option').forEach(el => {
+      el.classList.toggle('selected', el.dataset.design === designId);
     });
-    
-    // تحديث meta theme-color
-    const themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) {
-      const ui = UI_THEMES.find(x => x.id === uiId) || UI_THEMES[0];
-      themeMeta.setAttribute('content', ui.colors[1]);
-    }
   }
 
-  function updateUILabel() {
-    const label = document.getElementById('uiLabel');
+  function updateDesignLabel() {
+    const label = document.getElementById('designLabel');
     if (!label) return;
-    const ui = UI_THEMES.find(x => x.id === currentUI) || UI_THEMES[0];
-    label.textContent = ui.emoji + ' ' + (currentLang === 'ar' ? ui.ar : ui.en);
+    const d = DESIGNS.find(x => x.id === currentDesign) || DESIGNS[0];
+    label.textContent = d.emoji + ' ' + (currentLang === 'ar' ? d.ar : d.en);
   }
 
-  function openUIPicker() {
+  function openDesignPicker() {
     document.getElementById('settingsModal').classList.remove('show');
     setTimeout(() => {
-      document.getElementById('uiModal').classList.add('show');
-      rebuildUIGrid();
+      document.getElementById('designModal').classList.add('show');
+      rebuildDesignGrid();
     }, 200);
   }
 
-  function closeUIPicker() {
-    document.getElementById('uiModal').classList.remove('show');
+  function closeDesignPicker() {
+    document.getElementById('designModal').classList.remove('show');
   }
 
-  function rebuildUIGrid() {
-    const grid = document.getElementById('uiGrid');
+  function rebuildDesignGrid() {
+    const grid = document.getElementById('designGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    UI_THEMES.forEach(ui => {
+    DESIGNS.forEach(d => {
       const el = document.createElement('div');
-      el.className = 'ui-option' + (ui.id === currentUI ? ' selected' : '');
-      el.dataset.ui = ui.id;
+      el.className = 'design-option' + (d.id === currentDesign ? ' selected' : '');
+      el.dataset.design = d.id;
       el.innerHTML = `
-        <span class="ui-emoji">${ui.emoji}</span>
-        <div class="ui-name">${currentLang === 'ar' ? ui.ar : ui.en}</div>
-        <div class="ui-desc">${currentLang === 'ar' ? ui.descAr : ui.descEn}</div>
-        <div class="ui-preview">
-          <span style="background:${ui.colors[0]}"></span>
-          <span style="background:${ui.colors[1]}"></span>
-          <span style="background:${ui.colors[2]}"></span>
+        <div class="design-emoji">${d.emoji}</div>
+        <div class="design-info">
+          <div class="design-name">${currentLang === 'ar' ? d.ar : d.en}</div>
+          <div class="design-desc">${currentLang === 'ar' ? d.descAr : d.descEn}</div>
         </div>
+        <div class="design-check">✓</div>
       `;
       el.onclick = () => {
-        applyUI(ui.id);
-        showToast(t('uiChanged') + ' ' + ui.emoji);
-        closeUIPicker();
+        applyDesign(d.id);
+        showToast(t('designChanged') + ' ' + d.emoji);
+        closeDesignPicker();
       };
       grid.appendChild(el);
     });
   }
 
   // ========================================
-  // 🎨 تطبيق الثيم
+  // 🎨 تطبيق اللون (10 ألوان تعمل مع كل التصاميم)
   // ========================================
 
-  function applyThemeColor(themeId) {
-    currentTheme = themeId;
-    localStorage.setItem('theme', themeId);
+  function applyThemeColor(colorId) {
+    currentTheme = colorId;
+    localStorage.setItem('themeColor', colorId);
     
-    const th = THEMES.find(x => x.id === themeId) || THEMES[0];
-    
-    // ✅ تطبيق اللون على الواجهة الحالية
-    document.documentElement.style.setProperty('--accent', th.color);
-    document.documentElement.style.setProperty('--accent-light', th.color);
-    document.documentElement.style.setProperty('--accent-glow', th.color + '99');
-    document.documentElement.style.setProperty('--accent-glow-strong', th.color);
+    // إزالة جميع الألوان
+    document.body.classList.remove('color-purple', 'color-blue', 'color-green', 'color-red', 'color-orange', 'color-pink', 'color-cyan', 'color-indigo', 'color-yellow', 'color-teal');
+    // إضافة اللون الجديد
+    document.body.classList.add('color-' + colorId);
     
     updateThemeLabel();
     document.querySelectorAll('.theme-option').forEach(el => {
-      el.classList.toggle('selected', el.dataset.theme === themeId);
+      el.classList.toggle('selected', el.dataset.theme === colorId);
     });
   }
 
@@ -1895,7 +2150,7 @@ ${legendaryRules}`;
 
   function toggleTheme() {
     applyDarkMode(!isDark);
-    showToast(isDark ? t('darkOn') : t('darkOff'));
+    showToast(isDark ? '🌙 الوضع الليلي' : '☀️ الوضع النهاري');
   }
 
   function toggleLanguage() {
@@ -2565,7 +2820,7 @@ ${legendaryRules}`;
 
       <div class="stat-section">
         <div class="stat-card">
-          <div class="number" style="font-size:16px;">AI Chat v8.0</div>
+          <div class="number" style="font-size:16px;">AI Chat v9.0</div>
           <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
         </div>
       </div>
@@ -2733,7 +2988,7 @@ ${legendaryRules}`;
       newDiv.innerHTML = `
         <div class="msg-avatar">🌐</div>
         <div class="msg-bubble">
-          <div class="msg-content" style="background:var(--bg-bot-bubble);padding:10px 14px;border-radius:14px;line-height:1.5;font-size:15px;">
+          <div class="msg-content" style="padding:10px 14px;border-radius:14px;line-height:1.5;font-size:15px;">
             <div style="font-size:12px;color:var(--accent-light);margin-bottom:6px;">🌐 ${currentLang === 'ar' ? 'ترجمة' : 'Translation'}</div>
             ${renderMarkdown(translation)}
           </div>
@@ -2980,7 +3235,7 @@ ${legendaryRules}`;
 
     let finalContent = messageContent;
     
-    // ✅ الإصلاح: معالجة البحث في الإنترنت بشكل صحيح
+    // ✅ الإصلاح: معالجة البحث في الإنترنت
     if (webSearchEnabled && text) {
       showToast(t('searchingWeb'));
       const results = await searchWeb(text);
@@ -3058,7 +3313,7 @@ ${legendaryRules}`;
       const loadingContent = loading.querySelector('.msg-content');
 
       // ✅ عرض Markdown مباشرة (بدون تأثير كتابة)
-      loadingContent.innerHTML = `<div style="padding:0;line-height:1.5;font-size:15px;">${renderMarkdown(reply)}</div>`;
+      loadingContent.innerHTML = renderMarkdown(reply);
 
       const actions = loading.querySelector('.msg-actions');
       if (actions) {
@@ -3091,11 +3346,9 @@ ${legendaryRules}`;
     } catch (err) {
       playSound('error');
       loading.querySelector('.msg-content').innerHTML = `
-        <div style="padding:10px 14px;border-radius:14px;line-height:1.5;">
-          ❌ ${escapeHtml(err.message)}
-          <div style="margin-top:10px;">
-            <button onclick="retryMessage()" style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:white;border:none;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:bold;cursor:pointer;">🔄 ${t('retry')}</button>
-          </div>
+        ❌ ${escapeHtml(err.message)}
+        <div style="margin-top:10px;">
+          <button onclick="retryMessage()" style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:white;border:none;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:bold;cursor:pointer;">🔄 ${t('retry')}</button>
         </div>
       `;
     } finally {
@@ -3121,8 +3374,7 @@ ${legendaryRules}`;
     userInput.value = lastUserMessage;
     sendMessage();
   }
-</script>
-<script>
+
   // ========================================
   // 📋 نسخ المحادثة كاملة
   // ========================================
@@ -3217,7 +3469,8 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
     showToast('🔄 جاري إعادة التعيين...');
     setTimeout(() => location.reload(), 1000);
   }
-
+</script>
+<script>
   // ========================================
   // ⌨️ أحداث الإدخال
   // ========================================
@@ -3243,7 +3496,7 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
       closeSettings();
       closePersonalityPicker();
       closeThemePicker();
-      closeUIPicker();
+      closeDesignPicker();
       closeSidebar();
       closePage('chatsPage');
       closePage('explorePage');
@@ -3327,18 +3580,17 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
   }
 
   setInterval(updateMoodDisplay, 30000);
-</script>
-<script>
+
   // ========================================
   // 🚀 التهيئة النهائية
   // ========================================
 
-  // تطبيق الواجهة أولاً
-  applyUI(currentUI);
+  // ✅ تطبيق التصميم واللون أولاً
+  applyDesign(currentDesign);
+  applyThemeColor(currentTheme);
 
   // تطبيق الباقي
   applyLanguage(currentLang);
-  applyThemeColor(currentTheme);
   applyDarkMode(isDark);
   applyThinkingMode(useThinking);
   applyEmojiMode(useEmoji);
@@ -3356,10 +3608,10 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
   // بناء الشبكات
   rebuildPersonalityGrid();
   rebuildThemeGrid();
-  rebuildUIGrid();
+  rebuildDesignGrid();
   updatePersonalityLabel();
   updateThemeLabel();
-  updateUILabel();
+  updateDesignLabel();
   renderExplore();
 
   // تحديث اسم المستخدم
@@ -3373,9 +3625,10 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
   // 🎉 رسائل console
   // ========================================
 
-  console.log('%c✦ AI Chat v8.0', 'font-size:20px;color:#7c3aed;font-weight:bold;');
+  console.log('%c✦ AI Chat v9.0', 'font-size:20px;color:#7c3aed;font-weight:bold;');
   console.log('%cبواسطة Zaki', 'font-size:14px;color:#a855f7;');
-  console.log('%c🎨 4 واجهات: ليلية، نهارية، محيطية، حمراء', 'font-size:12px;color:#7c3aed;');
+  console.log('%c🎨 4 تصاميم: كلاسيكي، واتساب، تليجرام، iMessage', 'font-size:12px;color:#7c3aed;');
+  console.log('%c🌈 10 ألوان تعمل مع كل تصميم', 'font-size:12px;color:#7c3aed;');
   console.log('%c🎭 6 شخصيات كاملة بمشاعر وآراء', 'font-size:12px;color:#7c3aed;');
   console.log('%c🌟 استمتع بالتجربة!', 'font-size:12px;color:#a855f7;');
 
