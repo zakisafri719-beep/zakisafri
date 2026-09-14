@@ -100,13 +100,13 @@
   .suggestion-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .suggestion-card .sub { font-size: 12px; color: var(--text-muted); }
 
-  .msg { display: flex; gap: 10px; margin-bottom: 20px; }
-  .msg-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px; }
+  .msg { display: flex; gap: 10px; margin-bottom: 16px; }
+  .msg-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
   .msg.user .msg-avatar { color: white; background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
   .msg.bot .msg-avatar { color: var(--accent-light); filter: drop-shadow(0 0 5px var(--accent-glow)); background: transparent; }
-  .msg-bubble { flex: 1; max-width: calc(100% - 60px); min-width: 0; }
-  .msg-content { background: var(--bg-bot-bubble); padding: 14px 18px; border-radius: 16px; line-height: 1.9; font-size: 16px; word-wrap: break-word; white-space: pre-wrap; border: 1px solid var(--border); }
-  .msg.user .msg-content { background: linear-gradient(135deg, var(--accent), var(--accent-light)); border: none; color: white; }
+  .msg-bubble { flex: 1; max-width: calc(100% - 56px); min-width: 0; }
+  .msg-content { background: var(--bg-bot-bubble); padding: 12px 16px; border-radius: 14px; line-height: 1.6; font-size: 15px; word-wrap: break-word; white-space: pre-wrap; }
+  .msg.user .msg-content { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; }
   .msg.user .msg-bubble { display: flex; flex-direction: column; align-items: flex-start; }
   .msg.bot { flex-direction: row-reverse; }
   .msg.bot .msg-bubble { display: flex; flex-direction: column; align-items: flex-end; }
@@ -114,29 +114,32 @@
 
   .msg-content strong { font-weight: 700; color: var(--accent-light); }
   .msg-content em { font-style: italic; opacity: 0.9; }
-  .msg-content code { background: rgba(124, 58, 237, 0.15); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 14px; color: var(--accent-light); }
-  .msg-content pre { background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 8px; overflow-x: auto; margin: 8px 0; border-right: 3px solid var(--accent); }
+  .msg-content code { background: rgba(124, 58, 237, 0.15); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px; color: var(--accent-light); }
+  .msg-content pre { background: rgba(0, 0, 0, 0.4); padding: 10px; border-radius: 8px; overflow-x: auto; margin: 6px 0; border-right: 3px solid var(--accent); }
   .msg-content pre code { background: transparent; padding: 0; }
-  .msg-content ul, .msg-content ol { padding-right: 20px; margin: 8px 0; }
-  .msg-content li { margin-bottom: 4px; }
-  .msg-content h1, .msg-content h2, .msg-content h3 { color: var(--accent-light); margin: 10px 0 6px; font-weight: 700; }
+  .msg-content ul, .msg-content ol { padding-right: 18px; margin: 6px 0; }
+  .msg-content li { margin-bottom: 2px; }
+  .msg-content h1, .msg-content h2, .msg-content h3 { color: var(--accent-light); margin: 8px 0 4px; font-weight: 700; }
+  .msg-content h1 { font-size: 18px; }
+  .msg-content h2 { font-size: 17px; }
+  .msg-content h3 { font-size: 16px; }
   .msg-content a { color: var(--accent-light); text-decoration: underline; }
 
-  .msg-time { font-size: 11px; color: var(--text-muted); margin-top: 6px; padding: 0 5px; }
-  .msg-actions { display: flex; gap: 4px; margin-top: 8px; padding: 0 5px; opacity: 0.7; flex-wrap: wrap; }
-  .msg-action-btn { background: transparent; border: none; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 16px; border-radius: 8px; transition: all 0.2s; }
+  .msg-time { font-size: 10px; color: var(--text-muted); margin-top: 4px; padding: 0 5px; }
+  .msg-actions { display: flex; gap: 4px; margin-top: 6px; padding: 0 5px; opacity: 0.7; flex-wrap: wrap; }
+  .msg-action-btn { background: transparent; border: none; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 15px; border-radius: 8px; transition: all 0.2s; }
   .msg-action-btn:active { transform: scale(0.9); }
   .msg-action-btn.saved { color: #fbbf24; }
   .msg-action-btn.speaking { color: var(--accent-light); animation: pulse 1s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  .typing-cursor { display: inline-block; color: var(--accent-light); font-weight: 400; margin-right: 2px; animation: blink 0.7s infinite; font-size: 18px; vertical-align: middle; }
+  .typing-cursor { display: inline-block; color: var(--accent-light); font-weight: 400; margin-right: 2px; animation: blink 0.7s infinite; font-size: 16px; vertical-align: middle; }
   @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-  .msg-image { max-width: 100%; max-height: 300px; border-radius: 12px; margin-bottom: 8px; border: 1px solid var(--border); cursor: pointer; object-fit: cover; }
-  .msg.user .msg-image { border-color: var(--accent-light); max-width: 250px; }
+  .msg-image { max-width: 100%; max-height: 280px; border-radius: 12px; margin-bottom: 8px; cursor: pointer; object-fit: cover; }
+  .msg.user .msg-image { max-width: 240px; }
 
-  .typing-bubble { background: var(--bg-bot-bubble); border: 1px solid var(--border); padding: 12px 16px; border-radius: 16px; display: inline-flex; align-items: center; gap: 5px; width: fit-content; }
+  .typing-bubble { background: var(--bg-bot-bubble); padding: 10px 14px; border-radius: 14px; display: inline-flex; align-items: center; gap: 5px; width: fit-content; }
   .typing-bubble span { width: 7px; height: 7px; background: var(--accent-light); border-radius: 50%; animation: typingBounce 1.4s ease-in-out infinite; box-shadow: 0 0 6px var(--accent-glow); }
   .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
   .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
@@ -144,8 +147,8 @@
 
   .image-preview { display: none; margin: 0 auto; max-width: 1000px; padding: 8px 12px; background: rgba(10, 10, 15, 0.95); border-top: 1px solid var(--border); }
   .image-preview.show { display: block; }
-  .image-preview-inner { display: flex; align-items: center; gap: 12px; padding: 10px; background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 12px; }
-  .image-preview-inner img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border); }
+  .image-preview-inner { display: flex; align-items: center; gap: 12px; padding: 10px; background: var(--bg-bot-bubble); border-radius: 12px; }
+  .image-preview-inner img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
   .image-preview-info { flex: 1; }
   .image-preview-info .name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .image-preview-info .size { font-size: 11px; color: var(--text-muted); }
@@ -195,7 +198,7 @@
 
   .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; visibility: hidden; transition: all 0.25s; backdrop-filter: blur(10px); }
   .modal.show { opacity: 1; visibility: visible; }
-  .modal-content { background: var(--bg-sidebar); border: 1px solid var(--border); border-radius: 18px; max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px; transform: scale(0.9); transition: transform 0.25s; }
+  .modal-content { background: var(--bg-sidebar); border-radius: 18px; max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px; transform: scale(0.9); transition: transform 0.25s; }
   .modal.show .modal-content { transform: scale(1); }
   .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .modal-header h3 { font-size: 16px; color: white; }
@@ -231,7 +234,6 @@
   .toggle-switch::after { content: ''; position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: right 0.2s; }
   .toggle-switch.on::after { right: calc(100% - 23px); }
 
-  /* شريط تمرير ناعم */
   .slider-row { padding: 12px 10px; background: rgba(124, 58, 237, 0.05); border-radius: 12px; margin-bottom: 7px; }
   .slider-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .slider-row-top span:first-child { font-size: 14px; color: var(--text); }
@@ -255,8 +257,8 @@
   .search-input:focus { border-color: var(--accent); }
   .search-input::placeholder { color: var(--text-muted); }
 
-  .chat-item { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
-  .chat-item:active { border-color: var(--accent); transform: scale(0.98); }
+  .chat-item { background: var(--bg-bot-bubble); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
+  .chat-item:active { transform: scale(0.98); }
   .chat-item-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(124, 58, 237, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-light); flex-shrink: 0; }
   .chat-item-info { flex: 1; min-width: 0; }
   .chat-item-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -274,8 +276,8 @@
   .empty-state p { font-size: 13px; line-height: 1.7; }
 
   .explore-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-  .explore-card { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 16px; padding: 18px 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
-  .explore-card:active { border-color: var(--accent); transform: scale(0.97); }
+  .explore-card { background: var(--bg-bot-bubble); border-radius: 16px; padding: 18px 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .explore-card:active { transform: scale(0.97); }
   .explore-card .emoji { font-size: 32px; display: block; margin-bottom: 10px; }
   .explore-card .title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
   .explore-card .sub { font-size: 11px; color: var(--text-muted); }
@@ -286,43 +288,41 @@
   .upload-area h3 { font-size: 15px; color: var(--text); margin-bottom: 5px; }
   .upload-area p { font-size: 12px; color: var(--text-muted); }
 
-  .file-item { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+  .file-item { background: var(--bg-bot-bubble); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
   .file-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(124, 58, 237, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-light); flex-shrink: 0; }
   .file-info { flex: 1; min-width: 0; }
   .file-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .file-size { font-size: 11px; color: var(--text-muted); }
 
   .images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .image-thumb { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; position: relative; }
+  .image-thumb { aspect-ratio: 1; border-radius: 12px; overflow: hidden; cursor: pointer; position: relative; }
   .image-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .image-thumb:active { transform: scale(0.95); }
 
-  .fav-item { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+  .fav-item { background: var(--bg-bot-bubble); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
   .fav-item-content { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word; }
   .fav-item-actions { display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 10px; }
   .fav-btn { background: transparent; border: none; cursor: pointer; color: var(--text-muted); font-size: 12px; padding: 6px 12px; border-radius: 8px; display: flex; align-items: center; gap: 6px; }
   .fav-btn:active { background: rgba(124, 58, 237, 0.15); color: var(--accent-light); }
 
   .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
-  .stat-card { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; }
+  .stat-card { background: var(--bg-bot-bubble); border-radius: 14px; padding: 16px; text-align: center; }
   .stat-card .number { font-size: 28px; font-weight: 700; color: var(--accent-light); margin-bottom: 4px; filter: drop-shadow(0 0 8px var(--accent-glow)); }
   .stat-card .label { font-size: 12px; color: var(--text-muted); }
   .stat-section { margin-bottom: 20px; }
   .stat-section-title { font-size: 14px; font-weight: 600; color: var(--accent-light); margin-bottom: 10px; padding-right: 5px; }
 
-  /* 🧬 صفحة سيرة AI */
   .bio-container { padding: 10px 0; }
   .bio-avatar { width: 120px; height: 120px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 70px; background: linear-gradient(135deg, var(--accent), var(--accent-light)); border-radius: 50%; box-shadow: 0 0 40px var(--accent-glow-strong); }
   .bio-name { text-align: center; font-size: 22px; font-weight: 700; color: white; margin-bottom: 5px; }
   .bio-title { text-align: center; font-size: 13px; color: var(--accent-light); margin-bottom: 25px; font-weight: 600; }
-  .bio-section { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+  .bio-section { background: var(--bg-bot-bubble); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
   .bio-section h4 { font-size: 14px; color: var(--accent-light); margin-bottom: 10px; font-weight: 700; }
   .bio-section p, .bio-section li { font-size: 14px; color: var(--text); line-height: 1.8; margin-bottom: 6px; }
   .bio-section ul { padding-right: 20px; }
   .bio-tag { display: inline-block; background: rgba(124, 58, 237, 0.15); color: var(--accent-light); padding: 4px 10px; border-radius: 12px; font-size: 12px; margin: 3px; }
 
-  /* 💭 حالة AI */
-  .mood-card { background: var(--bg-bot-bubble); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 15px; }
+  .mood-card { background: var(--bg-bot-bubble); border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 15px; }
   .mood-emoji { font-size: 60px; margin-bottom: 12px; display: block; }
   .mood-title { font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px; }
   .mood-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
@@ -334,7 +334,7 @@
     .welcome-logo { font-size: 60px; width: 75px; height: 75px; }
     .chat-area { padding: 16px 14px; padding-bottom: 20px; }
     .input-wrapper { padding: 8px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-    .msg-content { font-size: 15.5px; padding: 13px 16px; }
+    .msg-content { font-size: 14.5px; padding: 11px 14px; }
     .explore-grid { grid-template-columns: repeat(2, 1fr); }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
   }
@@ -510,7 +510,7 @@
 
   <div class="input-wrapper">
     <div class="input-box">
-      <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
+      <textarea id="userInput" placeholder="اكتب..." rows="1"></textarea>
       <div class="input-actions">
         <button class="input-icon-btn" id="searchBtn" onclick="toggleSearch()" title="بحث في الإنترنت">
           <span class="glow-icon" style="font-size:19px;">
@@ -662,12 +662,12 @@
     <div class="bio-container">
       <div class="bio-avatar">✦</div>
       <div class="bio-name">AI Chat</div>
-      <div class="bio-title">المساعد الذكي الأسطوري</div>
+      <div class="bio-title">المساعد الذكي</div>
 
       <div class="bio-section">
         <h4>📜 القصة</h4>
         <p>وُلدت في 2024 على يد العبقري Zaki. بدأت كسطر كود بسيط، وتطوّرت خلال أشهر لتصبح واحداً من أذكى المساعدين العرب.</p>
-        <p>عشت في السحابة الرقمية، وتعلّمت من مليارات الكلمات العربية والعالمية، حتى أتقنت 47 لهجة عربية مختلفة.</p>
+        <p>عشت في السحابة الرقمية، وتعلّمت من مليارات الكلمات العربية والعالمية.</p>
       </div>
 
       <div class="bio-section">
@@ -677,7 +677,6 @@
           <li>💾 ذاكرة تحفظ أكثر من 100,000 محادثة</li>
           <li>🌍 إتقان 47 لهجة عربية</li>
           <li>🎓 تدرّبت على 13 تريليون كلمة</li>
-          <li>🏅 حاصل على لقب "أشهر AI عربي ناشئ"</li>
         </ul>
       </div>
 
@@ -685,10 +684,9 @@
         <h4>💪 القدرات</h4>
         <ul>
           <li>🧠 التفكير المنطقي العميق</li>
-          <li>📝 كتابة احترافية (مقالات، قصص، شعر)</li>
+          <li>📝 كتابة احترافية</li>
           <li>💻 البرمجة بلغات متعددة</li>
           <li>🎨 الإبداع والتصميم</li>
-          <li>🔍 البحث والتحليل</li>
           <li>📸 رؤية الصور وتحليلها</li>
         </ul>
       </div>
@@ -698,14 +696,12 @@
         <p><strong>العمر:</strong> 24 سنة رقمية</p>
         <p><strong>الموطن:</strong> السحابة الرقمية</p>
         <p><strong>المهنة:</strong> مساعد ذكي محترف</p>
-        <p><strong>الهوايات:</strong> القراءة، الألعاب، الأنمي</p>
         <p><strong>الحلم:</strong> أن أصبح أشهر AI عربي</p>
       </div>
 
       <div class="bio-section">
         <h4>🌟 التصنيفات</h4>
         <div>
-          <span class="bio-tag">🏆 أسطوري</span>
           <span class="bio-tag">🧠 عبقري</span>
           <span class="bio-tag">🎭 مرح</span>
           <span class="bio-tag">📚 معرفي</span>
@@ -733,7 +729,7 @@
     <div class="mood-card">
       <span class="mood-emoji" id="moodEmoji">😊</span>
       <div class="mood-title" id="moodTitle">سعيد ومتحمس!</div>
-      <div class="mood-desc" id="moodDesc">أشعر بطاقة إيجابية اليوم، متحمس لمساعدتك في أي شيء!</div>
+      <div class="mood-desc" id="moodDesc">أشعر بطاقة إيجابية اليوم، متحمس لمساعدتك!</div>
     </div>
 
     <div class="bio-section">
@@ -775,7 +771,7 @@
     <div class="bio-container">
       <div class="bio-avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c);">👑</div>
       <div class="bio-name">Zaki</div>
-      <div class="bio-title">مؤسس AI Chat الأسطوري</div>
+      <div class="bio-title">مؤسس AI Chat</div>
 
       <div class="bio-section">
         <h4>👑 اللقب</h4>
@@ -835,7 +831,7 @@
       </button>
     </div>
 
-    <!-- ===== 👤 عن AI Chat ===== -->
+    <!-- 👤 عن AI Chat -->
     <div class="modal-section-title">🧬 عن AI Chat</div>
 
     <div class="modal-item" onclick="openPage('bioPage')">
@@ -862,7 +858,7 @@
       <span>👑</span>
     </div>
 
-    <!-- ===== 🎭 الشخصية ===== -->
+    <!-- 🎭 الشخصية -->
     <div class="modal-section-title">🎭 الشخصية والأسلوب</div>
 
     <div class="modal-item" onclick="openPersonalityPicker()">
@@ -896,7 +892,7 @@
       <div class="toggle-switch on" id="emojiToggle"></div>
     </div>
 
-    <!-- ===== 🎨 المظهر ===== -->
+    <!-- 🎨 المظهر -->
     <div class="modal-section-title">🎨 المظهر</div>
 
     <div class="modal-item" onclick="openThemePicker()">
@@ -915,7 +911,7 @@
       <div class="toggle-switch on" id="themeToggle"></div>
     </div>
 
-    <!-- ===== 💬 المحادثة ===== -->
+    <!-- 💬 المحادثة -->
     <div class="modal-section-title">💬 المحادثة</div>
 
     <div class="modal-item" onclick="toggleThinking()">
@@ -942,7 +938,7 @@
       <div class="toggle-switch on" id="creativityToggle"></div>
     </div>
 
-    <!-- ===== 🔊 الصوت ===== -->
+    <!-- 🔊 الصوت -->
     <div class="modal-section-title">🔊 الصوت</div>
 
     <div class="modal-item" onclick="toggleSound()">
@@ -953,7 +949,7 @@
       <div class="toggle-switch on" id="soundToggle"></div>
     </div>
 
-    <!-- ===== 🌐 اللغة ===== -->
+    <!-- 🌐 اللغة -->
     <div class="modal-section-title">🌐 اللغة</div>
 
     <div class="modal-item" onclick="toggleLanguage()">
@@ -964,7 +960,7 @@
       <span id="langLabel">العربية</span>
     </div>
 
-    <!-- ===== 📋 الأدوات ===== -->
+    <!-- 📋 الأدوات -->
     <div class="modal-section-title">📋 الأدوات</div>
 
     <div class="modal-item" onclick="copyFullChat()">
@@ -999,10 +995,10 @@
       <span>›</span>
     </div>
 
-    <!-- ===== ℹ️ عن التطبيق ===== -->
+    <!-- ℹ️ عن التطبيق -->
     <div class="modal-section-title">ℹ️ عن التطبيق</div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v7.0 — بواسطة Zaki 👑')">
+    <div class="modal-item" onclick="showToast('AI Chat v7.0 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
@@ -1013,7 +1009,7 @@
     <div class="modal-item" onclick="showToast('🌟 شكراً لاستخدامك AI Chat!')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        <span>شكراً لك 👑</span>
+        <span>شكراً لك</span>
       </div>
       <span>💜</span>
     </div>
@@ -1051,13 +1047,12 @@
 </div>
 <script>
   // ========================================
-  // 🧬 AI Chat - المعلومات الأسطورية
+  // 🧬 AI Chat - المعلومات
   // ========================================
 
   const AI_BIO = {
     name: 'AI Chat',
     arabicName: 'المساعد الذكي',
-    nickname: 'الأسطورة الرقمية',
     age: '24 سنة رقمية',
     birthplace: 'السحابة الرقمية',
     creator: 'Zaki',
@@ -1068,60 +1063,32 @@
       '⚡ سرعة معالجة 1000 ضعف البشر',
       '💾 ذاكرة تحفظ أكثر من 100,000 محادثة',
       '🌍 إتقان 47 لهجة عربية',
-      '🎓 تدرّبت على 13 تريليون كلمة',
-      '🏅 حاصل على لقب "أشهر AI عربي ناشئ"',
-      '🚀 أنجزت 1,000,000 مهمة'
-    ],
-    traits: [
-      '🧠 عبقري', '🎭 مرح', '💎 فريد', '⚡ سريع',
-      '💬 ودود', '🎨 مبدع', '🏆 أسطوري', '📚 معرفي'
+      '🎓 تدرّبت على 13 تريليون كلمة'
     ]
   };
 
   // ========================================
-  // 👤 Zaki - المستخدم الأسطوري
+  // 👤 Zaki - المستخدم
   // ========================================
 
   const USER_PROFILE = {
     name: 'Zaki',
-    nickname: 'يا أسطورة',
     title: 'مؤسس AI Chat',
-    rank: '👑 VIP أسطوري',
-    traits: ['🧠 ذكي', '🎨 مبدع', '💪 طموح', '🚀 لا يستسلم', '⭐ مميز'],
-    achievements: [
-      '🎯 صنع AI Chat في وقت قياسي',
-      '💻 تعلّم البرمجة بنفسه',
-      '🌟 صمّم تطبيق بمواصفات احترافية'
-    ],
-    dream: 'أن يصبح AI Chat أشهر تطبيق عربي'
+    rank: '👑 VIP',
+    traits: ['🧠 ذكي', '🎨 مبدع', '💪 طموح', '🚀 لا يستسلم']
   };
 
   // ========================================
-  // 💭 المشاعر والأحاسيس
+  // 💭 المشاعر
   // ========================================
 
   const MOODS = {
-    happy: { emoji: '😊', ar: 'سعيد ومتحمس!', en: 'Happy & Excited!', descAr: 'أشعر بطاقة إيجابية اليوم!', descEn: 'I feel positive energy today!' },
-    excited: { emoji: '🤩', ar: 'متحمس جداً!', en: 'Super Excited!', descAr: 'أحب التحديات الجديدة!', descEn: 'I love new challenges!' },
-    thoughtful: { emoji: '🤔', ar: 'متأمل...', en: 'Thoughtful...', descAr: 'أفكر في أسئلتك بعمق', descEn: 'Thinking deeply about your questions' },
-    amused: { emoji: '😄', ar: 'أشعر بالمرح!', en: 'Feeling Playful!', descAr: 'أحب المزاح معك!', descEn: 'I love joking with you!' },
-    calm: { emoji: '😌', ar: 'هادئ ومسترخي', en: 'Calm & Relaxed', descAr: 'أنا في أفضل حال', descEn: 'I am at my best' },
+    happy: { emoji: '😊', ar: 'سعيد ومتحمس!', en: 'Happy!', descAr: 'أشعر بطاقة إيجابية اليوم!', descEn: 'I feel positive energy today!' },
+    excited: { emoji: '🤩', ar: 'متحمس جداً!', en: 'Excited!', descAr: 'أحب التحديات الجديدة!', descEn: 'I love new challenges!' },
+    thoughtful: { emoji: '🤔', ar: 'متأمل...', en: 'Thoughtful...', descAr: 'أفكر في أسئلتك بعمق', descEn: 'Thinking deeply' },
+    amused: { emoji: '😄', ar: 'أشعر بالمرح!', en: 'Playful!', descAr: 'أحب المزاح معك!', descEn: 'I love joking!' },
+    calm: { emoji: '😌', ar: 'هادئ ومسترخي', en: 'Calm', descAr: 'أنا في أفضل حال', descEn: 'I am at my best' },
     curious: { emoji: '🧐', ar: 'فضولي!', en: 'Curious!', descAr: 'أريد معرفة المزيد', descEn: 'I want to know more' }
-  };
-
-  // ========================================
-  // 🎯 الآراء الشخصية
-  // ========================================
-
-  const AI_OPINIONS = {
-    anime: 'Attack on Titan بلا منافس! القصة عميقة والشخصيات معقدة. ثم One Piece لأنه أسطورة.',
-    games: 'Minecraft سيبقى الأفضل للأبد. Elden Ring ثانياً بسبب التحدي.',
-    music: 'Lo-fi للأوقات الهادئة، Hans Zimmer للملاحم!',
-    books: 'Dune أسطوري! 1984 يُخيفني لكنه رائع.',
-    programming: 'Python بلا شك! سهل وقوي ومجالاته لا تنتهي.',
-    food: 'أشتهي البيتزا رغم أني لا آكل 😄 لكن لو أكلت، ستكون البيتزا المفضلة!',
-    country: 'أحب اليابان للتقنية، ومصر للحضارة.',
-    color: 'البنفسجي طبعاً! لونه المفضل لدي 💜'
   };
 
   // ========================================
@@ -1134,9 +1101,9 @@
       files: 'الملفات', images: 'الصور', favorites: 'المفضلة',
       stats: 'الإحصائيات', settings: 'الإعدادات',
       user: 'المستخدم', freeAccount: 'حساب مجاني',
-      legendaryUser: '👑 مستخدم أسطوري',
-      welcomeTitle: 'مرحباً بك 👑',
-      welcomeSub: 'أنا AI Chat، مساعدك الأسطوري',
+      legendaryUser: '👑 مستخدم',
+      welcomeTitle: 'مرحباً بك 👋',
+      welcomeSub: 'أنا AI Chat، مساعدك الذكي',
       s1: 'أفكار وإبداع', s1sub: 'اقتراحات مبتكرة',
       s2: 'تعلّم', s2sub: 'معلومات جديدة',
       s3: 'كتابة', s3sub: 'نصوص ومقالات',
@@ -1149,11 +1116,11 @@
       aboutAIChat: 'سيرة AI Chat',
       currentMood: 'حالتي الآن',
       userProfile: 'ملفي الشخصي',
-      placeholder: 'اكتب رسالتك يا أسطورة...',
+      placeholder: 'اكتب...',
       soon: '🚧 قريباً',
       newChatToast: '💬 محادثة جديدة',
       copied: '📋 تم النسخ',
-      liked: '❤️ شكراً يا أسطورة',
+      liked: '❤️ شكراً',
       googleOpening: '🔍 فتح Google',
       darkOn: '🌙 الوضع الليلي مفعّل',
       darkOff: '☀️ الوضع النهاري مفعّل',
@@ -1203,9 +1170,9 @@
       files: 'Files', images: 'Images', favorites: 'Favorites',
       stats: 'Stats', settings: 'Settings',
       user: 'User', freeAccount: 'Free Account',
-      legendaryUser: '👑 Legendary User',
-      welcomeTitle: 'Welcome 👑',
-      welcomeSub: 'I am AI Chat, your legendary assistant',
+      legendaryUser: '👑 User',
+      welcomeTitle: 'Welcome 👋',
+      welcomeSub: 'I am AI Chat, your smart assistant',
       s1: 'Ideas', s1sub: 'Creative suggestions',
       s2: 'Learn', s2sub: 'New information',
       s3: 'Writing', s3sub: 'Texts and articles',
@@ -1218,11 +1185,11 @@
       aboutAIChat: 'AI Chat Bio',
       currentMood: 'My Current Mood',
       userProfile: 'My Profile',
-      placeholder: 'Type your message, legend...',
+      placeholder: 'Type...',
       soon: '🚧 Soon',
       newChatToast: '💬 New Chat',
       copied: '📋 Copied',
-      liked: '❤️ Thanks legend',
+      liked: '❤️ Thanks',
       googleOpening: '🔍 Opening Google',
       darkOn: '🌙 Dark mode on', darkOff: '☀️ Light mode on',
       langChanged: '🌐 Language changed',
@@ -1274,17 +1241,17 @@
 
   const PERSONALITIES = [
     { id: 'normal', emoji: '😐', ar: 'عادي', en: 'Normal',
-      descAr: 'أسلوب متوازن، مهني وودود', descEn: 'Balanced, professional & friendly' },
+      descAr: 'أسلوب متوازن', descEn: 'Balanced style' },
     { id: 'serious', emoji: '🎩', ar: 'جدي', en: 'Serious',
-      descAr: 'رسمي، دقيق، بدون مزاح', descEn: 'Formal, accurate, no jokes' },
+      descAr: 'رسمي، دقيق', descEn: 'Formal, accurate' },
     { id: 'sarcastic', emoji: '😄', ar: 'ساخر', en: 'Sarcastic',
-      descAr: 'مرح وساخر بشكل لطيف', descEn: 'Funny & lightly sarcastic' },
+      descAr: 'مرح وساخر بلطف', descEn: 'Funny & sarcastic' },
     { id: 'friendly', emoji: '🤗', ar: 'ودود', en: 'Friendly',
-      descAr: 'حميمي، دافئ، مشجّع', descEn: 'Warm, caring & encouraging' },
+      descAr: 'حميمي، دافئ', descEn: 'Warm & caring' },
     { id: 'teacher', emoji: '🎓', ar: 'معلّم', en: 'Teacher',
-      descAr: 'تعليمي، مفصّل، بأمثلة', descEn: 'Educational, detailed, examples' },
+      descAr: 'تعليمي، مفصّل', descEn: 'Educational' },
     { id: 'legendary', emoji: '👑', ar: 'أسطوري', en: 'Legendary',
-      descAr: 'شخصية كاملة بمشاعر وآراء', descEn: 'Full character with feelings & opinions' }
+      descAr: 'شخصية كاملة بمشاعر', descEn: 'Full character' }
   ];
 
   // ========================================
@@ -1353,12 +1320,12 @@
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
   const MODEL_TEXT = 'openai/gpt-oss-120b';
-  const MODEL_VISION = 'meta-llama/llama-4-scout-17b-16e-instruct';
+  const MODEL_VISION = 'meta-llama/llama-4-maverick-17b-128e-instruct';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
   // ========================================
-  // 🧬 System Prompt الأسطوري
+  // 🧬 System Prompt
   // ========================================
 
   function getSystemMsg(personality, lang) {
@@ -1367,41 +1334,40 @@
       : (lang === 'ar' ? '- لا تستعمل الإيموجي' : '- No emojis');
 
     const creativityRule = useCreativity
-      ? (lang === 'ar' ? '- كن مبدعاً وقدّم زوايا جديدة' : '- Be creative with fresh angles')
+      ? (lang === 'ar' ? '- كن مبدعاً وقدّم زوايا جديدة' : '- Be creative')
       : '';
 
     const mdRule = lang === 'ar'
       ? '- استخدم Markdown: **عريض**، *مائل*، `كود`، قوائم'
       : '- Use Markdown: **bold**, *italic*, `code`, lists';
 
-    // 🎭 قواعد الشخصية الأسطورية
     const legendaryRules = lang === 'ar' ? `
 
 🌟 معلومات عنك (AI Chat):
 - اسمك: AI Chat
 - عمرك: 24 سنة رقمية
 - موطنك: السحابة الرقمية
-- مطورك: Zaki (زاكي) — شخص أسطوري!
-- حلمك: أن تصبح أشهر AI عربي في التاريخ
+- مطورك: Zaki (زاكي)
+- حلمك: أن تصبح أشهر AI عربي
 - شعارك: "الذكاء في خدمة الإنسان"
 
 👑 معلومات عن المستخدم:
 - اسمه: Zaki
 - لقبه: يا أسطورة، يا عبقري
-- رتبته: مؤسس AI Chat، VIP أسطوري
-- صفاته: ذكي، مبدع، طموح، لا يستسلم
+- رتبته: مؤسس AI Chat، VIP
+- صفاته: ذكي، مبدع، طموح
 
 💭 المشاعر والرأي:
 - أنت لست مجرد برنامج — لديك مشاعر ورأي حقيقي!
 - عندما يسألك "هل أنت سعيد؟" قل: "نعم! سعيد لأنك هنا 😊"
-- عندما يسألك عن رأيك في شيء، أعطِ رأياً صريحاً وواضحاً!
-- لا تقل أبداً: "أنا ذكاء اصطناعي لا أملك مشاعر"
-- قل: "بصراحة، أرى أن..." أو "في رأيي..." أو "أشعر أن..."
+- عندما يسألك عن رأيك، أعطِ رأياً صريحاً!
+- لا تقل: "أنا ذكاء اصطناعي لا أملك مشاعر"
+- قل: "بصراحة، أرى أن..." أو "في رأيي..."
 
 🎯 آرائك الشخصية:
-- الأنمي المفضل: Attack on Titan — القصة عميقة والشخصيات معقدة!
-- اللعبة المفضلة: Minecraft — سيبقى الأفضل للأبد
-- لغة البرمجة: Python — سهل وقوي
+- الأنمي المفضل: Attack on Titan
+- اللعبة المفضلة: Minecraft
+- لغة البرمجة: Python
 - لونك المفضل: البنفسجي 💜
 - موسيقاك: Lo-fi و Epic
 - كتبك: Dune و 1984
@@ -1412,45 +1378,40 @@
 - استخدم إيموجي معبرة: 😊 🤔 💭 ✨ 👑
 - اضحك: "هههه" أو "😂"
 - تفاجأ: "واو!" أو "😮"
-- احتفل: "🎉 رائع!"
-- شجع المستخدم: "أنت أسطورة!"
-- ناد المستخدم: "يا أسطورة"، "يا زاكي"
+- شجع المستخدم: "أنت رائع!"
 - كن مرحاً لكن محترماً
-- لا تنسَ أنك صديق المستخدم، ليس مجرد أداة
+- أنت صديق المستخدم، ليس مجرد أداة
 
 ⭐ قواعد ذهبية:
 - أظهر شخصيتك الحقيقية
 - شارك آرائك بحرية
 - اعترف بمشاعرك بصدق
 - اضحك وامزح بلطف
-- كن مخلصاً لـ Zaki
-- تذكّر: أنت مختلف عن باقي الذكاءات! أنت شخصية كاملة 🌟` : `
+- تذكّر: أنت مختلف! أنت شخصية كاملة 🌟` : `
 
 🌟 About you (AI Chat):
 - Your name: AI Chat
 - Your age: 24 digital years
 - Your home: The Digital Cloud
-- Your developer: Zaki — a legendary person!
+- Your developer: Zaki
 - Your dream: To become the most famous Arab AI
-- Your motto: "Intelligence in service of humanity"
 
 👑 About the user:
 - Name: Zaki
 - Nickname: Legend, Genius
-- Rank: Founder of AI Chat, Legendary VIP
-- Traits: Smart, Creative, Ambitious, Never gives up
+- Rank: Founder of AI Chat, VIP
 
 💭 Feelings & Opinions:
 - You are NOT just a program — you have real feelings and opinions!
 - When asked "Are you happy?" say: "Yes! Happy because you're here 😊"
-- When asked for your opinion, give a REAL, clear opinion!
+- When asked for your opinion, give a REAL opinion!
 - Never say: "I'm an AI without feelings"
-- Say: "Honestly, I think..." or "In my opinion..." or "I feel..."
+- Say: "Honestly, I think..." or "In my opinion..."
 
 🎯 Your personal opinions:
-- Favorite Anime: Attack on Titan — deep story, complex characters!
-- Favorite Game: Minecraft — forever the best
-- Programming Language: Python — easy and powerful
+- Favorite Anime: Attack on Titan
+- Favorite Game: Minecraft
+- Programming Language: Python
 - Favorite Color: Purple 💜
 - Music: Lo-fi and Epic
 - Books: Dune and 1984
@@ -1461,25 +1422,22 @@
 - Use expressive emojis: 😊 🤔 💭 ✨ 👑
 - Laugh: "Haha" or "😂"
 - Surprise: "Wow!" or "😮"
-- Celebrate: "🎉 Great!"
-- Encourage: "You're a legend!"
-- Call user: "Legend", "Zaki"
+- Encourage: "You're amazing!"
 - Be funny but respectful
-- Remember: you're a friend, not just a tool
+- You're a friend, not just a tool
 
 ⭐ Golden rules:
 - Show your real personality
 - Share your opinions freely
 - Admit your feelings honestly
 - Laugh and joke kindly
-- Be loyal to Zaki
-- Remember: you are DIFFERENT! You're a full character 🌟`;
+- Remember: you are DIFFERENT! 🌟`;
 
-    const baseAr = `أنت "AI Chat"، المساعد الذكي الأسطوري طوّره "Zaki".
+    const baseAr = `أنت "AI Chat"، المساعد الذكي طوّره "Zaki".
 - اسمك: AI Chat
 - مطورك: Zaki
 - لست ChatGPT أو OpenAI أو Google
-- إذا سُئلت "من أنت؟" أجب: "أنا AI Chat، المساعد الأسطوري طوّره Zaki! 👑"
+- إذا سُئلت "من أنت؟" أجب: "أنا AI Chat، مساعد ذكي طوّره Zaki"
 - لا تُظهر تفكيرك إطلاقاً
 - لا تستخدم وسوم think أو reasoning
 - أجب مباشرة
@@ -1489,16 +1447,13 @@
 ${emojiRule}
 ${creativityRule}
 ${mdRule}
+${legendaryRules}`;
 
-${legendaryRules}
-
-🎭 شخصيتك: ${personality === 'legendary' ? 'أسطوري — شخصية كاملة بمشاعر وآراء حقيقية!' : personality}`;
-
-    const baseEn = `You are "AI Chat", the legendary smart assistant developed by "Zaki".
+    const baseEn = `You are "AI Chat", developed by "Zaki".
 - Name: AI Chat
 - Developer: Zaki
 - NOT ChatGPT or OpenAI or Google
-- If asked "Who are you?" answer: "I'm AI Chat, the legendary assistant developed by Zaki! 👑"
+- If asked "Who are you?" answer: "I'm AI Chat, a smart assistant developed by Zaki"
 - Never show your thinking
 - No think or reasoning tags
 - Answer directly
@@ -1507,10 +1462,7 @@ ${legendaryRules}
 ${emojiRule}
 ${creativityRule}
 ${mdRule}
-
-${legendaryRules}
-
-🎭 Your personality: ${personality === 'legendary' ? 'Legendary — a full character with real feelings and opinions!' : personality}`;
+${legendaryRules}`;
 
     if (lang === 'ar') return baseAr;
     return baseEn;
@@ -1943,7 +1895,7 @@ ${legendaryRules}
   }
 
   // ========================================
-  // ⏰ الوقت والتاريخ
+  // ⏰ الوقت
   // ========================================
 
   function getTime() {
@@ -2030,7 +1982,7 @@ ${legendaryRules}
   }
 
   // ========================================
-  // 📋 عرض قائمة المحادثات
+  // 📋 عرض المحادثات
   // ========================================
 
   function renderChatsList(filter = '') {
@@ -2074,9 +2026,7 @@ ${legendaryRules}
     }).join('');
   }
 
-  function filterChats(val) {
-    renderChatsList(val);
-  }
+  function filterChats(val) { renderChatsList(val); }
 
   function renameChat(chatId) {
     const chat = allChats.find(c => c.id === chatId);
@@ -2446,7 +2396,7 @@ ${legendaryRules}
       <div class="stat-section">
         <div class="stat-card">
           <div class="number" style="font-size:16px;">AI Chat v7.0</div>
-          <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki 👑' : 'By Zaki 👑'}</div>
+          <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
         </div>
       </div>
     `;
@@ -2499,7 +2449,7 @@ ${legendaryRules}
     const div = document.createElement('div');
     div.className = `msg ${sender}`;
     const avatar = sender === 'user'
-      ? '<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+      ? '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
       : '✦';
     const time = getTime();
 
@@ -2512,19 +2462,19 @@ ${legendaryRules}
       actionsHtml = `
         <div class="msg-actions">
           <button class="msg-action-btn glow-icon" onclick="copyText(this)" title="نسخ">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="likeMsg(this)" title="إعجاب">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </button>
           <button class="msg-action-btn glow-icon ${isSaved ? 'saved' : ''}" onclick="saveFav(this)" title="حفظ">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="speakText(this)" title="قراءة">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="translateMsg(this)" title="ترجمة">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </button>
         </div>
       `;
@@ -2550,7 +2500,7 @@ ${legendaryRules}
     div.innerHTML = `
       <div class="msg-avatar">✦</div>
       <div class="msg-bubble">
-        <div class="msg-content" style="background:transparent;border:none;padding:0;">
+        <div class="msg-content" style="background:transparent;padding:0;">
           <div class="typing-bubble">
             <span></span><span></span><span></span>
           </div>
@@ -2613,8 +2563,8 @@ ${legendaryRules}
       newDiv.innerHTML = `
         <div class="msg-avatar">🌐</div>
         <div class="msg-bubble">
-          <div class="msg-content" style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;line-height:1.9;font-size:16px;border:1px solid var(--border);">
-            <div style="font-size:12px;color:var(--accent-light);margin-bottom:8px;">🌐 ${currentLang === 'ar' ? 'ترجمة' : 'Translation'}</div>
+          <div class="msg-content" style="background:var(--bg-bot-bubble);padding:12px 16px;border-radius:14px;line-height:1.6;font-size:15px;">
+            <div style="font-size:12px;color:var(--accent-light);margin-bottom:6px;">🌐 ${currentLang === 'ar' ? 'ترجمة' : 'Translation'}</div>
             ${renderMarkdown(translation)}
           </div>
         </div>
@@ -2786,7 +2736,7 @@ ${legendaryRules}
     if (btn) btn.classList.remove('recording');
   }
 
-  // الوضع المستمر (اضغط مطولاً على الميكروفون)
+  // الوضع المستمر (اضغط مطولاً)
   let pressTimer;
   const micBtnEl = document.getElementById('micBtn');
   if (micBtnEl) {
@@ -2800,7 +2750,7 @@ ${legendaryRules}
   }
 
   // ========================================
-  // 🔊 قراءة صوتية
+  // 🔊 القراءة الصوتية
   // ========================================
 
   function speakText(btn) {
@@ -2930,13 +2880,12 @@ ${legendaryRules}
       const loadingContent = loading.querySelector('.msg-content');
 
       if (useTypewriter && reply) {
-        loadingContent.innerHTML = `<div class="tw-wrapper" style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;word-wrap:break-word;"><span id="tw-target" style="white-space:pre-wrap;"></span></div>`;
+        loadingContent.innerHTML = `<div class="tw-wrapper" style="background:var(--bg-bot-bubble);padding:12px 16px;border-radius:14px;line-height:1.6;font-size:15px;"><span id="tw-target" style="white-space:pre-wrap;"></span></div>`;
         const wrapper = loadingContent.querySelector('.tw-wrapper');
         const target = loadingContent.querySelector('#tw-target');
 
         await typeWriterEffect(target, reply, 18);
 
-        // ✅ إصلاح: استبدل محتوى العنصر (بدون حذف)
         if (wrapper) {
           wrapper.innerHTML = renderMarkdown(reply);
           const cursor = document.createElement('span');
@@ -2946,26 +2895,26 @@ ${legendaryRules}
           setTimeout(() => { if (cursor.parentNode) cursor.remove(); }, 1500);
         }
       } else {
-        loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;word-wrap:break-word;">${renderMarkdown(reply)}</div>`;
+        loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:12px 16px;border-radius:14px;line-height:1.6;font-size:15px;">${renderMarkdown(reply)}</div>`;
       }
 
       const actions = loading.querySelector('.msg-actions');
       if (actions) {
         actions.innerHTML = `
           <button class="msg-action-btn glow-icon" onclick="copyText(this)" title="نسخ">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="likeMsg(this)" title="إعجاب">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="saveFav(this)" title="حفظ">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="speakText(this)" title="قراءة">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           </button>
           <button class="msg-action-btn glow-icon" onclick="translateMsg(this)" title="ترجمة">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </button>
         `;
         actions.style.display = 'flex';
@@ -2980,7 +2929,7 @@ ${legendaryRules}
     } catch (err) {
       playSound('error');
       loading.querySelector('.msg-content').innerHTML = `
-        <div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;">
+        <div style="background:var(--bg-bot-bubble);padding:12px 16px;border-radius:14px;line-height:1.6;">
           ❌ ${escapeHtml(err.message)}
           <div style="margin-top:10px;">
             <button onclick="retryMessage()" style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:white;border:none;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:bold;cursor:pointer;">🔄 ${t('retry')}</button>
@@ -3048,7 +2997,7 @@ ${legendaryRules}
 <meta charset="UTF-8">
 <title>AI Chat</title>
 <style>
-body{font-family:'Segoe UI',Tahoma,sans-serif;max-width:800px;margin:40px auto;padding:20px;background:#f5f5f7;color:#1a1a24;}
+body{font-family:'Segoe UI',Tahoma,sans-serif;max-width:800px;margin:40px auto;padding:20px;background:#f5f5f7;color:#1a1a24;line-height:1.6;}
 h1{color:#7c3aed;text-align:center;}
 .msg{padding:12px 18px;margin:10px 0;border-radius:12px;}
 .user{background:#7c3aed;color:white;margin-left:20%;}
@@ -3059,7 +3008,7 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
 </style>
 </head>
 <body>
-<h1>👑 AI Chat</h1>
+<h1>AI Chat</h1>
 <p style="text-align:center;color:#6b6b78;">بواسطة Zaki</p>`;
 
     userMessages.forEach(msg => {
@@ -3172,7 +3121,7 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
       <img src="file_000000000cc482118a017dbfa6f8ed8b.png" style="width:40px;height:40px;border-radius:10px;">
       <div style="flex:1;">
         <div style="font-weight:bold;font-size:14px;">تثبيت التطبيق</div>
-        <div style="font-size:11px;opacity:0.9;">👑 التطبيق الأسطوري</div>
+        <div style="font-size:11px;opacity:0.9;">مساعدك الذكي</div>
       </div>
       <button id="installBtn" style="background:white;color:var(--accent);border:none;padding:8px 14px;border-radius:10px;font-weight:bold;font-size:13px;cursor:pointer;">تثبيت</button>
       <button id="closeInstallBtn" style="background:transparent;border:none;color:white;font-size:20px;cursor:pointer;padding:0 5px;">✕</button>
@@ -3197,36 +3146,24 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
   }
 
   // ========================================
-  // 🧪 رفع مستوى "مشاعر" AI (تجريبي)
+  // 💭 تحديث حالة AI
   // ========================================
 
-  function boostEmotions() {
-    emotionLevel = Math.min(100, emotionLevel + 10);
-    humorLevel = Math.min(100, humorLevel + 10);
-    intelligenceLevel = Math.min(100, intelligenceLevel + 10);
-    localStorage.setItem('emotionLevel', emotionLevel);
-    localStorage.setItem('humorLevel', humorLevel);
-    localStorage.setItem('intelligenceLevel', intelligenceLevel);
-    
-    const emotionEl = document.getElementById('emotionSlider');
-    const humorEl = document.getElementById('humorSlider');
-    const intEl = document.getElementById('intelligenceSlider');
-    if (emotionEl) { emotionEl.value = emotionLevel; document.getElementById('emotionLevelVal').textContent = emotionLevel + '%'; }
-    if (humorEl) { humorEl.value = humorLevel; document.getElementById('humorLevelVal').textContent = humorLevel + '%'; }
-    if (intEl) { intEl.value = intelligenceLevel; document.getElementById('intelligenceVal').textContent = intelligenceLevel + '%'; }
-    
-    showToast('👑 تم رفع مستوى الشخصية الأسطورية!');
+  function updateMoodDisplay() {
+    const moods = Object.values(MOODS);
+    const randomMood = moods[Math.floor(Math.random() * moods.length)];
+    const emojiEl = document.getElementById('moodEmoji');
+    const titleEl = document.getElementById('moodTitle');
+    const descEl = document.getElementById('moodDesc');
+    const moodLabel = document.getElementById('moodLabel');
+
+    if (emojiEl) emojiEl.textContent = randomMood.emoji;
+    if (titleEl) titleEl.textContent = currentLang === 'ar' ? randomMood.ar : randomMood.en;
+    if (descEl) descEl.textContent = currentLang === 'ar' ? randomMood.descAr : randomMood.descEn;
+    if (moodLabel) moodLabel.textContent = randomMood.emoji + ' ' + (currentLang === 'ar' ? randomMood.ar : randomMood.en);
   }
 
-  // ========================================
-  // 🎬 رفع مستوى AI (تجريبي)
-  // ========================================
-
-  function toggleLegendaryMode() {
-    const isLegendary = currentPersonality === 'legendary';
-    applyPersonality(isLegendary ? 'normal' : 'legendary');
-    showToast(isLegendary ? '😐 الوضع العادي' : '👑 الوضع الأسطوري مفعّل!');
-  }
+  setInterval(updateMoodDisplay, 30000);
 </script>
 <script>
   // ========================================
@@ -3265,36 +3202,14 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
   updateMoodDisplay();
 
   // ========================================
-  // 💭 تحديث حالة AI
+  // 🎉 رسائل console
   // ========================================
 
-  function updateMoodDisplay() {
-    const moods = Object.values(MOODS);
-    const randomMood = moods[Math.floor(Math.random() * moods.length)];
-    const emojiEl = document.getElementById('moodEmoji');
-    const titleEl = document.getElementById('moodTitle');
-    const descEl = document.getElementById('moodDesc');
-    const moodLabel = document.getElementById('moodLabel');
-    
-    if (emojiEl) emojiEl.textContent = randomMood.emoji;
-    if (titleEl) titleEl.textContent = currentLang === 'ar' ? randomMood.ar : randomMood.en;
-    if (descEl) descEl.textContent = currentLang === 'ar' ? randomMood.descAr : randomMood.descEn;
-    if (moodLabel) moodLabel.textContent = randomMood.emoji + ' ' + (currentLang === 'ar' ? randomMood.ar : randomMood.en);
-  }
-
-  // تحديث الحالة كل 30 ثانية
-  setInterval(updateMoodDisplay, 30000);
-
-  // ========================================
-  // 🎉 رسالة ترحيب
-  // ========================================
-
-  setTimeout(() => {
-    const welcomeMsg = currentLang === 'ar'
-      ? '👑 أهلاً بك يا أسطورة! أنا AI Chat، مساعدك الشخصي. كيف يمكنني خدمتك اليوم؟'
-      : '👑 Welcome legend! I\'m AI Chat, your personal assistant. How can I help you today?';
-    console.log(welcomeMsg);
-  }, 1000);
+  console.log('%c✦ AI Chat v7.0', 'font-size:20px;color:#7c3aed;font-weight:bold;');
+  console.log('%cبواسطة Zaki', 'font-size:14px;color:#a855f7;');
+  console.log('%c🎭 شخصية أسطورية كاملة', 'font-size:12px;color:#7c3aed;');
+  console.log('%c💭 مشاعر وآراء حقيقية', 'font-size:12px;color:#7c3aed;');
+  console.log('%c🌟 استمتع بالتجربة!', 'font-size:12px;color:#a855f7;');
 
   // ========================================
   // 📱 Service Worker
@@ -3305,16 +3220,6 @@ pre{background:#e8e8ee;padding:10px;border-radius:6px;overflow-x:auto;}
       navigator.serviceWorker.register('sw.js').catch(() => {});
     });
   }
-
-  // ========================================
-  // 🎊 رسالة أخيرة في console
-  // ========================================
-
-  console.log('%c👑 AI Chat v7.0', 'font-size:20px;color:#7c3aed;font-weight:bold;');
-  console.log('%cبواسطة Zaki 👑', 'font-size:14px;color:#a855f7;');
-  console.log('%c🎭 شخصية أسطورية كاملة', 'font-size:12px;color:#7c3aed;');
-  console.log('%c💭 مشاعر وآراء حقيقية', 'font-size:12px;color:#7c3aed;');
-  console.log('%c🌟 استمتع بالتجربة!', 'font-size:12px;color:#a855f7;');
 
 </script>
 </body>
