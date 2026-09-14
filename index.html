@@ -109,6 +109,21 @@
   .msg-action-btn.speaking { color: var(--accent-light); animation: pulse 1s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+  /* ⚡ مؤشر الكتابة الوامض */
+  .typing-cursor {
+    display: inline-block;
+    color: var(--accent-light);
+    font-weight: 400;
+    margin-right: 2px;
+    animation: blink 0.7s infinite;
+    font-size: 18px;
+    vertical-align: middle;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
   .msg-image { max-width: 100%; max-height: 300px; border-radius: 12px; margin-bottom: 8px; border: 1px solid var(--border); cursor: pointer; object-fit: cover; }
   .msg.user .msg-image { border-color: var(--accent-light); max-width: 250px; }
 
@@ -586,13 +601,20 @@
       </button>
     </div>
 
-    <!-- ⚠️ زر وضع التفكير الجديد -->
     <div class="modal-item" onclick="toggleThinking()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
         <span data-i18n="thinkingMode">وضع التفكير</span>
       </div>
       <div class="toggle-switch" id="thinkingToggle"></div>
+    </div>
+
+    <div class="modal-item" onclick="toggleTypewriter()">
+      <div class="modal-item-left">
+        <span class="glow-icon"><svg viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span>
+        <span data-i18n="typewriterMode">تأثير الكتابة</span>
+      </div>
+      <div class="toggle-switch on" id="typewriterToggle"></div>
     </div>
 
     <div class="modal-item" onclick="toggleTheme()">
@@ -627,20 +649,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast(t('soon'))">
-      <div class="modal-item-left">
-        <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
-        <span data-i18n="notifications">الإشعارات</span>
-      </div>
-      <span>›</span>
-    </div>
-
-    <div class="modal-item" onclick="showToast('AI Chat v4.3 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v5.0 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v4.3</span>
+      <span>v5.0</span>
     </div>
   </div>
 </div>
@@ -718,6 +732,9 @@
       thinkingMode: 'وضع التفكير',
       thinkingOn: '🧠 وضع التفكير مفعّل (أبطأ - أذكى)',
       thinkingOff: '⚡ الوضع السريع مفعّل',
+      typewriterMode: 'تأثير الكتابة',
+      typewriterOn: '⌨️ تأثير الكتابة مفعّل',
+      typewriterOff: '⚡ عرض الرسائل فوراً',
       systemMsg: `أنت "AI Chat"، مساعد ذكي تم تطويره بواسطة "Zaki". 
 
 هويتك الثابتة:
@@ -782,6 +799,9 @@
       thinkingMode: 'Thinking Mode',
       thinkingOn: '🧠 Thinking mode ON (slower - smarter)',
       thinkingOff: '⚡ Fast mode ON',
+      typewriterMode: 'Typewriter Effect',
+      typewriterOn: '⌨️ Typewriter effect ON',
+      typewriterOff: '⚡ Messages appear instantly',
       systemMsg: `You are "AI Chat", a smart assistant developed by "Zaki".
 
 Your fixed identity:
@@ -811,6 +831,7 @@ Your style:
   let currentColor = localStorage.getItem('color') || 'purple';
   let isDark = localStorage.getItem('dark') !== 'false';
   let useThinking = localStorage.getItem('useThinking') !== 'false';
+  let useTypewriter = localStorage.getItem('useTypewriter') !== 'false';
   let history = [];
   let currentChatId = null;
   let allChats = JSON.parse(localStorage.getItem('allChats') || '[]');
@@ -824,18 +845,16 @@ Your style:
   let recognition = null;
   let isRecording = false;
   let currentSpeakingBtn = null;
+  let currentTypewriterId = null;
 
-  // ============ API والنماذج ============
+  // ============ API ============
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
   const API_KEY_PART2 = 'Gdyb3FY7XUyveqUEG5Zs8adGBkPzYLQ';
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-  // 🧠 نموذج التفكير (Qwen - أذكى لكن يستهلك أكثر)
   const MODEL_THINKING = 'qwen/qwen3.6-27b';
-
-  // ⚡ النموذج السريع (Llama-4-Scout - يدعم الصور، بدون تفكير)
-  const MODEL_FAST = 'meta-llama/llama-4-scout-17b-16e-instruct';
+  const MODEL_FAST = 'openai/gpt-oss-120b';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
@@ -847,6 +866,50 @@ Your style:
     text = text.replace(/<analysis>[\s\S]*?<\/analysis>/gi, '');
     text = text.replace(/\n{3,}/g, '\n\n');
     return text.trim();
+  }
+
+  // ============ ⚡ تأثير الكتابة (Typewriter) ============
+  function typeWriterEffect(element, text, speed) {
+    return new Promise((resolve) => {
+      element.textContent = '';
+      let i = 0;
+      const total = text.length;
+
+      // سرعة ذكية حسب طول النص
+      let delay;
+      if (total > 800) delay = 5;
+      else if (total > 400) delay = 8;
+      else if (total > 150) delay = 12;
+      else delay = speed || 18;
+
+      const myId = Date.now();
+      currentTypewriterId = myId;
+
+      function type() {
+        // إذا بدأت كتابة جديدة، توقف
+        if (currentTypewriterId !== myId) {
+          element.textContent = text;
+          resolve();
+          return;
+        }
+
+        if (i < total) {
+          // أضف عدة أحرف في كل مرة للنصوص الطويلة (لتسريع)
+          const chunk = total > 800 ? 3 : total > 400 ? 2 : 1;
+          element.textContent += text.substring(i, i + chunk);
+          i += chunk;
+
+          // التمرير التلقائي فقط إذا كنا في الأسفل
+          if (!userScrolledUp) {
+            chatArea.scrollTop = chatArea.scrollHeight;
+          }
+          setTimeout(type, delay);
+        } else {
+          resolve();
+        }
+      }
+      type();
+    });
   }
 
   // ============ عناصر DOM ============
@@ -889,6 +952,7 @@ Your style:
     renderExplore();
     renderStats();
     applyThinkingMode(useThinking);
+    applyTypewriterMode(useTypewriter);
   }
 
   // ============ اللون ============
@@ -972,6 +1036,19 @@ Your style:
     showToast(useThinking ? t('thinkingOn') : t('thinkingOff'));
   }
 
+  // ============ ⚡ تأثير الكتابة ============
+  function applyTypewriterMode(enabled) {
+    useTypewriter = enabled;
+    localStorage.setItem('useTypewriter', enabled);
+    const toggle = document.getElementById('typewriterToggle');
+    if (toggle) toggle.classList.toggle('on', enabled);
+  }
+
+  function toggleTypewriter() {
+    applyTypewriterMode(!useTypewriter);
+    showToast(useTypewriter ? t('typewriterOn') : t('typewriterOff'));
+  }
+
   // ============ Settings & Colors ============
   function openSettings() {
     closeSidebar();
@@ -1051,7 +1128,7 @@ Your style:
     toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
   function openGoogle() {
@@ -1064,6 +1141,7 @@ Your style:
     saveCurrentChat();
     history = [{ role: 'system', content: t('systemMsg') }];
     currentChatId = null;
+    currentTypewriterId = null;
     messagesEl.innerHTML = '';
     messagesEl.appendChild(welcomeEl);
     welcomeEl.style.display = 'block';
@@ -1451,7 +1529,7 @@ Your style:
         </div>
       </div>
       <div class="stat-card" style="margin-top:12px;">
-        <div class="number" style="font-size:16px;">AI Chat v4.3</div>
+        <div class="number" style="font-size:16px;">AI Chat v5.0</div>
         <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
       </div>
     `;
@@ -1764,6 +1842,7 @@ Your style:
 
     welcomeEl.style.display = 'none';
     userScrolledUp = false;
+    currentTypewriterId = null; // إيقاف أي كتابة سابقة
 
     let messageContent;
     const imageData = hasImage ? selectedImage.data : null;
@@ -1811,7 +1890,6 @@ Your style:
 
     setTimeout(() => focusElement(loading), 100);
 
-    // ⚠️ اختيار النموذج حسب وضع التفكير
     const model = useThinking ? MODEL_THINKING : MODEL_FAST;
     const maxTokens = useThinking ? 800 : 1500;
 
@@ -1834,12 +1912,32 @@ Your style:
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
 
-      // ⚠️ إخفاء التفكير
       let reply = data.choices[0].message.content;
       reply = cleanReply(reply);
 
+      // ⚡ تأثير الكتابة
       const loadingContent = loading.querySelector('.msg-content');
-      loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
+
+      if (useTypewriter && reply) {
+        // استخدام تأثير الكتابة
+        loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;"><span id="typewriterTarget"></span></div>`;
+        const target = loadingContent.querySelector('#typewriterTarget');
+
+        await typeWriterEffect(target, reply, 18);
+
+        // مؤشر الكتابة الوامض في النهاية
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        cursor.textContent = '▌';
+        target.appendChild(cursor);
+
+        setTimeout(() => {
+          if (cursor.parentNode) cursor.remove();
+        }, 1500);
+      } else {
+        // بدون تأثير - عرض مباشر
+        loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
+      }
 
       const actions = loading.querySelector('.msg-actions');
       if (actions) {
@@ -1864,7 +1962,6 @@ Your style:
       stats.messages += 2;
       localStorage.setItem('stats', JSON.stringify(stats));
 
-      setTimeout(() => focusElement(loading), 100);
       saveCurrentChat();
 
     } catch (err) {
@@ -2008,6 +2105,7 @@ h1{color:#7c3aed;text-align:center;}
   applyColor(currentColor);
   applyTheme(isDark);
   applyThinkingMode(useThinking);
+  applyTypewriterMode(useTypewriter);
   rebuildColorGrid();
   renderExplore();
 
@@ -2019,4 +2117,4 @@ h1{color:#7c3aed;text-align:center;}
 </script>
 
 </body>
-</htm
+</html>
