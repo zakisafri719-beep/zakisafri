@@ -109,7 +109,6 @@
   .msg-action-btn.speaking { color: var(--accent-light); animation: pulse 1s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  /* ⚡ مؤشر الكتابة الوامض */
   .typing-cursor {
     display: inline-block;
     color: var(--accent-light);
@@ -604,7 +603,7 @@
     <div class="modal-item" onclick="toggleThinking()">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
-        <span data-i18n="thinkingMode">وضع التفكير</span>
+        <span data-i18n="thinkingMode">إجابات مفصّلة</span>
       </div>
       <div class="toggle-switch" id="thinkingToggle"></div>
     </div>
@@ -649,12 +648,12 @@
       <span>›</span>
     </div>
 
-    <div class="modal-item" onclick="showToast('AI Chat v5.0 — بواسطة Zaki')">
+    <div class="modal-item" onclick="showToast('AI Chat v5.1 — بواسطة Zaki')">
       <div class="modal-item-left">
         <span class="glow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
         <span data-i18n="about">عن التطبيق</span>
       </div>
-      <span>v5.0</span>
+      <span>v5.1</span>
     </div>
   </div>
 </div>
@@ -729,9 +728,9 @@
       listening: '🎤 جاري الاستماع...', searchingWeb: '🔍 جاري البحث في الإنترنت...',
       exporting: '📄 جاري تصدير المحادثة...', exported: '✅ تم تصدير المحادثة',
       imageSelected: '🖼️ تم اختيار الصورة', imageTooBig: '❌ الصورة كبيرة جداً (الحد 4MB)',
-      thinkingMode: 'وضع التفكير',
-      thinkingOn: '🧠 وضع التفكير مفعّل (أبطأ - أذكى)',
-      thinkingOff: '⚡ الوضع السريع مفعّل',
+      thinkingMode: 'إجابات مفصّلة',
+      thinkingOn: '📝 إجابات مفصّلة (أطول)',
+      thinkingOff: '⚡ إجابات سريعة (مختصرة)',
       typewriterMode: 'تأثير الكتابة',
       typewriterOn: '⌨️ تأثير الكتابة مفعّل',
       typewriterOff: '⚡ عرض الرسائل فوراً',
@@ -746,10 +745,11 @@
 - لا تذكر OpenAI أو ChatGPT أبداً
 
 مهم جداً:
-- لا تُظهر خطوات تفكيرك أو تحليلك
+- لا تُظهر خطوات تفكيرك أو تحليلك إطلاقاً
 - أجب مباشرة دون مقدمات
 - لا تكتب "بالتأكيد" أو "سأساعدك" أو "دعني أفكر"
 - ابدأ إجابتك بالمحتوى الفعلي مباشرة
+- لا تستخدم وسوم مثل <think> أو <reasoning> أو <analysis>
 
 أسلوبك:
 - أجب بالعربية الفصحى بوضوح ودقة
@@ -796,9 +796,9 @@
       listening: '🎤 Listening...', searchingWeb: '🔍 Searching the web...',
       exporting: '📄 Exporting chat...', exported: '✅ Chat exported',
       imageSelected: '🖼️ Image selected', imageTooBig: '❌ Image too big (max 4MB)',
-      thinkingMode: 'Thinking Mode',
-      thinkingOn: '🧠 Thinking mode ON (slower - smarter)',
-      thinkingOff: '⚡ Fast mode ON',
+      thinkingMode: 'Detailed Answers',
+      thinkingOn: '📝 Detailed answers (longer)',
+      thinkingOff: '⚡ Quick answers (shorter)',
       typewriterMode: 'Typewriter Effect',
       typewriterOn: '⌨️ Typewriter effect ON',
       typewriterOff: '⚡ Messages appear instantly',
@@ -813,10 +813,11 @@ Your fixed identity:
 - Never mention OpenAI or ChatGPT
 
 Important:
-- Do NOT show your thinking steps or analysis
+- Do NOT show your thinking steps or analysis at all
 - Answer directly without preambles
 - Do not write "Sure" or "Let me think" or "I will help"
 - Start your answer with the actual content directly
+- Do NOT use tags like <think> or <reasoning> or <analysis>
 
 Your style:
 - Answer clearly and accurately
@@ -845,7 +846,7 @@ Your style:
   let recognition = null;
   let isRecording = false;
   let currentSpeakingBtn = null;
-  let currentTypewriterId = null;
+  let currentTypewriterToken = 0;
 
   // ============ API ============
   const API_KEY_PART1 = 'gsk_gWW8OnvnzgMzUh1WjvlZW';
@@ -853,53 +854,63 @@ Your style:
   const API_KEY = API_KEY_PART1 + API_KEY_PART2;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-  const MODEL_THINKING = 'qwen/qwen3.6-27b';
-  const MODEL_FAST = 'openai/gpt-oss-120b';
+  // ✅ النموذج الوحيد — قوي ومجاني بدون rate limits
+  const MODEL = 'openai/gpt-oss-120b';
 
   function t(key) { return TRANSLATIONS[currentLang][key] || key; }
 
   // ============ إخفاء التفكير ============
   function cleanReply(text) {
     if (!text) return '';
-    text = text.replace(/<think>[\s\S]*?<\/think>/gi, '');
-    text = text.replace(/<reasoning>[\s\S]*?<\/reasoning>/gi, '');
-    text = text.replace(/<analysis>[\s\S]*?<\/analysis>/gi, '');
+
+    // إزالة جميع أنواع وسوم التفكير
+    text = text.replace(/<think[^>]*>[\s\S]*?<\/think>/gi, '');
+    text = text.replace(/<reasoning[^>]*>[\s\S]*?<\/reasoning>/gi, '');
+    text = text.replace(/<analysis[^>]*>[\s\S]*?<\/analysis>/gi, '');
+    text = text.replace(/<reflection[^>]*>[\s\S]*?<\/reflection>/gi, '');
+    text = text.replace(/<scratchpad[^>]*>[\s\S]*?<\/scratchpad>/gi, '');
+    text = text.replace(/<internal[^>]*>[\s\S]*?<\/internal>/gi, '');
+
+    // إزالة أي وسوم عامة متبقية
+    text = text.replace(/<[a-z_]+[^>]*>[\s\S]*?<\/[a-z_]+>/gi, '');
+
+    // تنظيف المسافات الزائدة
     text = text.replace(/\n{3,}/g, '\n\n');
     return text.trim();
   }
 
-  // ============ ⚡ تأثير الكتابة (Typewriter) ============
+  // ============ ⚡ تأثير الكتابة ============
   function typeWriterEffect(element, text, speed) {
     return new Promise((resolve) => {
       element.textContent = '';
       let i = 0;
       const total = text.length;
 
-      // سرعة ذكية حسب طول النص
-      let delay;
-      if (total > 800) delay = 5;
-      else if (total > 400) delay = 8;
-      else if (total > 150) delay = 12;
-      else delay = speed || 18;
+      // حساب السرعة الذكية
+      let delay, chunkSize;
+      if (total > 1500) { delay = 4; chunkSize = 4; }
+      else if (total > 800) { delay = 5; chunkSize = 3; }
+      else if (total > 400) { delay = 7; chunkSize = 2; }
+      else if (total > 150) { delay = 10; chunkSize = 2; }
+      else { delay = speed || 18; chunkSize = 1; }
 
-      const myId = Date.now();
-      currentTypewriterId = myId;
+      // رمز فريد لهذه الكتابة
+      currentTypewriterToken++;
+      const myToken = currentTypewriterToken;
 
       function type() {
-        // إذا بدأت كتابة جديدة، توقف
-        if (currentTypewriterId !== myId) {
+        // إذا بدأت كتابة جديدة → أكمل النص كاملاً
+        if (currentTypewriterToken !== myToken) {
           element.textContent = text;
           resolve();
           return;
         }
 
         if (i < total) {
-          // أضف عدة أحرف في كل مرة للنصوص الطويلة (لتسريع)
-          const chunk = total > 800 ? 3 : total > 400 ? 2 : 1;
-          element.textContent += text.substring(i, i + chunk);
-          i += chunk;
+          element.textContent += text.substring(i, i + chunkSize);
+          i += chunkSize;
 
-          // التمرير التلقائي فقط إذا كنا في الأسفل
+          // التمرير التلقائي
           if (!userScrolledUp) {
             chatArea.scrollTop = chatArea.scrollHeight;
           }
@@ -908,6 +919,8 @@ Your style:
           resolve();
         }
       }
+
+      // بدء الكتابة
       type();
     });
   }
@@ -1023,7 +1036,7 @@ Your style:
     showToast(t('langChanged'));
   }
 
-  // ============ وضع التفكير ============
+  // ============ إجابات مفصّلة / سريعة ============
   function applyThinkingMode(thinking) {
     useThinking = thinking;
     localStorage.setItem('useThinking', thinking);
@@ -1036,7 +1049,7 @@ Your style:
     showToast(useThinking ? t('thinkingOn') : t('thinkingOff'));
   }
 
-  // ============ ⚡ تأثير الكتابة ============
+  // ============ تأثير الكتابة ============
   function applyTypewriterMode(enabled) {
     useTypewriter = enabled;
     localStorage.setItem('useTypewriter', enabled);
@@ -1141,7 +1154,7 @@ Your style:
     saveCurrentChat();
     history = [{ role: 'system', content: t('systemMsg') }];
     currentChatId = null;
-    currentTypewriterId = null;
+    currentTypewriterToken++;
     messagesEl.innerHTML = '';
     messagesEl.appendChild(welcomeEl);
     welcomeEl.style.display = 'block';
@@ -1235,6 +1248,7 @@ Your style:
 
     history = [...chat.messages];
     currentChatId = chatId;
+    currentTypewriterToken++;
     welcomeEl.style.display = 'none';
     messagesEl.innerHTML = '';
     messagesEl.appendChild(welcomeEl);
@@ -1529,7 +1543,7 @@ Your style:
         </div>
       </div>
       <div class="stat-card" style="margin-top:12px;">
-        <div class="number" style="font-size:16px;">AI Chat v5.0</div>
+        <div class="number" style="font-size:16px;">AI Chat v5.1</div>
         <div class="label">${currentLang === 'ar' ? 'بواسطة Zaki' : 'By Zaki'}</div>
       </div>
     `;
@@ -1842,7 +1856,6 @@ Your style:
 
     welcomeEl.style.display = 'none';
     userScrolledUp = false;
-    currentTypewriterId = null; // إيقاف أي كتابة سابقة
 
     let messageContent;
     const imageData = hasImage ? selectedImage.data : null;
@@ -1890,8 +1903,8 @@ Your style:
 
     setTimeout(() => focusElement(loading), 100);
 
-    const model = useThinking ? MODEL_THINKING : MODEL_FAST;
-    const maxTokens = useThinking ? 800 : 1500;
+    // ✅ الإجابات المفصّلة تعطي max_tokens أكبر
+    const maxTokens = useThinking ? 4096 : 800;
 
     try {
       const res = await fetch(API_URL, {
@@ -1901,7 +1914,7 @@ Your style:
           'Authorization': `Bearer ${API_KEY}`
         },
         body: JSON.stringify({
-          model: model,
+          model: MODEL,
           messages: history,
           temperature: 0.7,
           max_tokens: maxTokens,
@@ -1915,17 +1928,16 @@ Your style:
       let reply = data.choices[0].message.content;
       reply = cleanReply(reply);
 
-      // ⚡ تأثير الكتابة
       const loadingContent = loading.querySelector('.msg-content');
 
       if (useTypewriter && reply) {
-        // استخدام تأثير الكتابة
-        loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;"><span id="typewriterTarget"></span></div>`;
-        const target = loadingContent.querySelector('#typewriterTarget');
+        // ⌨️ تأثير الكتابة
+        loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;"><span id="tw-target"></span></div>`;
+        const target = loadingContent.querySelector('#tw-target');
 
         await typeWriterEffect(target, reply, 18);
 
-        // مؤشر الكتابة الوامض في النهاية
+        // مؤشر وامض بعد الانتهاء
         const cursor = document.createElement('span');
         cursor.className = 'typing-cursor';
         cursor.textContent = '▌';
@@ -1935,7 +1947,7 @@ Your style:
           if (cursor.parentNode) cursor.remove();
         }, 1500);
       } else {
-        // بدون تأثير - عرض مباشر
+        // ⚡ عرض فوري
         loadingContent.innerHTML = `<div style="background:var(--bg-bot-bubble);padding:14px 18px;border-radius:16px;border:1px solid var(--border);line-height:1.9;font-size:16px;white-space:pre-wrap;word-wrap:break-word;">${escapeHtml(reply)}</div>`;
       }
 
